@@ -25,7 +25,8 @@
   -->
 
   <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
+    <fileTypeFactory implementation="com.eiffel.EiffelFileTypeFactory"/>
+    <lang.parserDefinition language="Eiffel" implementationClass="com.eiffel.EiffelParserDefinition"/>
   </extensions>
 
   <actions>

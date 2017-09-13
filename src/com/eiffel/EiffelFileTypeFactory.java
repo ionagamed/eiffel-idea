@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 public class EiffelFileTypeFactory extends FileTypeFactory {
     @Override
     public void createFileTypes(@NotNull FileTypeConsumer fileTypeConsumer) {
-        fileTypeConsumer.consume(EiffelFileType.INSTANCE, "ecf");
+        fileTypeConsumer.consume(EiffelProjectFileType.INSTANCE, "ecf");
+        fileTypeConsumer.consume(EiffelSourceFileType.INSTANCE, "e");
     }
 }

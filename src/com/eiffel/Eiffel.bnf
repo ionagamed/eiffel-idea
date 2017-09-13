@@ -1,0 +1,20 @@
+{
+  parserClass="com.eiffel.parser.EiffelParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Eiffel"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.eiffel.psi"
+  psiImplPackage="com.eiffel.psi.impl"
+
+  elementTypeHolderClass="com.eiffel.psi.EiffelTypes"
+  elementTypeClass="com.eiffel.pci.EiffelElementType"
+  tokenTypeClass="com.eiffel.pci.EiffelTokenType"
+}
+
+eiffelFile ::= item_*
+
+private item_ ::= (property|COMMENT|CRLF)
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY
