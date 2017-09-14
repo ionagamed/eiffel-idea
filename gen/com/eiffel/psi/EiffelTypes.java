@@ -10,19 +10,28 @@ import com.eiffel.psi.impl.*;
 
 public interface EiffelTypes {
 
-  IElementType PROPERTY = new EiffelElementType("PROPERTY");
+  IElementType CLASS_DECLARATION = new EiffelElementType("CLASS_DECLARATION");
+  IElementType CLASS_HEADER = new EiffelElementType("CLASS_HEADER");
+  IElementType HEADER_MARK = new EiffelElementType("HEADER_MARK");
 
+  IElementType CLASS_KEYWORD = new EiffelTokenType("CLASS_KEYWORD");
   IElementType COMMENT = new EiffelTokenType("COMMENT");
-  IElementType CRLF = new EiffelTokenType("CRLF");
-  IElementType KEY = new EiffelTokenType("KEY");
-  IElementType SEPARATOR = new EiffelTokenType("SEPARATOR");
-  IElementType VALUE = new EiffelTokenType("VALUE");
+  IElementType DEFERRED_KEYWORD = new EiffelTokenType("DEFERRED_KEYWORD");
+  IElementType EXPANDED_KEYWORD = new EiffelTokenType("EXPANDED_KEYWORD");
+  IElementType FROZEN_KEYWORD = new EiffelTokenType("FROZEN_KEYWORD");
+  IElementType IDENTIFIER = new EiffelTokenType("IDENTIFIER");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-       if (type == PROPERTY) {
-        return new EiffelPropertyImpl(node);
+       if (type == CLASS_DECLARATION) {
+        return new EiffelClassDeclarationImpl(node);
+      }
+      else if (type == CLASS_HEADER) {
+        return new EiffelClassHeaderImpl(node);
+      }
+      else if (type == HEADER_MARK) {
+        return new EiffelHeaderMarkImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

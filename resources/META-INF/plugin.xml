@@ -27,6 +27,7 @@
   <extensions defaultExtensionNs="com.intellij">
     <fileTypeFactory implementation="com.eiffel.EiffelFileTypeFactory"/>
     <lang.parserDefinition language="Eiffel" implementationClass="com.eiffel.EiffelParserDefinition"/>
+    <lang.syntaxHighlighterFactory key="Eiffel" implementationClass="com.eiffel.EiffelSyntaxHighlighterFactory"/>
   </extensions>
 
   <actions>

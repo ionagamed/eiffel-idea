@@ -13,8 +13,9 @@
   tokenTypeClass="com.eiffel.pci.EiffelTokenType"
 }
 
-eiffelFile ::= item_*
+eiffelFile ::= COMMENT* class_declaration COMMENT*
 
-private item_ ::= (property|COMMENT|CRLF)
+class_declaration ::= class_header
 
-property ::= (KEY? SEPARATOR VALUE?) | KEY
+class_header ::= header_mark? CLASS_KEYWORD IDENTIFIER
+header_mark ::= (DEFERRED_KEYWORD|EXPANDED_KEYWORD|FROZEN_KEYWORD)

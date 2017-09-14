@@ -23,7 +23,6 @@ class EiffelLexer implements FlexLexer {
 
   /** lexical states */
   public static final int YYINITIAL = 0;
-  public static final int WAITING_VALUE = 2;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -32,7 +31,7 @@ class EiffelLexer implements FlexLexer {
    * l is of the form l = 2*k, k a non negative integer
    */
   private static final int ZZ_LEXSTATE[] = { 
-     0,  0,  1, 1
+     0, 0
   };
 
   /** 
@@ -54,8 +53,9 @@ class EiffelLexer implements FlexLexer {
 
   /* The ZZ_CMAP_A table has 320 entries */
   static final char ZZ_CMAP_A[] = zzUnpackCMap(
-    "\11\0\1\4\1\2\1\1\1\5\1\3\22\0\1\7\1\10\1\0\1\10\26\0\1\11\2\0\1\11\36\0\1"+
-    "\6\50\0\1\1\242\0\2\1\26\0");
+    "\11\0\1\4\1\2\1\1\1\4\1\3\22\0\1\4\14\0\1\7\2\0\12\6\7\0\32\5\4\0\1\6\1\0"+
+    "\1\12\1\5\1\10\1\14\1\15\1\16\5\5\1\11\1\5\1\22\1\23\1\21\1\5\1\17\1\13\4"+
+    "\5\1\20\1\5\1\24\12\0\1\1\242\0\2\1\26\0");
 
   /** 
    * Translates DFA states to action switch labels.
@@ -63,11 +63,11 @@ class EiffelLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\2\0\2\1\1\2\1\3\1\4\1\5\2\6\2\7"+
-    "\1\3\1\7\1\0\2\4\1\0\1\2\2\6";
+    "\1\0\1\1\1\2\1\3\1\1\4\3\1\4\4\3"+
+    "\2\4\10\3\1\5\5\3\1\6\2\3\1\7\1\10";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[21];
+    int [] result = new int[35];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -92,12 +92,14 @@ class EiffelLexer implements FlexLexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\12\0\24\0\36\0\50\0\62\0\74\0\106"+
-    "\0\120\0\132\0\50\0\144\0\156\0\170\0\62\0\202"+
-    "\0\214\0\156\0\132\0\226\0\240";
+    "\0\0\0\25\0\52\0\77\0\124\0\151\0\176\0\223"+
+    "\0\250\0\275\0\322\0\347\0\374\0\u0111\0\25\0\u0126"+
+    "\0\u013b\0\u0150\0\u0165\0\u017a\0\u018f\0\u01a4\0\u01b9\0\u01ce"+
+    "\0\77\0\u01e3\0\u01f8\0\u020d\0\u0222\0\u0237\0\77\0\u024c"+
+    "\0\u0261\0\77\0\77";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[21];
+    int [] result = new int[35];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -120,22 +122,30 @@ class EiffelLexer implements FlexLexer {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\3\1\4\1\5\1\4\2\5\1\6\1\5\1\7"+
-    "\1\10\1\11\1\12\1\13\1\12\1\14\1\13\1\15"+
-    "\1\16\2\11\2\3\1\0\1\3\2\0\1\17\1\0"+
-    "\1\3\1\0\1\3\1\4\1\5\1\4\2\5\1\17"+
-    "\1\5\1\3\2\0\5\5\1\0\1\5\11\0\1\3"+
-    "\2\0\2\7\1\0\1\3\2\20\1\21\1\20\1\7"+
-    "\1\20\12\0\2\11\1\0\2\11\1\0\1\22\4\11"+
-    "\1\23\1\5\2\23\1\5\1\22\1\23\3\11\1\24"+
-    "\1\16\1\24\1\14\1\16\1\22\1\14\5\11\1\25"+
-    "\6\11\1\0\1\5\1\16\1\5\2\16\1\0\1\16"+
-    "\2\0\2\20\2\0\10\20\2\0\3\20\1\7\2\20"+
-    "\1\11\1\24\1\5\2\24\1\5\1\22\1\24\7\11"+
-    "\1\0\1\22\3\11";
+    "\1\2\1\0\1\3\1\0\1\3\1\4\1\2\1\5"+
+    "\1\6\3\4\1\7\1\10\1\11\6\4\27\0\1\3"+
+    "\1\0\1\3\25\0\2\4\1\0\15\4\7\0\1\12"+
+    "\22\0\2\4\1\0\1\4\1\13\13\4\5\0\2\4"+
+    "\1\0\5\4\1\14\7\4\5\0\2\4\1\0\10\4"+
+    "\1\15\4\4\5\0\2\4\1\0\7\4\1\16\5\4"+
+    "\2\12\1\17\1\20\21\12\5\0\2\4\1\0\2\4"+
+    "\1\21\12\4\5\0\2\4\1\0\6\4\1\22\6\4"+
+    "\5\0\2\4\1\0\11\4\1\23\3\4\5\0\2\4"+
+    "\1\0\13\4\1\24\1\4\2\0\1\17\27\0\2\4"+
+    "\1\0\3\4\1\25\11\4\5\0\2\4\1\0\5\4"+
+    "\1\26\7\4\5\0\2\4\1\0\2\4\1\27\12\4"+
+    "\5\0\2\4\1\0\14\4\1\30\5\0\2\4\1\0"+
+    "\3\4\1\31\11\4\5\0\2\4\1\0\7\4\1\32"+
+    "\5\4\5\0\2\4\1\0\12\4\1\33\2\4\5\0"+
+    "\2\4\1\0\5\4\1\34\7\4\5\0\2\4\1\0"+
+    "\7\4\1\35\5\4\5\0\2\4\1\0\4\4\1\36"+
+    "\10\4\5\0\2\4\1\0\12\4\1\37\2\4\5\0"+
+    "\2\4\1\0\5\4\1\40\7\4\5\0\2\4\1\0"+
+    "\5\4\1\41\7\4\5\0\2\4\1\0\4\4\1\42"+
+    "\10\4\5\0\2\4\1\0\4\4\1\43\10\4";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[170];
+    int [] result = new int[630];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -173,10 +183,10 @@ class EiffelLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\5\1\1\11\6\1\1\0\2\1\1\0\3\1";
+    "\1\0\1\11\14\1\1\11\24\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[21];
+    int [] result = new int[35];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -490,33 +500,37 @@ class EiffelLexer implements FlexLexer {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { yybegin(YYINITIAL); return EiffelTypes.KEY;
-            }
-          case 8: break;
-          case 2: 
-            { yybegin(YYINITIAL); return TokenType.WHITE_SPACE;
-            }
-          case 9: break;
-          case 3: 
             { return TokenType.BAD_CHARACTER;
             }
+          case 9: break;
+          case 2: 
+            { return TokenType.WHITE_SPACE;
+            }
           case 10: break;
-          case 4: 
-            { yybegin(YYINITIAL); return EiffelTypes.COMMENT;
+          case 3: 
+            { return EiffelTypes.IDENTIFIER;
             }
           case 11: break;
-          case 5: 
-            { yybegin(WAITING_VALUE); return EiffelTypes.SEPARATOR;
+          case 4: 
+            { return EiffelTypes.COMMENT;
             }
           case 12: break;
-          case 6: 
-            { yybegin(YYINITIAL); return EiffelTypes.VALUE;
+          case 5: 
+            { return EiffelTypes.CLASS_KEYWORD;
             }
           case 13: break;
-          case 7: 
-            { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE;
+          case 6: 
+            { return EiffelTypes.FROZEN_KEYWORD;
             }
           case 14: break;
+          case 7: 
+            { return EiffelTypes.DEFERRED_KEYWORD;
+            }
+          case 15: break;
+          case 8: 
+            { return EiffelTypes.EXPANDED_KEYWORD;
+            }
+          case 16: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }

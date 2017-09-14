@@ -7,7 +7,15 @@ import com.intellij.psi.PsiElement;
 
 public class EiffelVisitor extends PsiElementVisitor {
 
-  public void visitProperty(@NotNull EiffelProperty o) {
+  public void visitClassDeclaration(@NotNull EiffelClassDeclaration o) {
+    visitPsiElement(o);
+  }
+
+  public void visitClassHeader(@NotNull EiffelClassHeader o) {
+    visitPsiElement(o);
+  }
+
+  public void visitHeaderMark(@NotNull EiffelHeaderMark o) {
     visitPsiElement(o);
   }
 
