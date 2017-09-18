@@ -13,9 +13,332 @@
   tokenTypeClass="com.eiffel.pci.EiffelTokenType"
 }
 
-eiffelFile ::= COMMENT* class_declaration COMMENT*
+eiffelFile ::= class_declaration
 
-class_declaration ::= class_header
+class_name ::= IDENTIFIER
+comment ::= COMMENT_ONELINE
 
-class_header ::= header_mark? CLASS_KEYWORD IDENTIFIER
-header_mark ::= (DEFERRED_KEYWORD|EXPANDED_KEYWORD|FROZEN_KEYWORD)
+class_declaration ::= [notes] class_header [formal_generics] [obsolete] [inheritance] [creators] [converters] [features] [notes] [invariant] [notes] END_KEYWORD
+class_header ::= [header_mark] CLASS_KEYWORD class_name
+header_mark ::= DEFERRED_KEYWORD | EXPANDED_KEYWORD | FROZEN_KEYWORD
+
+notes ::= NOTE_KEYWORD note_list
+note_list ::= (note_entry SEMICOLON?)*
+note_entry ::= note_name note_values
+note_name ::= IDENTIFIER COLON
+note_values ::= note_item (SEMICOLON? note_item)*
+note_item ::= IDENTIFIER | manifest_constant
+
+obsolete ::= OBSOLETE_KEYWORD message
+message ::= manifest_string
+
+features ::= feature_clause+
+feature_clause ::= FEATURE_KEYWORD [clients] [header_comment] feature_declaration_list
+feature_declaration_list ::= (feature_declaration SEMICOLON?)*
+header_comment ::= comment
+
+feature_declaration ::= new_feature_list declaration_body
+declaration_body ::= [formal_arguments] [query_mark] [feature_value]
+query_mark ::= type_mark [assigner_mark]
+type_mark ::= COLON type
+feature_value ::= [explicit_value] [obsolete] [header_comment] [attribute_or_routine]
+explicit_value ::= EQ manifest_constant
+
+new_feature_list ::= new_feature (COMMA? new_feature)*
+new_feature ::= [FROZEN_KEYWORD] extended_feature_name
+
+attribute_or_routine ::= [precondition] [local_declarations] feature_body [postcondition] [rescue] END_KEYWORD
+feature_body ::= deferred | effective_routine | attribute
+
+extended_feature_name ::= feature_name [alias]
+feature_name ::= IDENTIFIER
+alias ::= ALIAS_KEYWORD DQUOTE alias_name DQUOTE [CONVERT_KEYWORD]
+alias_name ::= operator | bracket
+bracket ::= ALIAS_BRACKETS
+
+operator ::= unary | binary
+unary ::= NOT_KEYWORD | PLUS | MINUS
+binary ::=
+    PLUS |
+    MINUS |
+    ASTERISK |
+    SLASH |
+    DSLASH |
+    DBACKSLASH |
+    CARET |
+    DDOT |
+    LT |
+    GT |
+    LTE |
+    GTE |
+    AND_KEYWORD |
+    OR_KEYWORD |
+    XOR_KEYWORD |
+    (AND_KEYWORD THEN_KEYWORD) |
+    (OR_KEYWORD ELSE_KEYWORD) |
+    IMPLIES_KEYWORD
+
+assigner_mark ::= ASSIGN_KEYWORD feature_name
+
+inheritance ::= inherit_clause+
+inherit_clause ::= INHERIT_KEYWORD [non_conformance] parent_list
+non_conformance ::= LEFT_CURLY_BRACKET NONE_KEYWORD RIGHT_CURLY_BRACKET
+parent_list ::= parent (SEMICOLON? parent)*
+parent ::= class_type [feature_adaption]
+feature_adaption ::= [undefine] [redefine] [rename] [new_exports] [select] END_KEYWORD
+
+rename ::= RENAME_KEYWORD rename_list
+rename_list ::= rename_pair (COMMA? rename_pair)*
+rename_pair ::= feature_name AS_KEYWORD extended_feature_name
+
+clients ::= LEFT_CURLY_BRACKET class_list RIGHT_CURLY_BRACKET
+class_list ::= class_name (COMMA? class_name)*
+
+new_exports ::= EXPORT_KEYWORD new_export_list
+new_export_list ::= new_export_item (COMMA? new_export_item)*
+new_export_item ::= clients [header_comment] feature_set
+feature_set ::= feature_list | ALL_KEYWORD
+feature_list ::= feature_name (COMMA? feature_name)*
+
+formal_arguments ::= LEFT_PAREN entity_declaration_list RIGHT_PAREN
+entity_declaration_list ::= entity_declaration_group (SEMICOLON? entity_declaration_group)*
+entity_declaration_group ::= identifier_list type_mark
+identifier_list ::= IDENTIFIER (COMMA IDENTIFIER)*
+
+deferred ::= DEFERRED_KEYWORD
+effective_routine ::= internal | ext
+internal ::= routine_mark compound
+routine_mark ::= DO_KEYWORD | once
+once ::= ONCE_KEYWORD [LEFT_PAREN key_list RIGHT_PAREN]
+key_list ::= manifest_string (COMMA? manifest_string)*
+
+local_declarations ::= LOCAL_KEYWORD [entity_declaration_list]
+
+compound ::= (instruction SEMICOLON?)*
+instruction ::=
+    creation_instruction |
+    assignment |
+    assigner_call |
+    call |
+    conditional |
+    multi_branch |
+    loop |
+    debug |
+    precursor |
+    check |
+    retry
+
+precondition ::= REQUIRE_KEYWORD [ELSE_KEYWORD] assertion
+postcondition ::= ENSURE_KEYWORD [THEN_KEYWORD] assertion [only]
+invariant ::= INVARIANT_KEYWORD assertion
+assertion ::= (assertion_clause SEMICOLON?)*
+assertion_clause ::= [tag_mark] unlabeled_assertion_clause
+unlabeled_assertion_clause ::= boolean_expression | comment
+tag_mark ::= tag COLON
+tag ::= IDENTIFIER
+
+old ::= OLD_KEYWORD expression
+
+only ::= ONLY_KEYWORD [feature_list]
+
+check ::= CHECK_KEYWORD assertion [notes] END_KEYWORD
+
+variant ::= VARIANT_KEYWORD [tag_mark] expression
+
+precursor ::= PRECURSOR_KEYWORD [parent_qualification] [actuals]
+parent_qualification ::= LEFT_CURLY_BRACKET class_name RIGHT_CURLY_BRACKET
+
+redefine ::= REDEFINE_KEYWORD feature_list
+undefine ::= UNDEFINE_KEYWORD feature_list
+
+type ::= class_or_tuple_type | formal_generic_name | anchored
+class_or_tuple_type ::= class_type | tuple_type
+class_type ::= [attachment_mark] class_name [actual_generics]
+attachment_mark ::= QUESTION | EXCLAMATION
+anchored ::= [attachment_mark] LIKE_KEYWORD anchor
+anchor ::= feature_name | CURRENT_KEYWORD
+
+actual_generics ::= LEFT_SQUARE_BRACKET type_list RIGHT_SQUARE_BRACKET
+type_list ::= type (COMMA? type)*
+
+formal_generics ::= LEFT_SQUARE_BRACKET formal_generic_list RIGHT_SQUARE_BRACKET
+formal_generic_list ::= formal_generic (COMMA? formal_generic)*
+formal_generic ::= [FROZEN_KEYWORD] formal_generic_name [constraint]
+formal_generic_name ::= [QUESTION] IDENTIFIER
+
+constraint ::= ARROW constraining_types [constraint_creators]
+constraining_types ::= single_constraint | multiple_constraint
+single_constraint ::= type [renaming]
+renaming ::= rename END_KEYWORD
+multiple_constraint ::= LEFT_CURLY_BRACKET constraint_list RIGHT_CURLY_BRACKET
+constraint_list ::= single_constraint (COMMA? single_constraint)*
+constraint_creators ::= CREATE_KEYWORD feature_list END_KEYWORD
+
+tuple_type ::= TUPLE_KEYWORD [tuple_parameter_list]
+tuple_parameter_list ::= LEFT_SQUARE_BRACKET tuple_parameters RIGHT_SQUARE_BRACKET
+tuple_parameters ::= type_list | entity_declaration_list
+
+manifest_tuple ::= LEFT_SQUARE_BRACKET expression_list RIGHT_SQUARE_BRACKET
+expression_list ::= (expression COMMA?)*
+
+converters ::= CONVERT_KEYWORD converter_list
+converter_list ::= converter (COMMA? converter)*
+converter ::= conversion_procedure | conversion_query
+conversion_procedure ::= feature_name LEFT_PAREN LEFT_CURLY_BRACKET type_list RIGHT_CURLY_BRACKET RIGHT_PAREN
+conversion_query ::= feature_name COLON LEFT_CURLY_BRACKET type_list RIGHT_CURLY_BRACKET
+
+select ::= SELECT_KEYWORD feature_list
+
+conditional ::= IF_KEYWORD then_part_list [else_part] END_KEYWORD
+then_part_list ::= then_part (ELSEIF_KEYWORD then_part)*
+then_part ::= boolean_expression THEN_KEYWORD compound
+else_part ::= ELSE_KEYWORD compound
+
+multi_branch ::= INSPECT_KEYWORD expression [when_part_list] [else_part] END_KEYWORD
+when_part_list ::= when_part+
+when_part ::= WHEN_KEYWORD choices THEN_KEYWORD compound
+choices ::= choice (COMMA? choice)*
+choice ::= constant | manifest_type | constant_interval | type_interval
+constant_interval ::= constant DDOT constant
+type_interval ::= manifest_type DDOT manifest_type
+
+loop ::=
+    [iteration]
+    [initialization]
+    [invariant]
+    [exit_condition]
+    loop_body
+    [variant]
+    END_KEYWORD
+iteration ::= ACROSS_KEYWORD expression AS_KEYWORD IDENTIFIER
+initialization ::= FROM_KEYWORD compound
+exit_condition ::= UNTIL_KEYWORD boolean_expression
+loop_body ::= (LOOP_KEYWORD compound) | (ALL_KEYWORD boolean_expression) | (SOME_KEYWORD boolean_expression)
+
+debug ::= DEBUG_KEYWORD [LEFT_PAREN key_list RIGHT_PAREN] compound END_KEYWORD
+
+attribute ::= ATTRIBUTE_KEYWORD compound
+
+entity ::= variable | read_only
+variable ::= local | variable_attribute
+variable_attribute ::= feature_name
+local ::= IDENTIFIER | RESULT_KEYWORD
+read_only ::= formal | constant_attribute | CURRENT_KEYWORD
+formal ::= IDENTIFIER
+constant_attribute ::= feature_name
+
+creators ::= creation_clause+
+creation_clause ::= CREATE_KEYWORD [clients] [header_comment] creation_procedure_list
+creation_procedure_list ::= creation_procedure (COMMA creation_procedure)*
+creation_procedure ::= feature_name
+
+creation_instruction ::= CREATE_KEYWORD [explicit_creation_type] creation_call
+explicit_creation_type ::= LEFT_CURLY_BRACKET type RIGHT_CURLY_BRACKET
+creation_call ::= variable [explicit_creation_call]
+explicit_creation_call ::= DOT unqualified_call
+
+creation_expression ::= CREATE_KEYWORD explicit_creation_type [explicit_creation_call]
+
+equality ::= expression comparison expression
+comparison ::= EQ | NOT_EQ | TILDE | NOT_TILDE
+
+assignment ::= variable ASSIGN expression
+
+assigner_call ::= expression ASSIGN expression
+
+call ::= object_call | non_object_call
+object_call ::= [target DOT] unqualified_call
+unqualified_call ::= feature_name [actuals]
+target ::= local | read_only | call | parenthesized_target
+non_object_call ::= LEFT_CURLY_BRACKET type RIGHT_CURLY_BRACKET DOT unqualified_call
+
+actuals ::= LEFT_PAREN actual_list RIGHT_PAREN
+actual_list ::= expression (COMMA expression)*
+
+object_test ::= LEFT_CURLY_BRACKET IDENTIFIER COLON type RIGHT_CURLY_BRACKET expression
+
+rescue ::= RESCUE_KEYWORD compound
+retry ::= RETRY_KEYWORD
+
+agent ::= call_agent | inline_agent
+call_agent ::= AGENT_KEYWORD call_agent_body
+inline_agent ::= AGENT_KEYWORD [formal_arguments] [type_mark] [attribute_or_routine] [agent_actuals]
+
+call_agent_body ::= agent_qualified | agent_unqualified
+agent_qualified ::= agent_target DOT agent_unqualified
+agent_unqualified ::= feature_name [agent_actuals]
+agent_target ::= entity | parenthesized | manifest_type
+agent_actuals ::= LEFT_PAREN agent_actual_list RIGHT_PAREN
+agent_actual_list ::= agent_actual (COMMA agent_actual)*
+agent_actual ::= expression | placeholder
+placeholder ::= [manifest_type] QUESTION
+
+expression ::= special_expression | basic_expression
+basic_expression_no_left ::=
+    read_only |
+    local |
+    call |
+    precursor |
+    //equality |
+    parenthesized |
+    old |
+    //operator_expression |
+    bracket_expression |
+    creation_expression
+basic_expression ::= unary_expression | (basic_expression_no_left binary expression) | (basic_expression_no_left comparison expression) | basic_expression_no_left
+special_expression ::=
+    manifest_constant |
+    manifest_tuple |
+    agent |
+    object_test |
+    once_string |
+    address
+parenthesized ::= LEFT_PAREN expression RIGHT_PAREN
+address ::= DOLLAR variable
+once_string ::= ONCE_KEYWORD manifest_string
+boolean_expression ::= basic_expression | boolean_constant | object_test
+
+operator_expression ::= unary_expression | binary_expression
+unary_expression ::= unary expression
+binary_expression ::= expression binary expression
+
+bracket_expression ::= bracket_target LEFT_SQUARE_BRACKET actuals RIGHT_SQUARE_BRACKET
+bracket_target ::= target | once_string | manifest_constant | manifest_tuple
+
+constant ::= manifest_constant | constant_attribute
+
+manifest_constant ::= [manifest_type] manifest_value
+manifest_type ::= LEFT_CURLY_BRACKET type RIGHT_CURLY_BRACKET
+manifest_value ::=
+    boolean_constant |
+    character_constant |
+    integer_constant |
+    real_constant |
+    manifest_string |
+    manifest_type
+integer_constant ::= INTEGER_LITERAL
+character_constant ::= CHARACTER_LITERAL
+boolean_constant ::= TRUE_KEYWORD | FALSE_KEYWORD
+real_constant ::= REAL_LITERAL
+
+manifest_string ::= STRING_LITERAL
+
+ext ::= EXTERNAL_KEYWORD external_language [external_name]
+external_language ::= unregistered_language | registered_language
+unregistered_language ::= manifest_string
+external_name ::= ALIAS_KEYWORD manifest_string
+
+registered_language ::= C_EXTERNAL_KEYWORD | CPP_EXTERNAL_KEYWORD | DLL_EXTERNAL_KEYWORD
+
+external_signature ::= SIGNATURE_KEYWORD [external_argument_types] [COLON external_type]
+external_argument_types ::= LEFT_PAREN external_type_list RIGHT_PAREN
+external_type_list ::= (external_type COMMA?)*
+external_type ::= STRING_ONELINE
+
+external_file_use ::= USE_KEYWORD external_file_list
+external_file_list ::= external_file (COMMA external_file)*
+external_file ::= external_user_file | external_system_file
+external_user_file ::= DQUOTE STRING_ONELINE DQUOTE
+external_system_file ::= LT STRING_ONELINE GT
+
+/* TODO: externals */
