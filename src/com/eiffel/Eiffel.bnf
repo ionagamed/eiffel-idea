@@ -91,7 +91,7 @@ rename ::= RENAME_KEYWORD rename_list
 rename_list ::= rename_pair (COMMA? rename_pair)*
 rename_pair ::= feature_name AS_KEYWORD extended_feature_name
 
-clients ::= LEFT_CURLY_BRACKET class_list RIGHT_CURLY_BRACKET
+clients ::= LEFT_CURLY_BRACKET (class_list | NONE_KEYWORD | ALL_KEYWORD) RIGHT_CURLY_BRACKET
 class_list ::= class_name (COMMA? class_name)*
 
 new_exports ::= EXPORT_KEYWORD new_export_list
@@ -115,18 +115,19 @@ key_list ::= manifest_string (COMMA? manifest_string)*
 local_declarations ::= LOCAL_KEYWORD [entity_declaration_list]
 
 compound ::= (instruction SEMICOLON?)*
-instruction ::=
+compound_without_loop ::= (instruction_without_loop SEMICOLON?)* // HACK: see next rule
+instruction_without_loop ::=
     creation_instruction |
     assignment |
     assigner_call |
     call |
     conditional |
     multi_branch |
-    loop |
     debug |
     precursor |
     check |
     retry
+instruction ::= instruction_without_loop | loop // HACK: maybe there someday will be a person, who knows how to deal with BNF
 
 precondition ::= REQUIRE_KEYWORD [ELSE_KEYWORD] assertion
 postcondition ::= ENSURE_KEYWORD [THEN_KEYWORD] assertion [only]
@@ -211,7 +212,7 @@ loop ::=
     [variant]
     END_KEYWORD
 iteration ::= ACROSS_KEYWORD expression AS_KEYWORD IDENTIFIER
-initialization ::= FROM_KEYWORD compound
+initialization ::= FROM_KEYWORD compound_without_loop
 exit_condition ::= UNTIL_KEYWORD boolean_expression
 loop_body ::= (LOOP_KEYWORD compound) | (ALL_KEYWORD boolean_expression) | (SOME_KEYWORD boolean_expression)
 
@@ -247,9 +248,10 @@ assignment ::= variable ASSIGN expression
 assigner_call ::= expression ASSIGN expression
 
 call ::= object_call | non_object_call
-object_call ::= [target DOT] unqualified_call
+object_call ::= (target_no_left DOT call) | unqualified_call
 unqualified_call ::= feature_name [actuals]
-target ::= local | read_only | call | parenthesized_target
+target_no_left ::= local | read_only | non_object_call
+target ::= target_no_left [DOT call]
 non_object_call ::= LEFT_CURLY_BRACKET type RIGHT_CURLY_BRACKET DOT unqualified_call
 
 actuals ::= LEFT_PAREN actual_list RIGHT_PAREN
@@ -273,19 +275,21 @@ agent_actual_list ::= agent_actual (COMMA agent_actual)*
 agent_actual ::= expression | placeholder
 placeholder ::= [manifest_type] QUESTION
 
-expression ::= special_expression | basic_expression
+expression ::= basic_expression | special_expression
 basic_expression_no_left ::=
-    read_only |
-    local |
     call |
+    local |
+    read_only |
     precursor |
     //equality |
     parenthesized |
     old |
     //operator_expression |
     bracket_expression |
-    creation_expression
-basic_expression ::= unary_expression | (basic_expression_no_left binary expression) | (basic_expression_no_left comparison expression) | basic_expression_no_left
+    creation_expression |
+    manifest_constant |
+    manifest_tuple
+basic_expression ::= (basic_expression_no_left binary expression) | (basic_expression_no_left comparison expression) | unary_expression | basic_expression_no_left
 special_expression ::=
     manifest_constant |
     manifest_tuple |

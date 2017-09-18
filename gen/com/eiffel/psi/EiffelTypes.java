@@ -59,6 +59,7 @@ public interface EiffelTypes {
   IElementType COMMENT = new EiffelElementType("COMMENT");
   IElementType COMPARISON = new EiffelElementType("COMPARISON");
   IElementType COMPOUND = new EiffelElementType("COMPOUND");
+  IElementType COMPOUND_WITHOUT_LOOP = new EiffelElementType("COMPOUND_WITHOUT_LOOP");
   IElementType CONDITIONAL = new EiffelElementType("CONDITIONAL");
   IElementType CONSTANT = new EiffelElementType("CONSTANT");
   IElementType CONSTANT_ATTRIBUTE = new EiffelElementType("CONSTANT_ATTRIBUTE");
@@ -131,6 +132,7 @@ public interface EiffelTypes {
   IElementType INITIALIZATION = new EiffelElementType("INITIALIZATION");
   IElementType INLINE_AGENT = new EiffelElementType("INLINE_AGENT");
   IElementType INSTRUCTION = new EiffelElementType("INSTRUCTION");
+  IElementType INSTRUCTION_WITHOUT_LOOP = new EiffelElementType("INSTRUCTION_WITHOUT_LOOP");
   IElementType INTEGER_CONSTANT = new EiffelElementType("INTEGER_CONSTANT");
   IElementType INTERNAL = new EiffelElementType("INTERNAL");
   IElementType INVARIANT = new EiffelElementType("INVARIANT");
@@ -196,6 +198,7 @@ public interface EiffelTypes {
   IElementType TAG = new EiffelElementType("TAG");
   IElementType TAG_MARK = new EiffelElementType("TAG_MARK");
   IElementType TARGET = new EiffelElementType("TARGET");
+  IElementType TARGET_NO_LEFT = new EiffelElementType("TARGET_NO_LEFT");
   IElementType THEN_PART = new EiffelElementType("THEN_PART");
   IElementType THEN_PART_LIST = new EiffelElementType("THEN_PART_LIST");
   IElementType TUPLE_PARAMETERS = new EiffelElementType("TUPLE_PARAMETERS");
@@ -292,7 +295,6 @@ public interface EiffelTypes {
   IElementType ONCE_KEYWORD = new EiffelTokenType("ONCE_KEYWORD");
   IElementType ONLY_KEYWORD = new EiffelTokenType("ONLY_KEYWORD");
   IElementType OR_KEYWORD = new EiffelTokenType("OR_KEYWORD");
-  IElementType PARENTHESIZED_TARGET = new EiffelTokenType("parenthesized_target");
   IElementType PLUS = new EiffelTokenType("PLUS");
   IElementType PRECURSOR_KEYWORD = new EiffelTokenType("PRECURSOR_KEYWORD");
   IElementType QUESTION = new EiffelTokenType("QUESTION");
@@ -473,6 +475,9 @@ public interface EiffelTypes {
       }
       else if (type == COMPOUND) {
         return new EiffelCompoundImpl(node);
+      }
+      else if (type == COMPOUND_WITHOUT_LOOP) {
+        return new EiffelCompoundWithoutLoopImpl(node);
       }
       else if (type == CONDITIONAL) {
         return new EiffelConditionalImpl(node);
@@ -690,6 +695,9 @@ public interface EiffelTypes {
       else if (type == INSTRUCTION) {
         return new EiffelInstructionImpl(node);
       }
+      else if (type == INSTRUCTION_WITHOUT_LOOP) {
+        return new EiffelInstructionWithoutLoopImpl(node);
+      }
       else if (type == INTEGER_CONSTANT) {
         return new EiffelIntegerConstantImpl(node);
       }
@@ -884,6 +892,9 @@ public interface EiffelTypes {
       }
       else if (type == TARGET) {
         return new EiffelTargetImpl(node);
+      }
+      else if (type == TARGET_NO_LEFT) {
+        return new EiffelTargetNoLeftImpl(node);
       }
       else if (type == THEN_PART) {
         return new EiffelThenPartImpl(node);

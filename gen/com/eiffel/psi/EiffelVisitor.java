@@ -203,6 +203,10 @@ public class EiffelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCompoundWithoutLoop(@NotNull EiffelCompoundWithoutLoop o) {
+    visitPsiElement(o);
+  }
+
   public void visitConditional(@NotNull EiffelConditional o) {
     visitPsiElement(o);
   }
@@ -491,6 +495,10 @@ public class EiffelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitInstructionWithoutLoop(@NotNull EiffelInstructionWithoutLoop o) {
+    visitPsiElement(o);
+  }
+
   public void visitIntegerConstant(@NotNull EiffelIntegerConstant o) {
     visitPsiElement(o);
   }
@@ -748,6 +756,10 @@ public class EiffelVisitor extends PsiElementVisitor {
   }
 
   public void visitTarget(@NotNull EiffelTarget o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTargetNoLeft(@NotNull EiffelTargetNoLeft o) {
     visitPsiElement(o);
   }
 
