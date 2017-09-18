@@ -28,6 +28,11 @@
     <fileTypeFactory implementation="com.eiffel.EiffelFileTypeFactory"/>
     <lang.parserDefinition language="Eiffel" implementationClass="com.eiffel.EiffelParserDefinition"/>
     <lang.syntaxHighlighterFactory key="Eiffel" implementationClass="com.eiffel.EiffelSyntaxHighlighterFactory"/>
+    <annotator language="Eiffel" implementationClass="com.eiffel.annotators.EiffelBuiltinAnnotator"/>
+    <!-- <annotator language="Eiffel" implementationClass="com.eiffel.annotators.EiffelClassNameAnnotator"/> -->
+    <annotator language="Eiffel" implementationClass="com.eiffel.annotators.EiffelFeatureDeclarationAnnotator"/>
+
+    <configurationType implementation="com.eiffel.GECRunConfigurationType"/>
   </extensions>
 
   <actions>
