@@ -30,7 +30,7 @@ WHITE_SPACE=\s+
 
 SIGN=[+-]
 INTEGER_LITERAL={SIGN}?{INTEGER}
-INTEGER={INTEGER_BASE}?[0-9a-fA-F_]+
+INTEGER=(0[bB][01_]+)|(0[cC][0-7_]+)|(0[xX][0-9a-fA-F_]+)|([0-9_]+)
 INTEGER_BASE=0[bcxBCX]
 CHARACTER_LITERAL='.'
 IDENTIFIER=[a-zA-Z][a-zA-Z0-9_]*
@@ -39,6 +39,7 @@ REAL_LITERAL={SIGN}?{REAL}
 STRING_ONELINE=(%.|[^%\"]+)*
 STRING={STRING_ONELINE}(%{WHITE_SPACE}*{EOL}{WHITE_SPACE}*%{STRING_ONELINE})*
 STRING_LITERAL=\"{STRING}\"
+PARTIAL_STRING_LITERAL=\"{STRING}
 COMMENT_ONELINE=--[^\n\r]*
 
 %%
@@ -115,11 +116,6 @@ COMMENT_ONELINE=--[^\n\r]*
 
   {IDENTIFIER}            { return EiffelTypes.IDENTIFIER; }
 
-  {REAL_LITERAL} { return EiffelTypes.REAL_LITERAL; }
-  {INTEGER_LITERAL} { return EiffelTypes.INTEGER_LITERAL; }
-  {STRING_LITERAL} { return EiffelTypes.STRING_LITERAL; }
-  {CHARACTER_LITERAL} { return EiffelTypes.CHARACTER_LITERAL; }
-
   ":" { return EiffelTypes.COLON; }
   ";" { return EiffelTypes.SEMICOLON; }
   "=" { return EiffelTypes.EQ; }
@@ -153,6 +149,14 @@ COMMENT_ONELINE=--[^\n\r]*
   "." { return EiffelTypes.DOT; }
   ":=" { return EiffelTypes.ASSIGN; }
   "$" { return EiffelTypes.DOLLAR; }
+
+
+
+  {REAL_LITERAL} { return EiffelTypes.REAL_LITERAL; }
+  {INTEGER_LITERAL} { return EiffelTypes.INTEGER_LITERAL; }
+  {STRING_LITERAL} { return EiffelTypes.STRING_LITERAL; }
+  {PARTIAL_STRING_LITERAL} { return EiffelTypes.STRING_LITERAL; } // TODO: somehow deal with incomplete string poisoning
+  {CHARACTER_LITERAL} { return EiffelTypes.CHARACTER_LITERAL; }
 
 
 }

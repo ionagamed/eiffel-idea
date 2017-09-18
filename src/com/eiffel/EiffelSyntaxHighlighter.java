@@ -37,8 +37,6 @@ public class EiffelSyntaxHighlighter extends SyntaxHighlighterBase {
             createTextAttributesKey("EIFFEL_STRING", DefaultLanguageHighlighterColors.STRING);
     public static final TextAttributesKey NUMBER =
             createTextAttributesKey("EIFFEL_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
-    public static final TextAttributesKey BUILTIN =
-            createTextAttributesKey("EIFFEL_BUILTIN", DefaultLanguageHighlighterColors.PREDEFINED_SYMBOL);
 
     private static final TextAttributesKey[] KEYWORD_KEYS = new TextAttributesKey[]{KEYWORD};
     private static final TextAttributesKey[] IDENTIFIER_KEYS = new TextAttributesKey[]{IDENTIFIER};
@@ -49,7 +47,6 @@ public class EiffelSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] COMMA_KEYS = new TextAttributesKey[]{COMMA};
     private static final TextAttributesKey[] STRING_KEYS = new TextAttributesKey[]{STRING};
     private static final TextAttributesKey[] NUMBER_KEYS = new TextAttributesKey[]{NUMBER};
-    private static final TextAttributesKey[] BUILTIN_KEYS = new TextAttributesKey[]{BUILTIN};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
 
     private static final ArrayList<IElementType> keywords = new ArrayList<>(Arrays.asList(
