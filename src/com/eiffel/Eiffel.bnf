@@ -67,10 +67,12 @@ binary ::=
     DBACKSLASH |
     CARET |
     DDOT |
+    RANGE |
     LT |
     GT |
     LTE |
     GTE |
+    AT |
     AND_KEYWORD |
     OR_KEYWORD |
     XOR_KEYWORD |
@@ -134,7 +136,7 @@ postcondition ::= ENSURE_KEYWORD [THEN_KEYWORD] assertion [only]
 invariant ::= INVARIANT_KEYWORD assertion
 assertion ::= (assertion_clause SEMICOLON?)*
 assertion_clause ::= [tag_mark] unlabeled_assertion_clause
-unlabeled_assertion_clause ::= boolean_expression | comment
+unlabeled_assertion_clause ::= boolean_loop | boolean_expression | comment
 tag_mark ::= tag COLON
 tag ::= IDENTIFIER
 
@@ -215,6 +217,11 @@ iteration ::= ACROSS_KEYWORD expression AS_KEYWORD IDENTIFIER
 initialization ::= FROM_KEYWORD compound_without_loop
 exit_condition ::= UNTIL_KEYWORD boolean_expression
 loop_body ::= (LOOP_KEYWORD compound) | (ALL_KEYWORD boolean_expression) | (SOME_KEYWORD boolean_expression)
+
+boolean_loop ::=
+    iteration
+    ((ALL_KEYWORD boolean_expression) | (SOME_KEYWORD boolean_expression))
+    END_KEYWORD
 
 debug ::= DEBUG_KEYWORD [LEFT_PAREN key_list RIGHT_PAREN] compound END_KEYWORD
 

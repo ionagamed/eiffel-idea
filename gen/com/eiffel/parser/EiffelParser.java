@@ -110,6 +110,9 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     else if (t == BOOLEAN_EXPRESSION) {
       r = boolean_expression(b, 0);
     }
+    else if (t == BOOLEAN_LOOP) {
+      r = boolean_loop(b, 0);
+    }
     else if (t == BRACKET) {
       r = bracket(b, 0);
     }
@@ -1163,10 +1166,12 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     DBACKSLASH |
   //     CARET |
   //     DDOT |
+  //     RANGE |
   //     LT |
   //     GT |
   //     LTE |
   //     GTE |
+  //     AT |
   //     AND_KEYWORD |
   //     OR_KEYWORD |
   //     XOR_KEYWORD |
@@ -1185,23 +1190,25 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, DBACKSLASH);
     if (!r) r = consumeToken(b, CARET);
     if (!r) r = consumeToken(b, DDOT);
+    if (!r) r = consumeToken(b, RANGE);
     if (!r) r = consumeToken(b, LT);
     if (!r) r = consumeToken(b, GT);
     if (!r) r = consumeToken(b, LTE);
     if (!r) r = consumeToken(b, GTE);
+    if (!r) r = consumeToken(b, AT);
     if (!r) r = consumeToken(b, AND_KEYWORD);
     if (!r) r = consumeToken(b, OR_KEYWORD);
     if (!r) r = consumeToken(b, XOR_KEYWORD);
-    if (!r) r = binary_15(b, l + 1);
-    if (!r) r = binary_16(b, l + 1);
+    if (!r) r = binary_17(b, l + 1);
+    if (!r) r = binary_18(b, l + 1);
     if (!r) r = consumeToken(b, IMPLIES_KEYWORD);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   // AND_KEYWORD THEN_KEYWORD
-  private static boolean binary_15(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "binary_15")) return false;
+  private static boolean binary_17(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "binary_17")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, AND_KEYWORD, THEN_KEYWORD);
@@ -1210,8 +1217,8 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   // OR_KEYWORD ELSE_KEYWORD
-  private static boolean binary_16(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "binary_16")) return false;
+  private static boolean binary_18(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "binary_18")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, OR_KEYWORD, ELSE_KEYWORD);
@@ -1255,6 +1262,55 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = boolean_constant(b, l + 1);
     if (!r) r = object_test(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // iteration
+  //     ((ALL_KEYWORD boolean_expression) | (SOME_KEYWORD boolean_expression))
+  //     END_KEYWORD
+  public static boolean boolean_loop(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "boolean_loop")) return false;
+    if (!nextTokenIs(b, ACROSS_KEYWORD)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = iteration(b, l + 1);
+    r = r && boolean_loop_1(b, l + 1);
+    r = r && consumeToken(b, END_KEYWORD);
+    exit_section_(b, m, BOOLEAN_LOOP, r);
+    return r;
+  }
+
+  // (ALL_KEYWORD boolean_expression) | (SOME_KEYWORD boolean_expression)
+  private static boolean boolean_loop_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "boolean_loop_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = boolean_loop_1_0(b, l + 1);
+    if (!r) r = boolean_loop_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ALL_KEYWORD boolean_expression
+  private static boolean boolean_loop_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "boolean_loop_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ALL_KEYWORD);
+    r = r && boolean_expression(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // SOME_KEYWORD boolean_expression
+  private static boolean boolean_loop_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "boolean_loop_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, SOME_KEYWORD);
+    r = r && boolean_expression(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -4816,12 +4872,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // boolean_expression | comment
+  // boolean_loop | boolean_expression | comment
   public static boolean unlabeled_assertion_clause(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "unlabeled_assertion_clause")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, UNLABELED_ASSERTION_CLAUSE, "<unlabeled assertion clause>");
-    r = boolean_expression(b, l + 1);
+    r = boolean_loop(b, l + 1);
+    if (!r) r = boolean_expression(b, l + 1);
     if (!r) r = comment(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;

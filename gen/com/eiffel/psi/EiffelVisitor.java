@@ -123,6 +123,10 @@ public class EiffelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitBooleanLoop(@NotNull EiffelBooleanLoop o) {
+    visitPsiElement(o);
+  }
+
   public void visitBracket(@NotNull EiffelBracket o) {
     visitPsiElement(o);
   }

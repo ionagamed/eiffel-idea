@@ -116,6 +116,8 @@ COMMENT_ONELINE=--[^\n\r]*
 
   {IDENTIFIER}            { return EiffelTypes.IDENTIFIER; }
 
+  "|..|" { return EiffelTypes.RANGE; }
+  "->" { return EiffelTypes.ARROW; }
   ":" { return EiffelTypes.COLON; }
   ";" { return EiffelTypes.SEMICOLON; }
   "=" { return EiffelTypes.EQ; }
@@ -128,15 +130,15 @@ COMMENT_ONELINE=--[^\n\r]*
   "+" { return EiffelTypes.PLUS; }
   "-" { return EiffelTypes.MINUS; }
   "*" { return EiffelTypes.ASTERISK; }
-  "/" { return EiffelTypes.SLASH; }
   "//" { return EiffelTypes.DSLASH; }
+  "/" { return EiffelTypes.SLASH; }
   "\\" { return EiffelTypes.DBACKSLASH; }
   "^" { return EiffelTypes.CARET; }
   ".." { return EiffelTypes.DDOT; }
-  "<" { return EiffelTypes.LT; }
-  ">" { return EiffelTypes.GT; }
   "<=" { return EiffelTypes.LTE; }
   ">=" { return EiffelTypes.GTE; }
+  "<" { return EiffelTypes.LT; }
+  ">" { return EiffelTypes.GT; }
   "{" { return EiffelTypes.LEFT_CURLY_BRACKET; }
   "}" { return EiffelTypes.RIGHT_CURLY_BRACKET; }
   "(" { return EiffelTypes.LEFT_PAREN; }
@@ -145,10 +147,10 @@ COMMENT_ONELINE=--[^\n\r]*
   "!" { return EiffelTypes.EXCLAMATION; }
   "[" { return EiffelTypes.LEFT_SQUARE_BRACKET; }
   "]" { return EiffelTypes.RIGHT_SQUARE_BRACKET; }
-  "->" { return EiffelTypes.ARROW; }
   "." { return EiffelTypes.DOT; }
   ":=" { return EiffelTypes.ASSIGN; }
   "$" { return EiffelTypes.DOLLAR; }
+  "@" { return EiffelTypes.AT; }
 
 
 

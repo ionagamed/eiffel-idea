@@ -39,6 +39,7 @@ public interface EiffelTypes {
   IElementType BINARY_EXPRESSION = new EiffelElementType("BINARY_EXPRESSION");
   IElementType BOOLEAN_CONSTANT = new EiffelElementType("BOOLEAN_CONSTANT");
   IElementType BOOLEAN_EXPRESSION = new EiffelElementType("BOOLEAN_EXPRESSION");
+  IElementType BOOLEAN_LOOP = new EiffelElementType("BOOLEAN_LOOP");
   IElementType BRACKET = new EiffelElementType("BRACKET");
   IElementType BRACKET_EXPRESSION = new EiffelElementType("BRACKET_EXPRESSION");
   IElementType BRACKET_TARGET = new EiffelElementType("BRACKET_TARGET");
@@ -231,6 +232,7 @@ public interface EiffelTypes {
   IElementType ASSIGN_KEYWORD = new EiffelTokenType("ASSIGN_KEYWORD");
   IElementType ASTERISK = new EiffelTokenType("ASTERISK");
   IElementType AS_KEYWORD = new EiffelTokenType("AS_KEYWORD");
+  IElementType AT = new EiffelTokenType("AT");
   IElementType ATTRIBUTE_KEYWORD = new EiffelTokenType("ATTRIBUTE_KEYWORD");
   IElementType CARET = new EiffelTokenType("CARET");
   IElementType CHARACTER_LITERAL = new EiffelTokenType("CHARACTER_LITERAL");
@@ -298,6 +300,7 @@ public interface EiffelTypes {
   IElementType PLUS = new EiffelTokenType("PLUS");
   IElementType PRECURSOR_KEYWORD = new EiffelTokenType("PRECURSOR_KEYWORD");
   IElementType QUESTION = new EiffelTokenType("QUESTION");
+  IElementType RANGE = new EiffelTokenType("RANGE");
   IElementType REAL_LITERAL = new EiffelTokenType("REAL_LITERAL");
   IElementType REDEFINE_KEYWORD = new EiffelTokenType("REDEFINE_KEYWORD");
   IElementType RENAME_KEYWORD = new EiffelTokenType("RENAME_KEYWORD");
@@ -415,6 +418,9 @@ public interface EiffelTypes {
       }
       else if (type == BOOLEAN_EXPRESSION) {
         return new EiffelBooleanExpressionImpl(node);
+      }
+      else if (type == BOOLEAN_LOOP) {
+        return new EiffelBooleanLoopImpl(node);
       }
       else if (type == BRACKET) {
         return new EiffelBracketImpl(node);
