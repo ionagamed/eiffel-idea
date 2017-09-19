@@ -3309,7 +3309,29 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, INSTRUCTION, "<instruction>");
     r = instruction_without_loop(b, l + 1);
     if (!r) r = loop(b, l + 1);
+    exit_section_(b, l, m, r, false, instruction_recovery_parser_);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // !(instruction | END_KEYWORD)
+  static boolean instruction_recovery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "instruction_recovery")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !instruction_recovery_0(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // instruction | END_KEYWORD
+  private static boolean instruction_recovery_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "instruction_recovery_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = instruction(b, l + 1);
+    if (!r) r = consumeToken(b, END_KEYWORD);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -4995,4 +5017,9 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
+  final static Parser instruction_recovery_parser_ = new Parser() {
+    public boolean parse(PsiBuilder b, int l) {
+      return instruction_recovery(b, l + 1);
+    }
+  };
 }

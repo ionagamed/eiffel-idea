@@ -130,6 +130,10 @@ instruction_without_loop ::=
     check |
     retry
 instruction ::= instruction_without_loop | loop // HACK: maybe there someday will be a person, who knows how to deal with BNF
+{
+  recoverWhile=instruction_recovery
+}
+private instruction_recovery ::= !(instruction | END_KEYWORD)
 
 precondition ::= REQUIRE_KEYWORD [ELSE_KEYWORD] assertion
 postcondition ::= ENSURE_KEYWORD [THEN_KEYWORD] assertion [only]
