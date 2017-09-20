@@ -43,4 +43,3 @@ Both of the above can be shown on this example
     * config
     * run (for run configuration)
     * formatting
-    * 
