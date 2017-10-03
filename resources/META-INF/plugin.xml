@@ -28,7 +28,6 @@
   <!-- uncomment to enable plugin in all products
   <depends>com.intellij.modules.lang</depends>
   -->
-
   <extensions defaultExtensionNs="com.intellij">
     <fileTypeFactory implementation="com.eiffel.EiffelFileTypeFactory"/>
     <lang.parserDefinition language="Eiffel" implementationClass="com.eiffel.parser.EiffelParserDefinition"/>
@@ -39,6 +38,11 @@
     <lang.formatter language="Eiffel" implementationClass="com.eiffel.formatting.EiffelFormattingModelBuilder"/>
 
     <toolWindow id="GOBO run window" icon="/com/eiffel/icons/ecf/e.png" anchor="bottom" factoryClass="com.eiffel.windows.run.RunToolWindowFactory"/>
+
+    <moduleBuilder builderClass="com.eiffel.ModuleWizard.EiffelWizardStep" id="FIRST_STEP" order="first"/>
+    <moduleBuilder builderClass="com.eiffel.ModuleWizard.EiffelWizardStep" id="SECOND_STEP" order="second"/>
+
+    <moduleType id="EIFFEL_MODULE_TYPE" implementationClass="com.eiffel.ModuleWizard.EiffelModuleType"/>
 
     <configurationType implementation="com.eiffel.GECRunConfigurationType"/>
 

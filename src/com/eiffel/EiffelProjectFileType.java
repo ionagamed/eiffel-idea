@@ -1,10 +1,12 @@
 package com.eiffel;
+import com.intellij.ide.highlighter.DomSupportEnabled;
+import com.intellij.ide.highlighter.XmlLikeFileType;
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import org.jetbrains.annotations.*;
 
 import javax.swing.*;
 
-public class EiffelProjectFileType extends LanguageFileType {
+public class EiffelProjectFileType extends XmlLikeFileType implements DomSupportEnabled {
     public static final EiffelProjectFileType INSTANCE = new EiffelProjectFileType();
 
     private EiffelProjectFileType() {
