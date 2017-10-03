@@ -1,4 +1,4 @@
-package com.eiffel;
+package com.eiffel.highlighting;
 
 import com.intellij.openapi.fileTypes.*;
 import com.intellij.openapi.project.Project;

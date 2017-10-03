@@ -1,5 +1,7 @@
-package com.eiffel;
+package com.eiffel.parser;
 
+import com.eiffel.EiffelLanguage;
+import com.eiffel.lexer.EiffelLexerAdapter;
 import com.eiffel.pci.EiffelFile;
 import com.intellij.lang.*;
 import com.intellij.lexer.Lexer;

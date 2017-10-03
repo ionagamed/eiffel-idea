@@ -1,0 +1,10 @@
+class
+    $NAME.toUpperCase()
+create
+    make
+feature
+    make
+    do
+        io.put_string("Hello, world")
+    end
+end

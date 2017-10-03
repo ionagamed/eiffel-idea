@@ -1,5 +1,6 @@
-package com.eiffel;
+package com.eiffel.highlighting;
 
+import com.eiffel.lexer.EiffelLexerAdapter;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.*;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
@@ -12,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.TreeSet;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 

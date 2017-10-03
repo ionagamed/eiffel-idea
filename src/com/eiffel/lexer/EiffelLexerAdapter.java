@@ -1,4 +1,5 @@
-package com.eiffel;
+package com.eiffel.lexer;
+import com.eiffel.EiffelLexer;
 import com.intellij.lexer.FlexAdapter;
 import java.io.Reader;
 

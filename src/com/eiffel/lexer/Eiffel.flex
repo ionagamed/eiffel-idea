@@ -118,6 +118,7 @@ COMMENT_ONELINE=--[^\n\r]*
 
   "|..|" { return EiffelTypes.RANGE; }
   "->" { return EiffelTypes.ARROW; }
+  ":=" { return EiffelTypes.ASSIGN; }
   ":" { return EiffelTypes.COLON; }
   ";" { return EiffelTypes.SEMICOLON; }
   "=" { return EiffelTypes.EQ; }
@@ -148,7 +149,6 @@ COMMENT_ONELINE=--[^\n\r]*
   "[" { return EiffelTypes.LEFT_SQUARE_BRACKET; }
   "]" { return EiffelTypes.RIGHT_SQUARE_BRACKET; }
   "." { return EiffelTypes.DOT; }
-  ":=" { return EiffelTypes.ASSIGN; }
   "$" { return EiffelTypes.DOLLAR; }
   "@" { return EiffelTypes.AT; }
 

@@ -10,6 +10,7 @@ import com.eiffel.psi.impl.*;
 
 public interface EiffelTypes {
 
+  IElementType ACROSS_EXPRESSION = new EiffelElementType("ACROSS_EXPRESSION");
   IElementType ACTUALS = new EiffelElementType("ACTUALS");
   IElementType ACTUAL_GENERICS = new EiffelElementType("ACTUAL_GENERICS");
   IElementType ACTUAL_LIST = new EiffelElementType("ACTUAL_LIST");
@@ -60,7 +61,6 @@ public interface EiffelTypes {
   IElementType COMMENT = new EiffelElementType("COMMENT");
   IElementType COMPARISON = new EiffelElementType("COMPARISON");
   IElementType COMPOUND = new EiffelElementType("COMPOUND");
-  IElementType COMPOUND_WITHOUT_LOOP = new EiffelElementType("COMPOUND_WITHOUT_LOOP");
   IElementType CONDITIONAL = new EiffelElementType("CONDITIONAL");
   IElementType CONSTANT = new EiffelElementType("CONSTANT");
   IElementType CONSTANT_ATTRIBUTE = new EiffelElementType("CONSTANT_ATTRIBUTE");
@@ -133,7 +133,6 @@ public interface EiffelTypes {
   IElementType INITIALIZATION = new EiffelElementType("INITIALIZATION");
   IElementType INLINE_AGENT = new EiffelElementType("INLINE_AGENT");
   IElementType INSTRUCTION = new EiffelElementType("INSTRUCTION");
-  IElementType INSTRUCTION_WITHOUT_LOOP = new EiffelElementType("INSTRUCTION_WITHOUT_LOOP");
   IElementType INTEGER_CONSTANT = new EiffelElementType("INTEGER_CONSTANT");
   IElementType INTERNAL = new EiffelElementType("INTERNAL");
   IElementType INVARIANT = new EiffelElementType("INVARIANT");
@@ -332,7 +331,10 @@ public interface EiffelTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-       if (type == ACTUALS) {
+       if (type == ACROSS_EXPRESSION) {
+        return new EiffelAcrossExpressionImpl(node);
+      }
+      else if (type == ACTUALS) {
         return new EiffelActualsImpl(node);
       }
       else if (type == ACTUAL_GENERICS) {
@@ -481,9 +483,6 @@ public interface EiffelTypes {
       }
       else if (type == COMPOUND) {
         return new EiffelCompoundImpl(node);
-      }
-      else if (type == COMPOUND_WITHOUT_LOOP) {
-        return new EiffelCompoundWithoutLoopImpl(node);
       }
       else if (type == CONDITIONAL) {
         return new EiffelConditionalImpl(node);
@@ -700,9 +699,6 @@ public interface EiffelTypes {
       }
       else if (type == INSTRUCTION) {
         return new EiffelInstructionImpl(node);
-      }
-      else if (type == INSTRUCTION_WITHOUT_LOOP) {
-        return new EiffelInstructionWithoutLoopImpl(node);
       }
       else if (type == INTEGER_CONSTANT) {
         return new EiffelIntegerConstantImpl(node);

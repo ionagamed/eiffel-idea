@@ -40,14 +40,14 @@ header_comment ::= comment
 feature_declaration ::= new_feature_list declaration_body
 declaration_body ::= [formal_arguments] [query_mark] [feature_value]
 query_mark ::= type_mark [assigner_mark]
-type_mark ::= COLON type
+type_mark ::= COLON type { pin = 1 }
 feature_value ::= [explicit_value] [obsolete] [header_comment] [attribute_or_routine]
-explicit_value ::= EQ manifest_constant
+explicit_value ::= EQ manifest_constant { pin = 1 }
 
 new_feature_list ::= new_feature (COMMA? new_feature)*
 new_feature ::= [FROZEN_KEYWORD] extended_feature_name
 
-attribute_or_routine ::= [precondition] [local_declarations] feature_body [postcondition] [rescue] END_KEYWORD
+attribute_or_routine ::= [precondition] [local_declarations] feature_body [postcondition] [rescue] END_KEYWORD { pin = 3 }
 feature_body ::= deferred | effective_routine | attribute
 
 extended_feature_name ::= feature_name [alias]
@@ -117,8 +117,8 @@ key_list ::= manifest_string (COMMA? manifest_string)*
 local_declarations ::= LOCAL_KEYWORD [entity_declaration_list]
 
 compound ::= (instruction SEMICOLON?)*
-compound_without_loop ::= (instruction_without_loop SEMICOLON?)* // HACK: see next rule
-instruction_without_loop ::=
+private compound_without_loop ::= (instruction_without_loop SEMICOLON?)* // HACK: see next rule
+private instruction_without_loop ::=
     creation_instruction |
     assignment |
     assigner_call |
@@ -217,7 +217,8 @@ loop ::=
     loop_body
     [variant]
     END_KEYWORD
-iteration ::= ACROSS_KEYWORD expression AS_KEYWORD IDENTIFIER
+iteration ::= ACROSS_KEYWORD across_expression AS_KEYWORD IDENTIFIER
+across_expression ::= expression
 initialization ::= FROM_KEYWORD compound_without_loop
 exit_condition ::= UNTIL_KEYWORD boolean_expression
 loop_body ::= (LOOP_KEYWORD compound) | (ALL_KEYWORD boolean_expression) | (SOME_KEYWORD boolean_expression)

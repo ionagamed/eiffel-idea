@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class EiffelVisitor extends PsiElementVisitor {
 
+  public void visitAcrossExpression(@NotNull EiffelAcrossExpression o) {
+    visitPsiElement(o);
+  }
+
   public void visitActualGenerics(@NotNull EiffelActualGenerics o) {
     visitPsiElement(o);
   }
@@ -204,10 +208,6 @@ public class EiffelVisitor extends PsiElementVisitor {
   }
 
   public void visitCompound(@NotNull EiffelCompound o) {
-    visitPsiElement(o);
-  }
-
-  public void visitCompoundWithoutLoop(@NotNull EiffelCompoundWithoutLoop o) {
     visitPsiElement(o);
   }
 
@@ -496,10 +496,6 @@ public class EiffelVisitor extends PsiElementVisitor {
   }
 
   public void visitInstruction(@NotNull EiffelInstruction o) {
-    visitPsiElement(o);
-  }
-
-  public void visitInstructionWithoutLoop(@NotNull EiffelInstructionWithoutLoop o) {
     visitPsiElement(o);
   }
 

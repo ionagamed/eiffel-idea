@@ -6,5 +6,7 @@ public class EiffelLanguage extends Language {
 
     private EiffelLanguage() {
         super("Eiffel");
+
+        EditorRoutines.initialize();
     }
 }

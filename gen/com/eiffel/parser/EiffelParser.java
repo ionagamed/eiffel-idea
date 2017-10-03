@@ -23,7 +23,10 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     boolean r;
     b = adapt_builder_(t, b, this, null);
     Marker m = enter_section_(b, 0, _COLLAPSE_, null);
-    if (t == ACTUAL_GENERICS) {
+    if (t == ACROSS_EXPRESSION) {
+      r = across_expression(b, 0);
+    }
+    else if (t == ACTUAL_GENERICS) {
       r = actual_generics(b, 0);
     }
     else if (t == ACTUAL_LIST) {
@@ -172,9 +175,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     }
     else if (t == COMPOUND) {
       r = compound(b, 0);
-    }
-    else if (t == COMPOUND_WITHOUT_LOOP) {
-      r = compound_without_loop(b, 0);
     }
     else if (t == CONDITIONAL) {
       r = conditional(b, 0);
@@ -391,9 +391,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     }
     else if (t == INSTRUCTION) {
       r = instruction(b, 0);
-    }
-    else if (t == INSTRUCTION_WITHOUT_LOOP) {
-      r = instruction_without_loop(b, 0);
     }
     else if (t == INTEGER_CONSTANT) {
       r = integer_constant(b, 0);
@@ -661,6 +658,17 @@ public class EiffelParser implements PsiParser, LightPsiParser {
 
   protected boolean parse_root_(IElementType t, PsiBuilder b, int l) {
     return eiffelFile(b, l + 1);
+  }
+
+  /* ********************************************************** */
+  // expression
+  public static boolean across_expression(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "across_expression")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, ACROSS_EXPRESSION, "<across expression>");
+    r = expression(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */
@@ -1048,16 +1056,17 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // [precondition] [local_declarations] feature_body [postcondition] [rescue] END_KEYWORD
   public static boolean attribute_or_routine(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attribute_or_routine")) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, ATTRIBUTE_OR_ROUTINE, "<attribute or routine>");
     r = attribute_or_routine_0(b, l + 1);
     r = r && attribute_or_routine_1(b, l + 1);
     r = r && feature_body(b, l + 1);
-    r = r && attribute_or_routine_3(b, l + 1);
-    r = r && attribute_or_routine_4(b, l + 1);
-    r = r && consumeToken(b, END_KEYWORD);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    p = r; // pin = 3
+    r = r && report_error_(b, attribute_or_routine_3(b, l + 1));
+    r = p && report_error_(b, attribute_or_routine_4(b, l + 1)) && r;
+    r = p && consumeToken(b, END_KEYWORD) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // [precondition]
@@ -1774,16 +1783,14 @@ public class EiffelParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // (instruction_without_loop SEMICOLON?)*
-  public static boolean compound_without_loop(PsiBuilder b, int l) {
+  static boolean compound_without_loop(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "compound_without_loop")) return false;
-    Marker m = enter_section_(b, l, _NONE_, COMPOUND_WITHOUT_LOOP, "<compound without loop>");
     int c = current_position_(b);
     while (true) {
       if (!compound_without_loop_0(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "compound_without_loop", c)) break;
       c = current_position_(b);
     }
-    exit_section_(b, l, m, true, false, null);
     return true;
   }
 
@@ -2446,12 +2453,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   public static boolean explicit_value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "explicit_value")) return false;
     if (!nextTokenIs(b, EQ)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, EXPLICIT_VALUE, null);
     r = consumeToken(b, EQ);
+    p = r; // pin = 1
     r = r && manifest_constant(b, l + 1);
-    exit_section_(b, m, EXPLICIT_VALUE, r);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */
@@ -3346,10 +3354,10 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     precursor |
   //     check |
   //     retry
-  public static boolean instruction_without_loop(PsiBuilder b, int l) {
+  static boolean instruction_without_loop(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "instruction_without_loop")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, INSTRUCTION_WITHOUT_LOOP, "<instruction without loop>");
+    Marker m = enter_section_(b);
     r = creation_instruction(b, l + 1);
     if (!r) r = assignment(b, l + 1);
     if (!r) r = assigner_call(b, l + 1);
@@ -3360,7 +3368,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = precursor(b, l + 1);
     if (!r) r = check(b, l + 1);
     if (!r) r = retry(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -3403,14 +3411,14 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ACROSS_KEYWORD expression AS_KEYWORD IDENTIFIER
+  // ACROSS_KEYWORD across_expression AS_KEYWORD IDENTIFIER
   public static boolean iteration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "iteration")) return false;
     if (!nextTokenIs(b, ACROSS_KEYWORD)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, ACROSS_KEYWORD);
-    r = r && expression(b, l + 1);
+    r = r && across_expression(b, l + 1);
     r = r && consumeTokens(b, 0, AS_KEYWORD, IDENTIFIER);
     exit_section_(b, m, ITERATION, r);
     return r;
@@ -4847,12 +4855,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   public static boolean type_mark(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_mark")) return false;
     if (!nextTokenIs(b, COLON)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, TYPE_MARK, null);
     r = consumeToken(b, COLON);
+    p = r; // pin = 1
     r = r && type(b, l + 1);
-    exit_section_(b, m, TYPE_MARK, r);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */
