@@ -40,7 +40,7 @@
     <toolWindow id="GOBO run window" icon="/com/eiffel/icons/ecf/e.png" anchor="bottom" factoryClass="com.eiffel.windows.run.RunToolWindowFactory"/>
 
     <moduleBuilder builderClass="com.eiffel.ModuleWizard.EiffelWizardStep" id="FIRST_STEP" order="first"/>
-    <moduleBuilder builderClass="com.eiffel.ModuleWizard.EiffelWizardStep" id="SECOND_STEP" order="second"/>
+    <!--<moduleBuilder builderClass="com.eiffel.ModuleWizard.EiffelWizardStep" id="SECOND_STEP" order="second"/>-->
 
     <moduleType id="EIFFEL_MODULE_TYPE" implementationClass="com.eiffel.ModuleWizard.EiffelModuleType"/>
 

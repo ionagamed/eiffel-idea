@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3ce41165-14ea-48d5-9733-a1082b12cbd6" name="Default" comment="Modal">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleBuilder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardFirstStepForm.form" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardFirstStepForm.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardStep.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelWizardStep.java" />
+    <list default="true" id="3ce41165-14ea-48d5-9733-a1082b12cbd6" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/gen/com/eiffel/EiffelLexer.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/gen/com/eiffel/parser/EiffelParser.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/gen/com/eiffel/psi/EiffelTypes.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/gen/com/eiffel/psi/EiffelVisitor.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/resources/META-INF/plugin.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/eiffel/EiffelProjectFileType.java" afterPath="$PROJECT_DIR$/src/com/eiffel/EiffelProjectFileType.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,14 +22,14 @@
       <file leaf-file-name="plugin.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="33" column="35" lean-forward="false" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+            <state relative-caret-position="319">
+              <caret line="41" column="83" lean-forward="false" selection-start-line="41" selection-start-column="83" selection-end-line="41" selection-end-column="83" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EiffelProjectFileType.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="EiffelProjectFileType.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/eiffel/EiffelProjectFileType.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
@@ -42,11 +39,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EiffelModuleWizardStep.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Eiffel.bnf" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/eiffel/parser/Eiffel.bnf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="18" column="15" lean-forward="false" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
+              <folding>
+                <element signature="e#0#391#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Eiffel.flex" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/eiffel/lexer/Eiffel.flex">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" column="17" lean-forward="false" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EiffelModuleWizardStep.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardStep.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="6" column="60" lean-forward="false" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="60" />
+            <state relative-caret-position="135">
+              <caret line="9" column="63" lean-forward="false" selection-start-line="9" selection-start-column="63" selection-end-line="9" selection-end-column="63" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#233#234#0" expanded="true" />
@@ -56,15 +75,46 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="EiffelModuleBuilder.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleBuilder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="171">
+              <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="28" selection-end-column="1" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#679#680#0" expanded="true" />
+                <element signature="e#732#733#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EiffelModuleWizardFirstStepForm.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardFirstStepForm.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="14" column="27" lean-forward="false" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="EiffelModuleType.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleType.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="57" column="86" lean-forward="false" selection-start-line="57" selection-start-column="86" selection-end-line="57" selection-end-column="86" />
-              <folding>
-                <element signature="e#1212#1213#0" expanded="true" />
-                <element signature="e#1258#1259#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="60">
+              <caret line="14" column="49" lean-forward="false" selection-start-line="14" selection-start-column="49" selection-end-line="14" selection-end-column="49" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EiffelWizardStep.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelWizardStep.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="31" column="39" lean-forward="false" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="39" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -138,14 +188,14 @@
         <option value="$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/fileTypes/LanguageFileType.class" />
         <option value="$PROJECT_DIR$/src/com/eiffel/EiffelProjectFileType.java" />
         <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelWizzardStep.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleBuilder.java" />
         <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardFirstStepForm.java" />
         <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardFirstStepForm.form" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardStep.java" />
         <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleType.java" />
         <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelWizardStep.java" />
         <option value="$USER_HOME$/Downloads/sourceCode/src/net/jay/parser/Lexer/ParserLexer.flex" />
         <option value="$PROJECT_DIR$/resources/META-INF/plugin.xml" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleBuilder.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardStep.java" />
       </list>
     </option>
   </component>
@@ -208,17 +258,6 @@
             <path>
               <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
               <item name="eiffel" type="462c0819:PsiDirectoryNode" />
-              <item name="gen" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
-              <item name="gen" type="462c0819:PsiDirectoryNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -250,7 +289,29 @@
               <item name="eiffel" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="lexer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
               <item name="ModuleWizard" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="ModuleWizard" type="462c0819:PsiDirectoryNode" />
+              <item name="EiffelModuleWizardFirstStepForm" type="e9f4de52:FormNode" />
+            </path>
+            <path>
+              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="parser" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
@@ -639,7 +700,7 @@
       <workItem from="1505772273625" duration="3405000" />
       <workItem from="1505831922961" duration="579000" />
       <workItem from="1505840388226" duration="8717000" />
-      <workItem from="1507060859289" duration="382000" />
+      <workItem from="1507060859289" duration="1526000" />
     </task>
     <task id="LOCAL-00001" summary="&gt; Initial commit&#10;- Basic class definition&#10;- Icons for .ecf files (Retina ready)&#10;- .ecf files definition">
       <created>1505168041215</created>
@@ -662,24 +723,32 @@
       <option name="project" value="LOCAL" />
       <updated>1505261103823</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Modal">
+      <created>1507061251138</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1507061251138</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28151000" />
+    <option name="totallyTimeSpent" value="29295000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.49676898" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.49030694" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3287483" sideWeight="0.503231" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22696011" sideWeight="0.50646204" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="PsiViewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3287483" sideWeight="0.49676898" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22696011" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.49676898" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22696011" sideWeight="0.49353796" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22294022" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -739,21 +808,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/xml/html5@2x.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/xml/html5.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/xml/css_class@2x.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/xml/css_class.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -939,6 +993,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="310">
           <caret line="436" column="21" lean-forward="false" selection-start-line="436" selection-start-column="21" selection-end-line="436" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -999,29 +1054,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="20" column="31" lean-forward="false" selection-start-line="20" selection-start-column="15" selection-end-line="20" selection-end-column="31" />
-          <folding>
-            <element signature="e#679#680#0" expanded="false" />
-            <element signature="e#732#733#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardStep.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="6" column="60" lean-forward="false" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="60" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#233#234#0" expanded="true" />
-            <element signature="e#303#304#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/module/ModuleType.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
@@ -1060,25 +1092,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelWizardStep.java">
+    <entry file="file://$PROJECT_DIR$/gen/com/eiffel/psi/EiffelVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="31" column="39" lean-forward="false" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1027#1028#0" expanded="false" />
-            <element signature="e#1098#1099#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="105">
+          <caret line="9" column="45" lean-forward="false" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardFirstStepForm.java">
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/lexer/Eiffel.flex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="1" lean-forward="false" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+        <state relative-caret-position="300">
+          <caret line="20" column="17" lean-forward="false" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1087,22 +1113,37 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleType.java">
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelWizardStep.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="57" column="86" lean-forward="false" selection-start-line="57" selection-start-column="86" selection-end-line="57" selection-end-column="86" />
-          <folding>
-            <element signature="e#1212#1213#0" expanded="true" />
-            <element signature="e#1258#1259#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="270">
+          <caret line="31" column="39" lean-forward="false" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardFirstStepForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="14" column="27" lean-forward="false" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="33" column="35" lean-forward="false" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+        <state relative-caret-position="319">
+          <caret line="41" column="83" lean-forward="false" selection-start-line="41" selection-start-column="83" selection-end-line="41" selection-end-column="83" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/parser/Eiffel.bnf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="15" lean-forward="false" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#391#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1111,6 +1152,38 @@
         <state relative-caret-position="60">
           <caret line="9" column="4" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="14" column="49" lean-forward="false" selection-start-line="14" selection-start-column="49" selection-end-line="14" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="28" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#679#680#0" expanded="true" />
+            <element signature="e#732#733#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardStep.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="63" lean-forward="false" selection-start-line="9" selection-start-column="63" selection-end-line="9" selection-end-column="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#233#234#0" expanded="true" />
+            <element signature="e#303#304#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
