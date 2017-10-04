@@ -27,7 +27,6 @@ public class BuildInjected extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        new CreateECF().actionPerformed(e);
         WriteAction action = new WriteAction() {
             @Override
             protected void run(@NotNull Result result) throws Throwable {
