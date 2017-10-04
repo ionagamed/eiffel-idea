@@ -39,16 +39,21 @@
 
     <toolWindow id="GOBO run window" icon="/com/eiffel/icons/ecf/e.png" anchor="bottom" factoryClass="com.eiffel.windows.run.RunToolWindowFactory"/>
 
-    <moduleBuilder builderClass="com.eiffel.ModuleWizard.EiffelWizardStep" id="FIRST_STEP" order="first"/>
+    <moduleBuilder builderClass="com.eiffel.sdk.EiffelWizardStep" id="FIRST_STEP" order="first"/>
     <!--<moduleBuilder builderClass="com.eiffel.ModuleWizard.EiffelWizardStep" id="SECOND_STEP" order="second"/>-->
 
-    <moduleType id="EIFFEL_MODULE_TYPE" implementationClass="com.eiffel.ModuleWizard.EiffelModuleType"/>
+    <moduleType id="EIFFEL_MODULE_TYPE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>
 
     <configurationType implementation="com.eiffel.GECRunConfigurationType"/>
 
     <stepsBeforeRunProvider implementation="com.eiffel.BuildInjectedBeforeRunTaskProvider"/>
 
     <internalFileTemplate name="Eiffel class"/>
+
+    <sdkType implementation="com.eiffel.sdk.EiffelSDKType"/>
+    <framework.type implementation="com.eiffel.sdk.EiffelFrameworkType"/>
+    <!--<moduleType id="EIFFEL_MODULE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>-->
+    <!--<moduleBuilder builderClass="com.eiffel.sdk.EiffelModuleBuilder"/>-->
   </extensions>
 
   <actions>

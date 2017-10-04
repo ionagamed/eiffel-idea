@@ -1,4 +1,4 @@
-package com.eiffel.ModuleWizard;
+package com.eiffel.sdk;
 
 import com.eiffel.EiffelIcons;
 
