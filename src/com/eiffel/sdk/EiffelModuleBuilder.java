@@ -57,9 +57,9 @@ public class EiffelModuleBuilder extends ModuleBuilder implements ModuleBuilderL
         }
     }
 
-    private VirtualFile createECF(String projectName, VirtualFile projectRoot) {
+    private VirtualFile createECF(String projectName, VirtualFile sourceRoot) {
         try {
-            VirtualFile ecf = projectRoot.createChildData(EiffelModuleBuilder.class, projectName + "-gobo.ecf");
+            VirtualFile ecf = sourceRoot.createChildData(EiffelModuleBuilder.class, projectName + "-gobo.ecf");
             WriteAction action = new WriteAction() {
                 @Override
                 protected void run(@NotNull Result result) throws Throwable {
@@ -95,7 +95,7 @@ public class EiffelModuleBuilder extends ModuleBuilder implements ModuleBuilderL
         if (rootClass == null) throw new ConfigurationException("Can't create root class");
         model.addContentEntry(rootClass);
 
-        VirtualFile ecf = createECF(model.getProject().getName(), projectRoot);
+        VirtualFile ecf = createECF(model.getProject().getName(), sourceRoot);
         if (ecf == null) throw new ConfigurationException("Can't create ECF file");
         model.addContentEntry(ecf);
     }

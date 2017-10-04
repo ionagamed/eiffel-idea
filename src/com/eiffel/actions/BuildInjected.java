@@ -41,7 +41,7 @@ public class BuildInjected extends AnAction {
                         e.getProject().getBaseDir().findChild("build").getPath(),
                         env,
                         "gec",
-                        "../" + e.getProject().getName() + "-gobo.ecf"
+                        "../src/" + e.getProject().getName() + "-gobo.ecf"
                 );
             }
         };
