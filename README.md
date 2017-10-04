@@ -1,11 +1,11 @@
 # eiffel-idea
-IntelliJ IDEA plugin for [Eiffel](eiffel.org) language support
+IntelliJ IDEA plugin for [Eiffel](http://eiffel.org) language support
 
 ### Current status
 Still under somewhat-active development (see last commit to see if it's still maintaned)
 
 ### What is done
-* Kinda-full EBNF syntax (as of 2006 [ECMA-367](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-367.pdf) with some additions) with parser by [Grammar-Kit](github.com/JetBrains/Grammar-Kit)
+* Kinda-full EBNF syntax (as of 2006 [ECMA-367](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-367.pdf) with some additions) with parser by [Grammar-Kit](http://github.com/JetBrains/Grammar-Kit)
 * Lexer for keywords and symbols
 * Syntax highlighting for keywords, literals, builtin types
 
