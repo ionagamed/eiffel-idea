@@ -26,20 +26,12 @@ Both of the above can be shown on this example
         end
     end
 
+### What is currently being done or WIP (but may be for the time being)
+* Project Wizard
+* Formatting (kinda done, but still some minor issues)
+* Building without an external button
+
 ### What is not done (needs to be done)
-* Formatting
-* Project wizard
-* Building support (still not sure if we can do it in IDEA)
 * Context-aware highlighting
 * Completion
 * Analysis
-
-### Contribution guidelines
-* Commit message must be of format '\<subsystem\>: \<action\>', e.g. 'bnf: add support for |..| operation'
-  Subsystems are:
-    * bnf
-    * lexer
-    * wizard
-    * config
-    * run (for run configuration)
-    * formatting
