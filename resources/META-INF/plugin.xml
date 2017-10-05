@@ -52,10 +52,10 @@
   </extensions>
 
   <actions>
-    <action id="Eiffel.RunInjected" class="com.eiffel.actions.BuildInjected" text="Run" description="Run with injected GOBO libraries" icon="/com/eiffel/icons/ecf/e.png">
+    <action id="Eiffel.RunInjected" class="com.eiffel.actions.BuildInjected" text="Run" description="Run with injected GOBO libraries" icon="/com/eiffel/icons/ecf/toolWindowRun.png">
       <!--<add-to-group group-id="MainToolBar" relative-to-action="Forward" anchor="after"/> -->
     </action>
-    <action id="Eiffel.CreateECF" class="com.eiffel.actions.CreateECF" text="Create ECF" description="Create ECF with GOBO libraries" icon="/com/eiffel/icons/ecf/ecf.png">
+    <action id="Eiffel.CreateECF" class="com.eiffel.actions.CreateECF" text="Create ECF" description="Create ECF with GOBO libraries" icon="/com/eiffel/icons/ecf/CreateNewProjectfromExistingFiles.png">
 
     </action>
     <group id="Eiffel.RunGroup" text="Run...">

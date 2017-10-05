@@ -37,11 +37,13 @@ public class BuildInjected extends AnAction {
                 }
 
                 Map<String, String> env = new HashMap<>();
-                env.put("GOBO", "/Users/ionagamed/Downloads/gobo");
+                env.put("GOBO", System.getProperty("user.home")+"/Downloads/gobo");
+                env.put("GOBO_BIN", env.get("GOBO")+"/bin");
+                System.out.println(e.getProject().getBasePath());
                 RunInToolWindowPerformer.run(
                         e.getProject().getBaseDir().findChild("build").getPath(),
                         env,
-                        "gec",
+                        env.get("GOBO_BIN")+"/gec",
                         "../" + e.getProject().getName() + "-gobo.ecf"
                 );
             }
