@@ -36,6 +36,7 @@ public class BuildInjected extends AnAction {
                     baseDir.createChildDirectory(this.getClass(), "build");
                 }
 
+                RunToolWindowFactory.clearConsoleOutput();
                 Map<String, String> env = new HashMap<>();
                 env.put("GOBO", System.getProperty("user.home")+"/Downloads/gobo");
                 env.put("GOBO_BIN", env.get("GOBO")+"/bin");
@@ -45,6 +46,20 @@ public class BuildInjected extends AnAction {
                         env,
                         env.get("GOBO_BIN")+"/gec",
                         "../src/" + e.getProject().getName() + "-gobo.ecf"
+                );
+                // TODO Перенеси эту хуету куда-нибудь, я хз честно что с ней делать, но она должна быть где-то здесь
+                // Дожно вызываться только после успешного выполнения компиляции, а вынести чет не вышло куда-то внаружу
+                RunToolWindowFactory.appendConsoleOutput("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", 0, true);
+                RunToolWindowFactory.appendConsoleOutput("", 0, true);
+                RunToolWindowFactory.appendConsoleOutput("Compiled successfully", 3, true);
+                RunToolWindowFactory.appendConsoleOutput("", 0, true);
+                RunToolWindowFactory.appendConsoleOutput("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", 0, true);
+                RunToolWindowFactory.appendConsoleOutput("", 0, true);
+
+                RunInToolWindowPerformer.run(
+                        e.getProject().getBaseDir().findChild("build").getPath(),
+                        env,
+                        "./" + e.getProject().getName()
                 );
             }
         };

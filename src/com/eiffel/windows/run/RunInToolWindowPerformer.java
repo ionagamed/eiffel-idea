@@ -1,5 +1,6 @@
 package com.eiffel.windows.run;
 
+import com.eiffel.actions.BuildInjected;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
@@ -52,6 +53,7 @@ public class RunInToolWindowPerformer {
         } catch (Exception e) {
             System.err.println(e.toString());
         }
+
     }
 
     /**
@@ -59,6 +61,7 @@ public class RunInToolWindowPerformer {
      * 1 - normal
      * -1 - error
      */
+    public static final String SUCCESS_COLOR = "#629755";
     public static final String NORMAL_COLOR = "#A9B7C6";
     public static final String COMMENT_COLOR = "#8C8C8C";
     public static final String WARNING_COLOR = "#CC7832";
@@ -75,6 +78,10 @@ public class RunInToolWindowPerformer {
                 break;
             case 2:
                 color = COMMENT_COLOR;
+                break;
+            case 3:
+                color = SUCCESS_COLOR;
+                line = "<span background: #5E5339'>"+line+"</span>";
                 break;
             case -1:
                 int i = line.indexOf("warning");

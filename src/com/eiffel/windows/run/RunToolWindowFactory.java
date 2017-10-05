@@ -1,5 +1,6 @@
 package com.eiffel.windows.run;
 
+import com.eiffel.actions.BuildInjected;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
@@ -39,6 +40,9 @@ public class RunToolWindowFactory implements ToolWindowFactory {
             s = RunInToolWindowPerformer.lineConstructor(s, code, "pre");
         consoleOutputSinkBuffer += s;
         consoleOutputSink.setText(consoleOutputSinkBuffer);
+    }
+    public static void clearConsoleOutput() {
+        consoleOutputSink.setText("");
     }
 
     @Override
