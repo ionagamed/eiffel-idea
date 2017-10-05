@@ -31,7 +31,9 @@
               <background color="-14211289"/>
               <contentType value="text/html"/>
               <editable value="false"/>
-              <font name="Menlo" size="9" style="0"/>
+              <font name="Andale Mono" size="8" style="0"/>
+              <margin top="5" left="10" bottom="5" right="10"/>
+              <requestFocusEnabled value="true"/>
               <text value="&lt;html&gt;&#10;  &lt;head&gt;&#10;    &#10;  &lt;/head&gt;&#10;  &lt;body&gt;&#10;  &lt;/body&gt;&#10;&lt;/html&gt;&#10;"/>
             </properties>
             <clientProperties>

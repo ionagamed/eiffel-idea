@@ -7,6 +7,10 @@ import com.intellij.ui.content.ContentFactory;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class RunToolWindowFactory implements ToolWindowFactory {
     private JPanel toolWindowContent;
@@ -15,9 +19,26 @@ public class RunToolWindowFactory implements ToolWindowFactory {
 
     private static JTextPane consoleOutputSink;
     private static String consoleOutputSinkBuffer;
-    public static void appendConsoleOutput(String s) {
+
+    public RunToolWindowFactory() {
+        consoleInput.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    appendConsoleOutput(consoleInput.getText(), 1, true);
+                    consoleInput.setText("");
+                }
+
+            }
+        });
+    }
+
+    public static void appendConsoleOutput(String s, int code, boolean format) {
+        if (format)
+            s = RunInToolWindowPerformer.lineConstructor(s, code, "pre");
         consoleOutputSinkBuffer += s;
-        consoleOutputSink.setText(RunInToolWindowPerformer.lineConstructor(consoleOutputSinkBuffer, 2, null));
+        consoleOutputSink.setText(consoleOutputSinkBuffer);
     }
 
     @Override

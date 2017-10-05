@@ -27,7 +27,7 @@ public class BuildInjected extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        new CreateECF().actionPerformed(e);
+        //new CreateECF().actionPerformed(e);
         WriteAction action = new WriteAction() {
             @Override
             protected void run(@NotNull Result result) throws Throwable {
@@ -39,12 +39,12 @@ public class BuildInjected extends AnAction {
                 Map<String, String> env = new HashMap<>();
                 env.put("GOBO", System.getProperty("user.home")+"/Downloads/gobo");
                 env.put("GOBO_BIN", env.get("GOBO")+"/bin");
-                System.out.println(e.getProject().getBasePath());
+                System.out.println(env.get("GOBO_BIN"));
                 RunInToolWindowPerformer.run(
                         e.getProject().getBaseDir().findChild("build").getPath(),
                         env,
-                        "gec",
-                        "../" + e.getProject().getName() + "-gobo.ecf"
+                        env.get("GOBO_BIN")+"/gec",
+                        "../src/" + e.getProject().getName() + "-gobo.ecf"
                 );
             }
         };

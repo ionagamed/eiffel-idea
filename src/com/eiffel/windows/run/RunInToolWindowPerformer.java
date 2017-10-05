@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Map;
 
 public class RunInToolWindowPerformer {
@@ -22,7 +23,8 @@ public class RunInToolWindowPerformer {
                     String line;
                     try {
                         while ((line = reader.readLine()) != null) {
-                            RunToolWindowFactory.appendConsoleOutput(lineConstructor(line, -1, null));
+                            for (String l : line.split("\n"))
+                                RunToolWindowFactory.appendConsoleOutput(l, 1, true);
                         }
                     } catch (IOException ex) {
                         System.err.println(ex.toString());
@@ -36,7 +38,11 @@ public class RunInToolWindowPerformer {
                     String line;
                     try {
                         while ((line = reader.readLine()) != null) {
-                            RunToolWindowFactory.appendConsoleOutput(lineConstructor(line, -1, null));
+                            for (String l : line.split("\n")) {
+                                //System.out.println(l);
+                                RunToolWindowFactory.appendConsoleOutput(l, -1, true);
+                            }
+
                         }
                     } catch (IOException ex) {
                         System.err.println(ex.toString());
@@ -55,12 +61,13 @@ public class RunInToolWindowPerformer {
      */
     public static final String NORMAL_COLOR = "#A9B7C6";
     public static final String COMMENT_COLOR = "#8C8C8C";
+    public static final String WARNING_COLOR = "#CC7832";
     public static final String ERROR_COLOR = "#FF6B68";
 
     public static String lineConstructor (String line, int code, @Nullable String container) {
         String color;
         if (container == null)
-            container = "span";
+            container = "pre";
         switch (code) {
             default:
             case 1:
@@ -70,9 +77,20 @@ public class RunInToolWindowPerformer {
                 color = COMMENT_COLOR;
                 break;
             case -1:
-                color = ERROR_COLOR;
+                int i = line.indexOf("warning");
+                if (i > -1) {
+                    color = NORMAL_COLOR;
+                    String filename = line.substring(0, i);
+                    line = line
+                            .replace(filename,"<strong style='font-weight: bold;'>"+filename+"</strong>")
+                            .replaceAll("warning[s]?", "<span style='color: "+WARNING_COLOR+"; background: #5E5339'>warning</span>");
+                } else
+                    color = ERROR_COLOR;
+                line = line                    //eiffel-pluggin-test21.c:3675:17
+                        .replaceAll("(->|\\^~)", "<span style='color: "+COMMENT_COLOR+"; font-weight: bold;'>$1</span>");
                 break;
         }
-        return "<"+container+" style='color: "+color+"; font-family: Melno, monospace; white-space: nowrap; font-size: 11px !important;'>"+line+"</"+container+"><br>";
+        //System.out.println(line);
+        return "<" + container + " style='color: " + color + "; font: normal 10px Source Code Pro, monospace; margin: 0; padding: 0;><div style='height: 10px;'>" + line + "</div></" + container + ">";
     }
 }
