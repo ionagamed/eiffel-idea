@@ -1,9 +1,7 @@
-package com.eiffel.ModuleWizard;
+package com.eiffel.sdk;
 
 import com.eiffel.EiffelIcons;
-import com.intellij.icons.AllIcons;
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
-import com.intellij.ide.util.projectWizard.ProjectJdkForModuleStep;
 import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.module.ModuleTypeManager;

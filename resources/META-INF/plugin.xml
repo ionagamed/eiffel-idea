@@ -39,28 +39,30 @@
 
     <toolWindow id="GOBO run window" icon="/com/eiffel/icons/ecf/e.png" anchor="bottom" factoryClass="com.eiffel.windows.run.RunToolWindowFactory"/>
 
-    <moduleBuilder builderClass="com.eiffel.ModuleWizard.EiffelWizardStep" id="FIRST_STEP" order="first"/>
+    <moduleBuilder builderClass="com.eiffel.sdk.EiffelWizardStep" id="FIRST_STEP" order="first"/>
     <!--<moduleBuilder builderClass="com.eiffel.ModuleWizard.EiffelWizardStep" id="SECOND_STEP" order="second"/>-->
 
-    <moduleType id="EIFFEL_MODULE_TYPE" implementationClass="com.eiffel.ModuleWizard.EiffelModuleType"/>
+    <moduleType id="EIFFEL_MODULE_TYPE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>
 
     <configurationType implementation="com.eiffel.GECRunConfigurationType"/>
 
     <stepsBeforeRunProvider implementation="com.eiffel.BuildInjectedBeforeRunTaskProvider"/>
 
     <internalFileTemplate name="Eiffel class"/>
+
+    <sdkType implementation="com.eiffel.sdk.EiffelSDKType"/>
+    <framework.type implementation="com.eiffel.sdk.EiffelFrameworkType"/>
+    <!--<moduleType id="EIFFEL_MODULE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>-->
+    <!--<moduleBuilder builderClass="com.eiffel.sdk.EiffelModuleBuilder"/>-->
   </extensions>
 
   <actions>
-    <action id="Eiffel.RunInjected" class="com.eiffel.actions.BuildInjected" text="Run" description="Run with injected GOBO libraries" icon="/com/eiffel/icons/ecf/toolWindowRun.png">
+    <action id="Eiffel.RunInjected" class="com.eiffel.actions.BuildInjected" text="Run" description="Run with injected GOBO libraries" icon="/com/eiffel/icons/ecf/e.png">
       <!--<add-to-group group-id="MainToolBar" relative-to-action="Forward" anchor="after"/> -->
     </action>
-    <action id="Eiffel.CreateECF" class="com.eiffel.actions.CreateECF" text="Create ECF" description="Create ECF with GOBO libraries" icon="/com/eiffel/icons/ecf/CreateNewProjectfromExistingFiles.png">
 
-    </action>
     <group id="Eiffel.RunGroup" text="Run...">
       <separator/>
-      <reference ref="Eiffel.CreateECF"/>
       <reference ref="Eiffel.RunInjected"/>
       <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
     </group>

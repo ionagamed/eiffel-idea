@@ -1,4 +1,4 @@
-package com.eiffel.ModuleWizard;
+package com.eiffel.sdk;
 
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
 

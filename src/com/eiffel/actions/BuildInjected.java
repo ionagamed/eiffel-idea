@@ -43,7 +43,7 @@ public class BuildInjected extends AnAction {
                 RunInToolWindowPerformer.run(
                         e.getProject().getBaseDir().findChild("build").getPath(),
                         env,
-                        env.get("GOBO_BIN")+"/gec",
+                        "gec",
                         "../" + e.getProject().getName() + "-gobo.ecf"
                 );
             }
