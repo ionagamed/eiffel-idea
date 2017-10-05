@@ -96,4 +96,8 @@ public class EiffelSDKType extends SdkType {
             return null;
         }
     }
+
+    public static SdkTypeId getInstance() {
+        return SdkType.findInstance(EiffelSDKType.class);
+    }
 }
