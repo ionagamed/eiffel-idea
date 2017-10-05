@@ -1,6 +1,8 @@
 package com.eiffel.windows.run;
 
 import com.eiffel.actions.BuildInjected;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
@@ -8,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 public class RunInToolWindowPerformer {
@@ -50,6 +53,15 @@ public class RunInToolWindowPerformer {
                     }
                 }
             }.run();
+            System.out.println(Arrays.deepToString(args));
+            if (args.length > 1) {
+                RunToolWindowFactory.appendConsoleOutput("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", 0, true);
+                RunToolWindowFactory.appendConsoleOutput("", 0, true);
+                RunToolWindowFactory.appendConsoleOutput("Compiled successfully", 3, true);
+                RunToolWindowFactory.appendConsoleOutput("", 0, true);
+                RunToolWindowFactory.appendConsoleOutput("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", 0, true);
+                RunToolWindowFactory.appendConsoleOutput("<br><br><br><br><br>", 0, false);
+            }
         } catch (Exception e) {
             System.err.println(e.toString());
         }

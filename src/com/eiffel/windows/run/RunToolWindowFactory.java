@@ -43,6 +43,7 @@ public class RunToolWindowFactory implements ToolWindowFactory {
     }
     public static void clearConsoleOutput() {
         consoleOutputSink.setText("");
+        consoleOutputSinkBuffer = "";
     }
 
     @Override

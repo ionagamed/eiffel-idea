@@ -8,6 +8,8 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.application.WriteAction;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.openapi.wm.impl.ToolWindowImpl;
@@ -45,17 +47,9 @@ public class BuildInjected extends AnAction {
                         e.getProject().getBaseDir().findChild("build").getPath(),
                         env,
                         env.get("GOBO_BIN")+"/gec",
-                        "../src/" + e.getProject().getName() + "-gobo.ecf"
+                        "../src/" + e.getProject().getName() + "-gobo.ecf",
+                        "--silent"
                 );
-                // TODO Перенеси эту хуету куда-нибудь, я хз честно что с ней делать, но она должна быть где-то здесь
-                // Дожно вызываться только после успешного выполнения компиляции, а вынести чет не вышло куда-то внаружу
-                RunToolWindowFactory.appendConsoleOutput("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", 0, true);
-                RunToolWindowFactory.appendConsoleOutput("", 0, true);
-                RunToolWindowFactory.appendConsoleOutput("Compiled successfully", 3, true);
-                RunToolWindowFactory.appendConsoleOutput("", 0, true);
-                RunToolWindowFactory.appendConsoleOutput("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", 0, true);
-                RunToolWindowFactory.appendConsoleOutput("", 0, true);
-
                 RunInToolWindowPerformer.run(
                         e.getProject().getBaseDir().findChild("build").getPath(),
                         env,
