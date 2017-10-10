@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 
 public class EiffelModuleType extends ModuleType<EiffelModuleBuilder> {
-    private static final String ID = "EIFFEL_MODULE_TYPE";
+    private static final String ID = "EIFFEL_MODULE";
 
     public EiffelModuleType() {
         super(ID);

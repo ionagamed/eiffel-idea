@@ -17,7 +17,7 @@ public class EiffelSDKType extends SdkType {
 //    }
 
     public EiffelSDKType() {
-        super("eiffel");
+        super("EIFFEL_SDK");
     }
 
     @Nullable
