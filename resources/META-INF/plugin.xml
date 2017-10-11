@@ -57,15 +57,6 @@
   </extensions>
 
   <actions>
-    <action id="Eiffel.RunInjected" class="com.eiffel.actions.BuildInjected" text="Run" description="Run with injected GOBO libraries" icon="/com/eiffel/icons/ecf/e.png">
-      <!--<add-to-group group-id="MainToolBar" relative-to-action="Forward" anchor="after"/> -->
-    </action>
-
-    <group id="Eiffel.RunGroup" text="Run...">
-      <separator/>
-      <reference ref="Eiffel.RunInjected"/>
-      <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
-    </group>
   </actions>
 
 </idea-plugin>
