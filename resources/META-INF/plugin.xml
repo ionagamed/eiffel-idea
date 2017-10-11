@@ -29,6 +29,8 @@
   <depends>com.intellij.modules.lang</depends>
   -->
   <extensions defaultExtensionNs="com.intellij">
+    <compileServer.plugin classpath="eiffel-jps-plugin.jar"/>
+
     <fileTypeFactory implementation="com.eiffel.EiffelFileTypeFactory"/>
     <lang.parserDefinition language="Eiffel" implementationClass="com.eiffel.parser.EiffelParserDefinition"/>
     <lang.syntaxHighlighterFactory key="Eiffel" implementationClass="com.eiffel.highlighting.EiffelSyntaxHighlighterFactory"/>
