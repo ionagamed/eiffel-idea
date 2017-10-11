@@ -42,7 +42,7 @@
     <moduleBuilder builderClass="com.eiffel.sdk.EiffelWizardStep" id="FIRST_STEP" order="first"/>
     <!--<moduleBuilder builderClass="com.eiffel.ModuleWizard.EiffelWizardStep" id="SECOND_STEP" order="second"/>-->
 
-    <moduleType id="EIFFEL_MODULE_TYPE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>
+    <moduleType id="EIFFEL_MODULE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>
 
     <configurationType implementation="com.eiffel.GECRunConfigurationType"/>
 
@@ -57,15 +57,6 @@
   </extensions>
 
   <actions>
-    <action id="Eiffel.RunInjected" class="com.eiffel.actions.BuildInjected" text="Run" description="Run with injected GOBO libraries" icon="/com/eiffel/icons/ecf/toolWindowRun.png">
-      <!--<add-to-group group-id="MainToolBar" relative-to-action="Forward" anchor="after"/> -->
-    </action>
-
-    <group id="Eiffel.RunGroup" text="Run...">
-      <separator/>
-      <reference ref="Eiffel.RunInjected"/>
-      <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
-    </group>
   </actions>
 
 </idea-plugin>

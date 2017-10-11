@@ -20,7 +20,7 @@ public class GECRunConfigurationType implements ConfigurationType {
 
     @Override
     public Icon getIcon() {
-        return AllIcons.General.Information;
+        return EiffelIcons.EIFFEL_RUN;
     }
 
     @NotNull
