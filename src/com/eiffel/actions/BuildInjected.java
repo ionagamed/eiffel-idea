@@ -37,8 +37,6 @@ public class BuildInjected extends AnAction {
                 if (baseDir.findChild("build") == null) {
                     baseDir.createChildDirectory(this.getClass(), "build");
                 }
-
-                RunToolWindowFactory.clearConsoleOutput();
                 Map<String, String> env = new HashMap<>();
                 env.put("GOBO", System.getProperty("user.home")+"/Downloads/gobo");
                 env.put("GOBO_BIN", env.get("GOBO")+"/bin");
@@ -47,13 +45,7 @@ public class BuildInjected extends AnAction {
                         e.getProject().getBaseDir().findChild("build").getPath(),
                         env,
                         env.get("GOBO_BIN")+"/gec",
-                        "../src/" + e.getProject().getName() + "-gobo.ecf",
-                        "--silent"
-                );
-                RunInToolWindowPerformer.run(
-                        e.getProject().getBaseDir().findChild("build").getPath(),
-                        env,
-                        "./" + e.getProject().getName()
+                        "../src/" + e.getProject().getName() + "-gobo.ecf"
                 );
             }
         };

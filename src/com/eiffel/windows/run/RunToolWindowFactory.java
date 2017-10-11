@@ -41,10 +41,6 @@ public class RunToolWindowFactory implements ToolWindowFactory {
         consoleOutputSinkBuffer += s;
         consoleOutputSink.setText(consoleOutputSinkBuffer);
     }
-    public static void clearConsoleOutput() {
-        consoleOutputSink.setText("");
-        consoleOutputSinkBuffer = "";
-    }
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {

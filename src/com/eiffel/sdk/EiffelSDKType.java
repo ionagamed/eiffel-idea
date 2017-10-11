@@ -3,6 +3,7 @@ package com.eiffel.sdk;
 import com.intellij.openapi.projectRoots.*;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.util.Icons;
 import net.sf.cglib.core.Local;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
@@ -70,7 +71,6 @@ public class EiffelSDKType extends SdkType {
 
     @Override
     public void saveAdditionalData(@NotNull SdkAdditionalData additionalData, @NotNull Element additional) {
-
     }
 
     @Nullable
