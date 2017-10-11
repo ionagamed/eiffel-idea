@@ -97,11 +97,9 @@ public class EiffelModuleBuilder extends ModuleBuilder implements ModuleBuilderL
 
         VirtualFile rootClass = createRootClass(sourceRoot);
         if (rootClass == null) throw new ConfigurationException("Can't create root class");
-        model.addContentEntry(rootClass);
 
         VirtualFile ecf = createECF(model.getProject().getName(), sourceRoot);
         if (ecf == null) throw new ConfigurationException("Can't create ECF file");
-        model.addContentEntry(ecf);
     }
 
     @Override
