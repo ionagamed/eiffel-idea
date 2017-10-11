@@ -1,6 +1,6 @@
 package com.eiffel.windows.run;
 
-import com.intellij.execution.dashboard.RunDashboardToolWindowFactory;
+import com.eiffel.actions.BuildInjected;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
@@ -8,16 +8,42 @@ import com.intellij.ui.content.ContentFactory;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class RunToolWindowFactory implements ToolWindowFactory {
-    private JTextPane consoleOutput;
     private JPanel toolWindowContent;
+    private JTextPane consoleOutput;
+    private JTextField consoleInput;
 
     private static JTextPane consoleOutputSink;
     private static String consoleOutputSinkBuffer;
-    public static void appendConsoleOutput(String s) {
+
+    public RunToolWindowFactory() {
+        consoleInput.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    appendConsoleOutput(consoleInput.getText(), 1, true);
+                    consoleInput.setText("");
+                }
+
+            }
+        });
+    }
+
+    public static void appendConsoleOutput(String s, int code, boolean format) {
+        if (format)
+            s = RunInToolWindowPerformer.lineConstructor(s, code, "pre");
         consoleOutputSinkBuffer += s;
-        consoleOutputSink.setText("<font face='Source Code Pro' size='4'>" + consoleOutputSinkBuffer + "</font>");
+        consoleOutputSink.setText(consoleOutputSinkBuffer);
+    }
+    public static void clearConsoleOutput() {
+        consoleOutputSink.setText("");
+        consoleOutputSinkBuffer = "";
     }
 
     @Override

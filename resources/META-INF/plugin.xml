@@ -25,11 +25,10 @@
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
        on how to target different products -->
+  <!-- uncomment to enable plugin in all products
   <depends>com.intellij.modules.lang</depends>
-
+  -->
   <extensions defaultExtensionNs="com.intellij">
-    <compileServer.plugin classpath="eiffel-jps-plugin.jar"/>
-
     <fileTypeFactory implementation="com.eiffel.EiffelFileTypeFactory"/>
     <lang.parserDefinition language="Eiffel" implementationClass="com.eiffel.parser.EiffelParserDefinition"/>
     <lang.syntaxHighlighterFactory key="Eiffel" implementationClass="com.eiffel.highlighting.EiffelSyntaxHighlighterFactory"/>
@@ -43,20 +42,30 @@
     <moduleBuilder builderClass="com.eiffel.sdk.EiffelWizardStep" id="FIRST_STEP" order="first"/>
     <!--<moduleBuilder builderClass="com.eiffel.ModuleWizard.EiffelWizardStep" id="SECOND_STEP" order="second"/>-->
 
-    <moduleType id="EIFFEL_MODULE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>
+    <moduleType id="EIFFEL_MODULE_TYPE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>
 
     <configurationType implementation="com.eiffel.GECRunConfigurationType"/>
 
+    <stepsBeforeRunProvider implementation="com.eiffel.BuildInjectedBeforeRunTaskProvider"/>
+
     <internalFileTemplate name="Eiffel class"/>
 
-    <sdkType id="EIFFEL_SDK" implementation="com.eiffel.sdk.EiffelSDKType"/>
+    <sdkType implementation="com.eiffel.sdk.EiffelSDKType"/>
     <framework.type implementation="com.eiffel.sdk.EiffelFrameworkType"/>
     <!--<moduleType id="EIFFEL_MODULE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>-->
     <!--<moduleBuilder builderClass="com.eiffel.sdk.EiffelModuleBuilder"/>-->
-
   </extensions>
 
   <actions>
+    <action id="Eiffel.RunInjected" class="com.eiffel.actions.BuildInjected" text="Run" description="Run with injected GOBO libraries" icon="/com/eiffel/icons/ecf/toolWindowRun.png">
+      <!--<add-to-group group-id="MainToolBar" relative-to-action="Forward" anchor="after"/> -->
+    </action>
+
+    <group id="Eiffel.RunGroup" text="Run...">
+      <separator/>
+      <reference ref="Eiffel.RunInjected"/>
+      <add-to-group group-id="ToolbarRunGroup" anchor="first"/>
+    </group>
   </actions>
 
 </idea-plugin>
