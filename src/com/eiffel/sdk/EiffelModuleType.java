@@ -1,6 +1,7 @@
 package com.eiffel.sdk;
 
 import com.eiffel.EiffelIcons;
+import com.intellij.icons.AllIcons;
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
 import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.module.ModuleType;
@@ -10,6 +11,7 @@ import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkAdditionalData;
 import com.intellij.openapi.projectRoots.SdkTypeId;
 import com.intellij.openapi.roots.ui.configuration.ModulesProvider;
+import com.intellij.util.Icons;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -46,12 +48,12 @@ public class EiffelModuleType extends ModuleType<EiffelModuleBuilder> {
     }
 
     public Icon getBigIcon() {
-        return EiffelIcons.E_ICON_FILE;
+        return EiffelIcons.EIFFEL_FOLDER;
     }
 
     @Override
     public Icon getNodeIcon(@Deprecated boolean b) {
-        return EiffelIcons.E_ICON_FILE;
+        return EiffelIcons.EIFFEL_FOLDER;
     }
 
     @NotNull
