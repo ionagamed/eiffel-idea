@@ -1,6 +1,7 @@
 package com.eiffel.jps;
 
 import com.eiffel.jps.model.JpsEiffelModuleType;
+import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.jps.builders.BuildTargetLoader;

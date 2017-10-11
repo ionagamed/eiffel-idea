@@ -10,12 +10,12 @@ import javax.swing.*;
 public class GECRunConfigurationType implements ConfigurationType {
     @Override
     public String getDisplayName() {
-        return "GOBO";
+        return "Eiffel GOBO";
     }
 
     @Override
     public String getConfigurationTypeDescription() {
-        return "GOBO Eiffel Toolchain Configuration";
+        return "Eiffel GOBO Toolchain Configuration";
     }
 
     @Override
@@ -26,7 +26,7 @@ public class GECRunConfigurationType implements ConfigurationType {
     @NotNull
     @Override
     public String getId() {
-        return "GOBO_RUN";
+        return "GOBO_EIFFEL_RUN";
     }
 
     @Override

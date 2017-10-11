@@ -6,6 +6,7 @@ import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.process.ColoredProcessHandler;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ExecutionEnvironment;
+import com.intellij.openapi.util.SystemInfo;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,9 +21,16 @@ public class GECRunProcessState extends CommandLineState {
     @NotNull
     @Override
     protected ProcessHandler startProcess() throws ExecutionException {
-        return new ColoredProcessHandler(
-                new GeneralCommandLine("build/" + getEnvironment().getProject().getName())
-                .withWorkDirectory(getEnvironment().getProject().getBasePath())
-        );
+        if (!SystemInfo.isWindows) {
+            return new ColoredProcessHandler(
+                    new GeneralCommandLine("out/production/" + getEnvironment().getProject().getName() + "/" + getEnvironment().getProject().getName())
+                            .withWorkDirectory(getEnvironment().getProject().getBasePath())
+            );
+        } else {
+            return new ColoredProcessHandler(
+                    new GeneralCommandLine("out\\production\\" + getEnvironment().getProject().getName() + "\\" + getEnvironment().getProject().getName() + ".exe")
+                            .withWorkDirectory(getEnvironment().getProject().getBasePath())
+            );
+        }
     }
 }

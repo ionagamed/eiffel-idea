@@ -47,8 +47,6 @@
 
     <configurationType implementation="com.eiffel.GECRunConfigurationType"/>
 
-    <stepsBeforeRunProvider implementation="com.eiffel.BuildInjectedBeforeRunTaskProvider"/>
-
     <internalFileTemplate name="Eiffel class"/>
 
     <sdkType id="EIFFEL_SDK" implementation="com.eiffel.sdk.EiffelSDKType"/>

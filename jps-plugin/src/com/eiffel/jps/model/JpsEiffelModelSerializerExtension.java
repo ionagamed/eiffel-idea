@@ -16,7 +16,6 @@ public class JpsEiffelModelSerializerExtension extends JpsModelSerializerExtensi
     @NotNull
     @Override
     public List<? extends JpsModulePropertiesSerializer<?>> getModulePropertiesSerializers() {
-        int i = 1 / 0;
         return Collections.singletonList(new JpsModulePropertiesSerializer<JpsDummyElement>(JpsEiffelModuleType.getInstance(), "EIFFEL_MODULE", null) {
             @Override
             public JpsDummyElement loadProperties(@Nullable Element componentElement) {

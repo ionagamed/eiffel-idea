@@ -6,6 +6,8 @@ import com.intellij.openapi.editor.actionSystem.EditorActionManager;
 
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EditorRoutines {
     public static void initialize() {
@@ -13,14 +15,5 @@ public class EditorRoutines {
         final EditorActionHandler action = eam.getActionHandler(IdeActions.ACTION_EDITOR_ENTER);
 //        eam.setActionHandler(IdeActions.ACTION_EDITOR_ENTER, new EnterPressedHandler(action));
 //        eam.setActionHandler(IdeActions.ACTION_EDITOR_ENTER, action);
-
-        ClassLoader cl = ClassLoader.getSystemClassLoader();
-
-        URL[] urls = ((URLClassLoader)cl).getURLs();
-
-        for(URL url: urls){
-            System.out.println(url.getFile());
-        }
-
     }
 }

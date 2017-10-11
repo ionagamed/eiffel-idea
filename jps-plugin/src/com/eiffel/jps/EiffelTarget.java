@@ -1,5 +1,6 @@
 package com.eiffel.jps;
 
+import com.eiffel.jps.model.JpsEiffelModuleType;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -10,6 +11,7 @@ import org.jetbrains.jps.indices.IgnoredFileIndex;
 import org.jetbrains.jps.indices.ModuleExcludeIndex;
 import org.jetbrains.jps.model.JpsModel;
 import org.jetbrains.jps.model.java.JavaSourceRootType;
+import org.jetbrains.jps.model.java.JpsJavaClasspathKind;
 import org.jetbrains.jps.model.java.JpsJavaExtensionService;
 import org.jetbrains.jps.model.module.JpsModule;
 import org.jetbrains.jps.model.module.JpsModuleSourceRootType;
@@ -35,7 +37,14 @@ public class EiffelTarget extends ModuleBasedTarget<EiffelSourceRootDescriptor> 
 
     @Override
     public Collection<BuildTarget<?>> computeDependencies(BuildTargetRegistry targetRegistry, TargetOutputIndex outputIndex) {
-        return null;
+        List<BuildTarget<?>> dependencies = new ArrayList<>();
+        Set<JpsModule> modules = JpsJavaExtensionService.dependencies(myModule).includedIn(JpsJavaClasspathKind.compile(isTests())).getModules();
+        for (JpsModule module : modules) {
+            if (module.getModuleType().equals(JpsEiffelModuleType.getInstance())) {
+                dependencies.add(new EiffelTarget(getEiffelTargetType(), module));
+            }
+        }
+        return dependencies;
     }
 
     @NotNull
