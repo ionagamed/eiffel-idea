@@ -72,7 +72,7 @@ public class EiffelBuilder extends TargetBuilder<EiffelSourceRootDescriptor, Eif
                 .withWorkDirectory(outputDirectory.getAbsolutePath())
                 .withExePath(sdkHome + (SystemInfo.isWindows ? "\\bin\\gec.exe" : "/bin/gec"))
                 .withParameters(
-                        "-cc=yes",
+                        "--cc=yes",
                         sourceRoot + "/" + module.getProject().getName() + "-gobo.ecf"
                 )
                 .withRedirectErrorStream(true)

@@ -52,6 +52,9 @@
 
     <sdkType implementation="com.eiffel.sdk.EiffelSDKType"/>
     <framework.type implementation="com.eiffel.sdk.EiffelFrameworkType"/>
+
+    <lang.braceMatcher language="Eiffel" implementationClass="com.eiffel.formatting.EiffelBraceMatcher"/>
+    <enterHandlerDelegate implementation="com.eiffel.formatting.EiffelEnterHandlerDelegate"/>
     <!--<moduleType id="EIFFEL_MODULE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>-->
     <!--<moduleBuilder builderClass="com.eiffel.sdk.EiffelModuleBuilder"/>-->
   </extensions>

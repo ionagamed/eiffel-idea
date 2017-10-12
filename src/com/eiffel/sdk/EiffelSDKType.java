@@ -1,5 +1,6 @@
 package com.eiffel.sdk;
 
+import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.projectRoots.*;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.vfs.LocalFileSystem;
@@ -10,6 +11,7 @@ import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 

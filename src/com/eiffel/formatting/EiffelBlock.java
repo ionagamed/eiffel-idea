@@ -24,6 +24,7 @@ public class EiffelBlock extends AbstractBlock {
             EiffelTypes.ASSERTION,
             EiffelTypes.EXPRESSION,
             EiffelTypes.CREATION_PROCEDURE_LIST,
+            EiffelTypes.ENTITY_DECLARATION_LIST,
 
             EiffelTypes.COMPOUND
     ));
@@ -40,7 +41,7 @@ public class EiffelBlock extends AbstractBlock {
         List<Block> blocks = new ArrayList<>();
         ASTNode child = myNode.getFirstChildNode();
         while (child != null) {
-            if ((!child.getElementType().equals(TokenType.WHITE_SPACE))) {
+            if ((!child.getElementType().equals(TokenType.WHITE_SPACE)) && child.getTextLength() != 0) {
                 EiffelBlock block = new EiffelBlock(
                         child,
                         Wrap.createWrap(WrapType.NONE, false),

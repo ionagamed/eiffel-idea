@@ -88,6 +88,7 @@ public class EiffelModuleBuilder extends ModuleBuilder implements ModuleBuilderL
     public void setupRootModel(ModifiableRootModel model) throws ConfigurationException {
         VirtualFile projectRoot = model.getProject().getBaseDir();
         model.addContentEntry(projectRoot);
+        model.inheritSdk();
 
         VirtualFile sourceRoot = createSourceRoot(projectRoot);
         if (sourceRoot == null) throw new ConfigurationException("Can't create src directory");
