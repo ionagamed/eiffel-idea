@@ -71,8 +71,12 @@ public class EiffelBuilder extends TargetBuilder<EiffelSourceRootDescriptor, Eif
         GeneralCommandLine commandLine = new GeneralCommandLine()
                 .withWorkDirectory(outputDirectory.getAbsolutePath())
                 .withExePath(sdkHome + (SystemInfo.isWindows ? "\\bin\\gec.exe" : "/bin/gec"))
-                .withParameters(sourceRoot + "/" + module.getProject().getName() + "-gobo.ecf")
-                .withRedirectErrorStream(true);
+                .withParameters(
+                        "-cc=yes",
+                        sourceRoot + "/" + module.getProject().getName() + "-gobo.ecf"
+                )
+                .withRedirectErrorStream(true)
+                .withEnvironment("GOBO", sdkHome);
         try {
             process = commandLine.createProcess();
         } catch (ExecutionException e) {

@@ -1,6 +1,7 @@
 package com.eiffel.sdk;
 
 import com.intellij.openapi.projectRoots.*;
+import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.Icons;
@@ -44,7 +45,7 @@ public class EiffelSDKType extends SdkType {
             return false;
         }
 
-        VirtualFile gec = bin.findChild("gec");
+        VirtualFile gec = bin.findChild(SystemInfo.isWindows ? "gec.exe" : "gec");
         if (gec == null || !gec.exists()) {
             return false;
         }
