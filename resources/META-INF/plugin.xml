@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>com.eiffel</id>
   <name>Eiffel</name>
-  <version>0.0.1a</version>
+  <version>0.0.1</version>
   <vendor email="ionagamed@gmail.com" url="https://github.com/ionagamed/eiffel-idea">ionagamed</vendor>
 
   <description><![CDATA[
@@ -11,7 +11,7 @@
   <change-notes><![CDATA[
       <ul>
         <li>
-          <b>0.0.1a</b>: <br>
+          <b>0.0.1</b>: <br>
           <ul>
             <li> Basic eiffel syntax support </li>
             <li> Highlighting </li>
