@@ -7,32 +7,6 @@
     </constraints>
     <properties/>
     <border type="none"/>
-    <children>
-      <toolbar id="7418b" binding="msvcToolBar">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="-1" height="20"/>
-          </grid>
-        </constraints>
-        <properties>
-          <margin top="0" left="0" bottom="0" right="0"/>
-        </properties>
-        <border type="empty" title="Microsoft Visual Studio">
-          <size top="10" left="5" bottom="5" right="5"/>
-        </border>
-        <children>
-          <component id="96a47" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="msvcLocationField">
-            <constraints/>
-            <properties>
-              <editable value="false"/>
-              <text value="asdf"/>
-            </properties>
-            <clientProperties>
-              <html.disable class="java.lang.Boolean" value="true"/>
-            </clientProperties>
-          </component>
-        </children>
-      </toolbar>
-    </children>
+    <children/>
   </grid>
 </form>

@@ -28,10 +28,6 @@ import javax.swing.*;
 
 public class EiffelModuleConfigurationEditor extends ModuleElementsEditor {
     private JPanel mainPanel;
-    private JToolBar msvcToolBar;
-    private TextFieldWithBrowseButton msvcLocationField;
-
-    private Key<String> MSVC_HOME = new Key<>("msvc.home");
 
     protected EiffelModuleConfigurationEditor(@NotNull ModuleConfigurationState state) {
         super(state);
@@ -45,34 +41,26 @@ public class EiffelModuleConfigurationEditor extends ModuleElementsEditor {
 
     @Override
     public void apply() {
-        getState().putUserData(MSVC_HOME, msvcLocationField.getText());
-        getModel().getModule().getComponent(EiffelModulePersistent.class).getState().msvcLocation = msvcLocationField.getText();
     }
 
     @Override
     public boolean isModified() {
-        boolean modified = false;
-
-        String msvcHome = getState().getUserData(MSVC_HOME);
-        if (msvcHome == null) return true;
-        modified |= isModified(msvcLocationField.getTextField(), msvcHome);
-
-        return modified;
+        return false;
     }
 
     @Override
     protected JComponent createComponentImpl() {
-        msvcLocationField.addBrowseFolderListener(new TextBrowseFolderListener(
-                new FileChooserDescriptor(
-                        false,
-                        true,
-                        false,
-                        false,
-                        false,
-                        false
-                )
-        ));
-
         return mainPanel;
     }
+
+    // Empty stubs for 2016 and earlier versions of IDEA without defaults in interfaces
+
+    @Override
+    public void saveData() {
+    }
+
+    @Override
+    public void moduleStateChanged() {
+    }
+
 }

@@ -63,7 +63,7 @@ public class EiffelSDKType extends SdkType {
     @Nullable
     @Override
     public AdditionalDataConfigurable createAdditionalDataConfigurable(@NotNull SdkModel sdkModel, @NotNull SdkModificator sdkModificator) {
-        return null;
+        return new EiffelSDKConfigurable();
     }
 
     @NotNull
@@ -72,8 +72,19 @@ public class EiffelSDKType extends SdkType {
         return "Eiffel GOBO SDK";
     }
 
+    @Nullable
+    @Override
+    public SdkAdditionalData loadAdditionalData(@NotNull Sdk currentSdk, Element additional) {
+        EiffelSDKAdditionalData data = new EiffelSDKAdditionalData();
+        data.readExternal(additional);
+        return data;
+    }
+
     @Override
     public void saveAdditionalData(@NotNull SdkAdditionalData additionalData, @NotNull Element additional) {
+        if (additionalData instanceof EiffelSDKAdditionalData) {
+            ((EiffelSDKAdditionalData)additionalData).writeExternal(additional);
+        }
     }
 
     @Nullable

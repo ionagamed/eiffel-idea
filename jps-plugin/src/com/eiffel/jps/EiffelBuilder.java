@@ -101,7 +101,7 @@ public class EiffelBuilder extends TargetBuilder<EiffelSourceRootDescriptor, Eif
 
     private void invokeMSVC(@NotNull final JpsModule module, @NotNull final File outputDirectory, @NotNull CompileContext context) {
         String msvcLocation = null;
-        JpsSimpleElement<HashMap<String, String>> propsElement = (module.getProperties() instanceof JpsSimpleElementImpl ? (JpsSimpleElementImpl) module.getProperties() : null);
+        JpsSimpleElement<HashMap<String, String>> propsElement = module.getSdk(JpsEiffelSdkType.getInstance()).getSdkProperties();
         if (propsElement == null) {
             context.processMessage(new CompilerMessage("msvc", BuildMessage.Kind.ERROR, "MSVC block in module config is not present"));
             return;

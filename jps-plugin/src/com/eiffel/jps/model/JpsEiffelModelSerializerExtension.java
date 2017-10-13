@@ -33,9 +33,7 @@ public class JpsEiffelModelSerializerExtension extends JpsModelSerializerExtensi
                                     el.getAttribute("name").getValue(),
                                     el.getAttribute("value").getValue()
                             );
-                        } catch (Exception e) {
-                            return new JpsSimpleElementImpl<>(new HashMap<>());
-                        }
+                        } catch (Exception ignored) {}
                     }
                 }
 
@@ -51,20 +49,29 @@ public class JpsEiffelModelSerializerExtension extends JpsModelSerializerExtensi
 
     @NotNull
     @Override
-    public List<? extends JpsSdkPropertiesSerializer<?>> getSdkPropertiesSerializers()
-    {
-        return Collections.singletonList(new JpsSdkPropertiesSerializer<JpsDummyElement>("EIFFEL_SDK", JpsEiffelSdkType.getInstance())
-        {
+    public List<? extends JpsSdkPropertiesSerializer<?>> getSdkPropertiesSerializers() {
+        return Collections.singletonList(new JpsSdkPropertiesSerializer<JpsSimpleElementImpl<HashMap<String, String>>>("EIFFEL_SDK", JpsEiffelSdkType.getInstance()) {
             @NotNull
             @Override
-            public JpsDummyElement loadProperties(@Nullable Element element)
-            {
-                return JpsElementFactory.getInstance().createDummyElement();
+            public JpsSimpleElementImpl<HashMap<String, String>> loadProperties(@Nullable Element element) {
+                HashMap<String, String> map = new HashMap<>();
+
+                for (Element el : element.getChildren()) {
+                    if (el.getName().equals("option")) {
+                        try {
+                            map.put(
+                                    el.getAttribute("name").getValue(),
+                                    el.getAttribute("value").getValue()
+                            );
+                        } catch (Exception ignored) {}
+                    }
+                }
+
+                return new JpsSimpleElementImpl<>(map);
             }
 
             @Override
-            public void saveProperties(@NotNull JpsDummyElement jpsElement, @NotNull Element element)
-            {
+            public void saveProperties(@NotNull JpsSimpleElementImpl<HashMap<String, String>> jpsElement, @NotNull Element element) {
 
             }
         });
