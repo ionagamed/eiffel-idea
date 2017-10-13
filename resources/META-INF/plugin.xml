@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>com.eiffel</id>
   <name>Eiffel</name>
-  <version>0.0.1</version>
+  <version>0.0.2a</version>
   <vendor email="ionagamed@gmail.com" url="https://github.com/ionagamed/eiffel-idea">ionagamed</vendor>
 
   <description><![CDATA[
