@@ -16,7 +16,7 @@
         </constraints>
         <properties/>
         <border type="empty" title="Microsoft Visual Studio">
-          <size top="10" left="10" bottom="10" right="10"/>
+          <size top="0" left="0" bottom="0" right="0"/>
         </border>
         <children>
           <component id="5fdda" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="msvcLocationField">
