@@ -23,9 +23,13 @@ import org.jetbrains.jps.builders.java.JavaSourceRootDescriptor;
 import org.jetbrains.jps.incremental.*;
 import org.jetbrains.jps.incremental.messages.BuildMessage;
 import org.jetbrains.jps.incremental.messages.CompilerMessage;
+import org.jetbrains.jps.incremental.messages.CustomBuilderMessage;
 import org.jetbrains.jps.incremental.messages.ProgressMessage;
 import org.jetbrains.jps.incremental.resources.ResourcesBuilder;
 import org.jetbrains.jps.incremental.resources.StandardResourceBuilderEnabler;
+import org.jetbrains.jps.model.JpsDummyElement;
+import org.jetbrains.jps.model.JpsSimpleElement;
+import org.jetbrains.jps.model.impl.JpsSimpleElementImpl;
 import org.jetbrains.jps.model.java.JpsJavaExtensionService;
 import org.jetbrains.jps.model.library.sdk.JpsSdk;
 import org.jetbrains.jps.model.module.JpsModule;
@@ -34,12 +38,16 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EiffelBuilder extends TargetBuilder<EiffelSourceRootDescriptor, EiffelTarget> {
 
     private static final Logger LOG = Logger.getInstance(EiffelBuilder.class);
+
+    private static String MSVC_DEV_CMD_SUFFIX = "\\Tools\\VsDevCmd.bat";
 
     public EiffelBuilder() {
         super(Collections.singletonList(EiffelTargetType.PRODUCTION));
@@ -50,6 +58,7 @@ public class EiffelBuilder extends TargetBuilder<EiffelSourceRootDescriptor, Eif
             }
         });
     }
+
     @NotNull
     @Override
     public String getPresentableName() {
@@ -60,6 +69,9 @@ public class EiffelBuilder extends TargetBuilder<EiffelSourceRootDescriptor, Eif
         File outputDirectory = getBuildOutputDirectory(target.getModule(), false, context);
         context.processMessage(new ProgressMessage("Compiling Eiffel sources"));
         invokeGEC(target.getModule(), outputDirectory, context);
+        if (SystemInfo.isWindows) {
+            invokeMSVC(target.getModule(), outputDirectory, context);
+        }
         context.checkCanceled();
         context.processMessage(new ProgressMessage(""));
     }
@@ -72,7 +84,6 @@ public class EiffelBuilder extends TargetBuilder<EiffelSourceRootDescriptor, Eif
                 .withWorkDirectory(outputDirectory.getAbsolutePath())
                 .withExePath(sdkHome + (SystemInfo.isWindows ? "\\bin\\gec.exe" : "/bin/gec"))
                 .withParameters(
-                        "--cc=yes",
                         sourceRoot + "/" + module.getProject().getName() + "-gobo.ecf"
                 )
                 .withRedirectErrorStream(true)
@@ -87,6 +98,59 @@ public class EiffelBuilder extends TargetBuilder<EiffelSourceRootDescriptor, Eif
         handler.startNotify();
         handler.waitFor();
     }
+
+    private void invokeMSVC(@NotNull final JpsModule module, @NotNull final File outputDirectory, @NotNull CompileContext context) {
+        String msvcLocation = null;
+        JpsSimpleElement<HashMap<String, String>> propsElement = (module.getProperties() instanceof JpsSimpleElementImpl ? (JpsSimpleElementImpl) module.getProperties() : null);
+        if (propsElement == null) {
+            context.processMessage(new CompilerMessage("msvc", BuildMessage.Kind.ERROR, "MSVC block in module config is not present"));
+            return;
+        }
+        HashMap<String, String> props = propsElement.getData();
+        if (props.containsKey("msvcLocation")) {
+            msvcLocation = props.get("msvcLocation");
+        }
+        if (!validMSVCHome(msvcLocation)) {
+            context.processMessage(new CompilerMessage("msvc", BuildMessage.Kind.ERROR, "MSVC location not set or not valid in module file"));
+            return;
+        }
+        try {
+            injectMSVCEnv(module, outputDirectory, msvcLocation, context);
+        } catch (IOException e) {
+            context.processMessage(new CompilerMessage("msvc", BuildMessage.Kind.ERROR, "Couldn't inject msvc dev cmd into build script: " + e.getMessage()));
+            return;
+        }
+        GeneralCommandLine commandLine = new GeneralCommandLine()
+                .withExePath("C:\\Windows\\System32\\cmd.exe")
+                .withParameters("/k", outputDirectory.getAbsolutePath() + "/" + module.getName() + ".bat");
+        try {
+            Process process = commandLine.createProcess();
+            process.waitFor();
+        } catch (Exception e) {
+            context.processMessage(new CompilerMessage("msvc", BuildMessage.Kind.ERROR, "Couldn't invoke MSVC: " + e.getMessage()));
+        }
+    }
+
+    private void injectMSVCEnv(@NotNull JpsModule module, @NotNull final File outputDirectory, @NotNull final String msvcLocation, @NotNull CompileContext context) throws IOException {
+        File buildScriptFile = new File(outputDirectory.getAbsolutePath() + "/" + module.getName() + ".bat");
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(buildScriptFile)));
+        String result = "";
+        String line = "";
+        while ((line = br.readLine()) != null) {
+            result += line;
+        }
+        result = msvcLocation + MSVC_DEV_CMD_SUFFIX + "\n" + result;
+        buildScriptFile.delete();
+        FileOutputStream outputStream = new FileOutputStream(buildScriptFile);
+        outputStream.write(result.getBytes());
+        outputStream.flush();
+    }
+
+    private boolean validMSVCHome(String msvcHome) {
+        // TODO: replace stub after debugging
+        return msvcHome != null && new File(msvcHome + MSVC_DEV_CMD_SUFFIX).exists();
+    }
+
 
     @NotNull
     private static File getBuildOutputDirectory(@NotNull JpsModule module,

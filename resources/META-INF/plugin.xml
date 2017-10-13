@@ -45,6 +45,7 @@
     <!--<moduleBuilder builderClass="com.eiffel.ModuleWizard.EiffelWizardStep" id="SECOND_STEP" order="second"/>-->
 
     <moduleType id="EIFFEL_MODULE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>
+    <moduleConfigurationEditorProvider implementation="com.eiffel.sdk.EiffelModuleConfigurationEditorProvider"/>
 
     <configurationType implementation="com.eiffel.GECRunConfigurationType"/>
 
@@ -58,6 +59,17 @@
     <!--<moduleType id="EIFFEL_MODULE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>-->
     <!--<moduleBuilder builderClass="com.eiffel.sdk.EiffelModuleBuilder"/>-->
   </extensions>
+
+  <extensionPoints>
+    <extensionPoint name="moduleConfigurationEditorProvider" interface="com.intellij.openapi.roots.ui.configuration.ModuleConfigurationEditorProvider" area="IDEA_MODULE"/>
+  </extensionPoints>
+
+  <module-components>
+    <component>
+      <interface-class>com.eiffel.sdk.EiffelModulePersistent</interface-class>
+      <implementation-class>com.eiffel.sdk.EiffelModulePersistent</implementation-class>
+    </component>
+  </module-components>
 
   <actions>
   </actions>
