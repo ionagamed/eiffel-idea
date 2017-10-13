@@ -8,6 +8,7 @@ Still under somewhat-active development (see last commit to see if it's still ma
 * Kinda-full EBNF syntax (as of 2006 [ECMA-367](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-367.pdf) with some additions) with parser by [Grammar-Kit](http://github.com/JetBrains/Grammar-Kit)
 * Lexer for keywords and symbols
 * Syntax highlighting for keywords, literals, builtin types
+* Building support through GEC
 
 ##### Extensions of ECMA-367
 * Integer ranges using `|..|` binary operation.
@@ -29,7 +30,6 @@ Both of the above can be shown on this example
 ### What is currently being done or WIP (but may be for the time being)
 * Project Wizard
 * Formatting (kinda done, but still some minor issues)
-* Building without an external button
 
 ### What is not done (needs to be done)
 * Context-aware highlighting
