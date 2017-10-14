@@ -9,10 +9,10 @@
   psiImplPackage="com.eiffel.psi.impl"
 
   elementTypeHolderClass="com.eiffel.psi.EiffelTypes"
-  elementTypeClass="com.eiffel.pci.EiffelElementType"
-  tokenTypeClass="com.eiffel.pci.EiffelTokenType"
+  elementTypeClass="com.eiffel.psi.EiffelElementType"
+  tokenTypeClass="com.eiffel.psi.EiffelTokenType"
 
-  psiImplUtilClass="com.eiffel.pci.impl.EiffelPsiImplUtil"
+  psiImplUtilClass="com.eiffel.psi.impl.EiffelPsiImplUtil"
 }
 
 eiffelFile ::= class_declaration

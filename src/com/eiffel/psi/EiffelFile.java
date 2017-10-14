@@ -1,4 +1,4 @@
-package com.eiffel.pci;
+package com.eiffel.psi;
 
 import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.openapi.fileTypes.FileType;

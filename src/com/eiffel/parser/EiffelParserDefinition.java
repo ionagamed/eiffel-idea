@@ -2,13 +2,12 @@ package com.eiffel.parser;
 
 import com.eiffel.EiffelLanguage;
 import com.eiffel.lexer.EiffelLexerAdapter;
-import com.eiffel.pci.EiffelFile;
+import com.eiffel.psi.EiffelFile;
 import com.intellij.lang.*;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.tree.*;
-import com.eiffel.parser.EiffelParser;
 import com.eiffel.psi.*;
 import org.jetbrains.annotations.NotNull;
 

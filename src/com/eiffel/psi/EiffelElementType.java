@@ -1,4 +1,4 @@
-package com.eiffel.pci;
+package com.eiffel.psi;
 
 import com.intellij.psi.tree.IElementType;
 import com.eiffel.EiffelLanguage;

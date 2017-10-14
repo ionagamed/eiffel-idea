@@ -1,6 +1,6 @@
 package com.eiffel.codeInsight.completion;
 
-import com.eiffel.pci.EiffelClassUtil;
+import com.eiffel.psi.EiffelClassUtil;
 import com.eiffel.psi.EiffelClassDeclaration;
 import com.eiffel.psi.EiffelTypes;
 import com.intellij.codeInsight.completion.CompletionParameters;

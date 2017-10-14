@@ -4,8 +4,6 @@ package com.eiffel.psi;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
-import com.eiffel.pci.EiffelElementType;
-import com.eiffel.pci.EiffelTokenType;
 import com.eiffel.psi.impl.*;
 
 public interface EiffelTypes {

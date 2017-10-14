@@ -1,4 +1,4 @@
-package com.eiffel.pci.impl;
+package com.eiffel.psi.impl;
 
 import com.eiffel.psi.EiffelClassDeclaration;
 import com.eiffel.psi.EiffelTypes;
