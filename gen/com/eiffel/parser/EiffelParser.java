@@ -1491,7 +1491,18 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [notes] class_header [formal_generics] [obsolete] [inheritance] [creators] [converters] [features] [notes] [invariant] [notes] END_KEYWORD
+  // [notes]
+  //     class_header
+  //     [formal_generics]
+  //     [obsolete]
+  //     [inheritance]
+  //     [creators]
+  //     [converters]
+  //     [features]
+  //     [notes]
+  //     [invariant]
+  //     [notes]
+  //     END_KEYWORD
   public static boolean class_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "class_declaration")) return false;
     boolean r;

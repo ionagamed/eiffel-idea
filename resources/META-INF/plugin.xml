@@ -58,6 +58,8 @@
 
     <lang.braceMatcher language="Eiffel" implementationClass="com.eiffel.formatting.EiffelBraceMatcher"/>
     <enterHandlerDelegate implementation="com.eiffel.formatting.EiffelEnterHandlerDelegate"/>
+
+    <completion.contributor language="Eiffel" implementationClass="com.eiffel.codeInsight.completion.EiffelCompletionContributor"/>
     <!--<moduleType id="EIFFEL_MODULE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>-->
     <!--<moduleBuilder builderClass="com.eiffel.sdk.EiffelModuleBuilder"/>-->
   </extensions>

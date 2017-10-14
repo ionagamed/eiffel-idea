@@ -11,6 +11,8 @@
   elementTypeHolderClass="com.eiffel.psi.EiffelTypes"
   elementTypeClass="com.eiffel.pci.EiffelElementType"
   tokenTypeClass="com.eiffel.pci.EiffelTokenType"
+
+  psiImplUtilClass="com.eiffel.pci.impl.EiffelPsiImplUtil"
 }
 
 eiffelFile ::= class_declaration
@@ -18,7 +20,20 @@ eiffelFile ::= class_declaration
 class_name ::= IDENTIFIER
 comment ::= COMMENT_ONELINE
 
-class_declaration ::= [notes] class_header [formal_generics] [obsolete] [inheritance] [creators] [converters] [features] [notes] [invariant] [notes] END_KEYWORD
+class_declaration ::=
+    [notes]
+    class_header
+    [formal_generics]
+    [obsolete]
+    [inheritance]
+    [creators]
+    [converters]
+    [features]
+    [notes]
+    [invariant]
+    [notes]
+    END_KEYWORD
+    { methods=[getClassName] }
 class_header ::= [header_mark] CLASS_KEYWORD class_name
 header_mark ::= DEFERRED_KEYWORD | EXPANDED_KEYWORD | FROZEN_KEYWORD
 
