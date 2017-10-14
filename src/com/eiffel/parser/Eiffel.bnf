@@ -33,7 +33,7 @@ class_declaration ::=
     [invariant]
     [notes]
     END_KEYWORD
-    { methods=[getClassName] }
+    { methods=[getName setName getNameIdentifier] }
 class_header ::= [header_mark] CLASS_KEYWORD class_name
 header_mark ::= DEFERRED_KEYWORD | EXPANDED_KEYWORD | FROZEN_KEYWORD
 
@@ -277,7 +277,7 @@ assigner_call ::= expression ASSIGN expression
 call ::= object_call | non_object_call
 object_call ::= (target_no_left DOT call) | unqualified_call
 unqualified_call ::= feature_name [actuals]
-target_no_left ::= local | read_only | non_object_call
+target_no_left ::= unqualified_call | local | read_only | non_object_call
 target ::= target_no_left [DOT call]
 non_object_call ::= LEFT_CURLY_BRACKET type RIGHT_CURLY_BRACKET DOT unqualified_call
 

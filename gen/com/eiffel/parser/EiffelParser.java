@@ -4686,12 +4686,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // local | read_only | non_object_call
+  // unqualified_call | local | read_only | non_object_call
   public static boolean target_no_left(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "target_no_left")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TARGET_NO_LEFT, "<target no left>");
-    r = local(b, l + 1);
+    r = unqualified_call(b, l + 1);
+    if (!r) r = local(b, l + 1);
     if (!r) r = read_only(b, l + 1);
     if (!r) r = non_object_call(b, l + 1);
     exit_section_(b, l, m, r, false, null);

@@ -17,7 +17,7 @@ public class EiffelClassNameCompletionUtil {
         if (isClassType(parameters.getPosition())) {
             List<EiffelClassDeclaration> classDeclarations = EiffelClassUtil.findClassDeclarations(parameters.getEditor().getProject());
             for (EiffelClassDeclaration declaration : classDeclarations) {
-                resultSet.addElement(LookupElementBuilder.create(declaration.getClassName()));
+                resultSet.addElement(LookupElementBuilder.create(declaration.getName()));
             }
         }
     }
