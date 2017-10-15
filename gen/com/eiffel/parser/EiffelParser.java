@@ -1186,7 +1186,8 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     XOR_KEYWORD |
   //     (AND_KEYWORD THEN_KEYWORD) |
   //     (OR_KEYWORD ELSE_KEYWORD) |
-  //     IMPLIES_KEYWORD
+  //     IMPLIES_KEYWORD |
+  //     FREE_OPERATOR
   public static boolean binary(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "binary")) return false;
     boolean r;
@@ -1211,6 +1212,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = binary_17(b, l + 1);
     if (!r) r = binary_18(b, l + 1);
     if (!r) r = consumeToken(b, IMPLIES_KEYWORD);
+    if (!r) r = consumeToken(b, FREE_OPERATOR);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -3358,8 +3360,8 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // creation_instruction |
   //     assignment |
   //     assigner_call |
-  //     call |
   //     conditional |
+  //     call |
   //     multi_branch |
   //     debug |
   //     precursor |
@@ -3372,8 +3374,8 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     r = creation_instruction(b, l + 1);
     if (!r) r = assignment(b, l + 1);
     if (!r) r = assigner_call(b, l + 1);
-    if (!r) r = call(b, l + 1);
     if (!r) r = conditional(b, l + 1);
+    if (!r) r = call(b, l + 1);
     if (!r) r = multi_branch(b, l + 1);
     if (!r) r = debug(b, l + 1);
     if (!r) r = precursor(b, l + 1);
@@ -4877,7 +4879,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // NOT_KEYWORD | PLUS | MINUS
+  // NOT_KEYWORD | PLUS | MINUS | FREE_OPERATOR
   public static boolean unary(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "unary")) return false;
     boolean r;
@@ -4885,6 +4887,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, NOT_KEYWORD);
     if (!r) r = consumeToken(b, PLUS);
     if (!r) r = consumeToken(b, MINUS);
+    if (!r) r = consumeToken(b, FREE_OPERATOR);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

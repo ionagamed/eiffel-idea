@@ -264,6 +264,7 @@ public interface EiffelTypes {
   IElementType EXTERNAL_KEYWORD = new EiffelTokenType("EXTERNAL_KEYWORD");
   IElementType FALSE_KEYWORD = new EiffelTokenType("FALSE_KEYWORD");
   IElementType FEATURE_KEYWORD = new EiffelTokenType("FEATURE_KEYWORD");
+  IElementType FREE_OPERATOR = new EiffelTokenType("FREE_OPERATOR");
   IElementType FROM_KEYWORD = new EiffelTokenType("FROM_KEYWORD");
   IElementType FROZEN_KEYWORD = new EiffelTokenType("FROZEN_KEYWORD");
   IElementType GT = new EiffelTokenType("GT");

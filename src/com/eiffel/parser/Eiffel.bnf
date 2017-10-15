@@ -76,7 +76,7 @@ alias_name ::= operator | bracket
 bracket ::= ALIAS_BRACKETS
 
 operator ::= unary | binary
-unary ::= NOT_KEYWORD | PLUS | MINUS
+unary ::= NOT_KEYWORD | PLUS | MINUS | FREE_OPERATOR
 binary ::=
     PLUS |
     MINUS |
@@ -97,7 +97,8 @@ binary ::=
     XOR_KEYWORD |
     (AND_KEYWORD THEN_KEYWORD) |
     (OR_KEYWORD ELSE_KEYWORD) |
-    IMPLIES_KEYWORD
+    IMPLIES_KEYWORD |
+    FREE_OPERATOR
 
 assigner_mark ::= ASSIGN_KEYWORD feature_name
 
@@ -141,8 +142,8 @@ private instruction_without_loop ::=
     creation_instruction |
     assignment |
     assigner_call |
-    call |
     conditional |
+    call |
     multi_branch |
     debug |
     precursor |

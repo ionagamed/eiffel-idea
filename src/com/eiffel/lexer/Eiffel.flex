@@ -41,6 +41,8 @@ STRING={STRING_ONELINE}(%{WHITE_SPACE}*{EOL}{WHITE_SPACE}*%{STRING_ONELINE})*
 STRING_LITERAL=\"{STRING}\"
 PARTIAL_STRING_LITERAL=\"{STRING}
 COMMENT_ONELINE=--[^\n\r]*
+OPERATOR_SYMBOL=[~%!?+\-*/\^<>|]
+FREE_OPERATOR={OPERATOR_SYMBOL}+
 
 %%
 <YYINITIAL> {
@@ -151,6 +153,9 @@ COMMENT_ONELINE=--[^\n\r]*
   "." { return EiffelTypes.DOT; }
   "$" { return EiffelTypes.DOLLAR; }
   "@" { return EiffelTypes.AT; }
+
+
+  {FREE_OPERATOR} { return EiffelTypes.FREE_OPERATOR; }
 
 
 
