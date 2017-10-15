@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Stack;
 
 public class EiffelClassUtil {
     public static List<EiffelClassDeclaration> findClassDeclarations(Project project) {
@@ -151,6 +152,17 @@ public class EiffelClassUtil {
     }
 
     @Nullable
+    public static String findSerializedFeatureFormalArguments(Project project, String className, String feature) {
+        EiffelFeatureDeclaration featureDeclaration = findFeatureDeclaration(project, className, feature);
+        if (featureDeclaration == null) return null;
+        ASTNode declarationBody = featureDeclaration.getNode().findChildByType(EiffelTypes.DECLARATION_BODY);
+        if (declarationBody == null) return null;
+        ASTNode formalArguments = declarationBody.findChildByType(EiffelTypes.FORMAL_ARGUMENTS);
+        if (formalArguments == null) return null;
+        return formalArguments.getText();
+    }
+
+    @Nullable
     public static ASTNode findParentOfType(ASTNode node, IElementType type) {
         while (node != null) {
             if (node.getElementType().equals(type)) {
@@ -159,5 +171,37 @@ public class EiffelClassUtil {
             node = node.getTreeParent();
         }
         return node;
+    }
+
+    @Nullable
+    public static String findParentingClassForFeatureCall(Project project, PsiElement unqualifiedCall) {
+        EiffelClassDeclaration currentClassDeclaration = EiffelClassUtil.findClassDeclaration(unqualifiedCall);
+        if (currentClassDeclaration == null) return null;
+
+        Stack<ASTNode> processingStack = new Stack<>();
+        ASTNode storedObjectCall = EiffelClassUtil.findParentOfType(unqualifiedCall.getNode(), EiffelTypes.OBJECT_CALL);
+        if (storedObjectCall == null) return null;
+        ASTNode currentNode = storedObjectCall.getTreeParent();
+        while (currentNode != null && !currentNode.getElementType().equals(EiffelTypes.COMPOUND)) {
+            if (currentNode.getElementType().equals(EiffelTypes.OBJECT_CALL)) {
+                processingStack.push(currentNode);
+            }
+            currentNode = currentNode.getTreeParent();
+        }
+
+        String currentClass = currentClassDeclaration.getName();
+        while (!processingStack.empty()) {
+            ASTNode objectCall = processingStack.pop();
+            ASTNode target = objectCall.findChildByType(EiffelTypes.TARGET_NO_LEFT);
+            if (target == null) return null;
+            ASTNode currentUnqualifiedCall = target.findChildByType(EiffelTypes.UNQUALIFIED_CALL);
+            if (currentUnqualifiedCall == null) return null;
+            ASTNode currentFeatureName = currentUnqualifiedCall.findChildByType(EiffelTypes.FEATURE_NAME);
+            if (currentFeatureName == null) return null;
+            currentClass = EiffelClassUtil.findFeatureReturnType(project, currentClass, currentFeatureName.getText());
+            if (currentClass == null) return null;
+        }
+
+        return currentClass;
     }
 }

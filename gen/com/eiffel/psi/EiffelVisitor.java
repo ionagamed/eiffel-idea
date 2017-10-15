@@ -172,7 +172,7 @@ public class EiffelVisitor extends PsiElementVisitor {
   }
 
   public void visitClassDeclaration(@NotNull EiffelClassDeclaration o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitClassHeader(@NotNull EiffelClassHeader o) {
@@ -840,6 +840,10 @@ public class EiffelVisitor extends PsiElementVisitor {
   }
 
   public void visitWhenPartList(@NotNull EiffelWhenPartList o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNamedElement(@NotNull EiffelNamedElement o) {
     visitPsiElement(o);
   }
 

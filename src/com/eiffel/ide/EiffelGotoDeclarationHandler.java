@@ -35,32 +35,8 @@ public class EiffelGotoDeclarationHandler extends GotoDeclarationHandlerBase {
     }
 
     private PsiElement getFeatureDeclarationByUnqualifiedCallElement(PsiElement unqualifiedCall, Editor editor) {
-        EiffelClassDeclaration currentClassDeclaration = EiffelClassUtil.findClassDeclaration(unqualifiedCall);
-        if (currentClassDeclaration == null) return null;
-
-        Stack<ASTNode> processingStack = new Stack<>();
-        ASTNode storedObjectCall = EiffelClassUtil.findParentOfType(unqualifiedCall.getNode(), EiffelTypes.OBJECT_CALL);
-        if (storedObjectCall == null) return null;
-        ASTNode currentNode = storedObjectCall.getTreeParent();
-        while (currentNode != null && !currentNode.getElementType().equals(EiffelTypes.COMPOUND)) {
-            if (currentNode.getElementType().equals(EiffelTypes.OBJECT_CALL)) {
-                processingStack.push(currentNode);
-            }
-            currentNode = currentNode.getTreeParent();
-        }
-
-        String currentClass = currentClassDeclaration.getName();
-        while (!processingStack.empty()) {
-            ASTNode objectCall = processingStack.pop();
-            ASTNode target = objectCall.findChildByType(EiffelTypes.TARGET_NO_LEFT);
-            if (target == null) return null;
-            ASTNode currentUnqualifiedCall = target.findChildByType(EiffelTypes.UNQUALIFIED_CALL);
-            if (currentUnqualifiedCall == null) return null;
-            ASTNode currentFeatureName = currentUnqualifiedCall.findChildByType(EiffelTypes.FEATURE_NAME);
-            if (currentFeatureName == null) return null;
-            currentClass = EiffelClassUtil.findFeatureReturnType(editor.getProject(), currentClass, currentFeatureName.getText());
-            if (currentClass == null) return null;
-        }
+        String currentClass = EiffelClassUtil.findParentingClassForFeatureCall(editor.getProject(), unqualifiedCall);
+        if (currentClass == null) return null;
 
         ASTNode featureName = unqualifiedCall.getNode().findChildByType(EiffelTypes.FEATURE_NAME);
         if (featureName == null) return null;

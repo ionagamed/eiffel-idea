@@ -3,9 +3,13 @@ package com.eiffel.codeInsight.completion;
 import com.eiffel.psi.EiffelClassUtil;
 import com.eiffel.psi.EiffelClassDeclaration;
 import com.eiffel.psi.EiffelTypes;
-import com.intellij.codeInsight.completion.CompletionParameters;
-import com.intellij.codeInsight.completion.CompletionResultSet;
+import com.intellij.codeInsight.completion.*;
+import com.intellij.codeInsight.completion.impl.BetterPrefixMatcher;
+import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
+import com.intellij.codeInsight.lookup.LookupElementPresentation;
+import com.intellij.codeInsight.lookup.LookupElementRenderer;
+import com.intellij.icons.AllIcons;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +21,18 @@ public class EiffelClassNameCompletionUtil {
         if (isClassType(parameters.getPosition())) {
             List<EiffelClassDeclaration> classDeclarations = EiffelClassUtil.findClassDeclarations(parameters.getEditor().getProject());
             for (EiffelClassDeclaration declaration : classDeclarations) {
-                resultSet.addElement(LookupElementBuilder.create(declaration.getName()));
+                resultSet.addElement(
+                        LookupElementBuilder
+                                .create(declaration.getName())
+                                .withRenderer(new LookupElementRenderer<LookupElement>() {
+                                    @Override
+                                    public void renderElement(LookupElement element, LookupElementPresentation presentation) {
+                                        presentation.setIcon(AllIcons.Nodes.Class);
+                                        presentation.setItemText(declaration.getName());
+                                        presentation.setItemTextBold(true);
+                                    }
+                                })
+                );
             }
         }
     }

@@ -33,7 +33,11 @@ class_declaration ::=
     [invariant]
     [notes]
     END_KEYWORD
-    { methods=[getName setName getNameIdentifier] }
+    {
+        methods=[getName setName getNameIdentifier]
+        mixin="com.eiffel.psi.impl.EiffelClassDeclarationMixin"
+        implements="com.eiffel.psi.EiffelNamedElement"
+    }
 class_header ::= [header_mark] CLASS_KEYWORD class_name
 header_mark ::= DEFERRED_KEYWORD | EXPANDED_KEYWORD | FROZEN_KEYWORD
 
