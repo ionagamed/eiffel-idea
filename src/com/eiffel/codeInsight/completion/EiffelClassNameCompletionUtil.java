@@ -1,10 +1,9 @@
 package com.eiffel.codeInsight.completion;
 
-import com.eiffel.psi.EiffelClassUtil;
 import com.eiffel.psi.EiffelClassDeclaration;
+import com.eiffel.psi.EiffelClassUtil;
 import com.eiffel.psi.EiffelTypes;
 import com.intellij.codeInsight.completion.*;
-import com.intellij.codeInsight.completion.impl.BetterPrefixMatcher;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.codeInsight.lookup.LookupElementPresentation;
@@ -28,7 +27,7 @@ public class EiffelClassNameCompletionUtil {
                                     @Override
                                     public void renderElement(LookupElement element, LookupElementPresentation presentation) {
                                         presentation.setIcon(AllIcons.Nodes.Class);
-                                        presentation.setItemText(declaration.getName());
+                                        presentation.setItemText(EiffelClassUtil.formalizeName(declaration.getName()));
                                         presentation.setItemTextBold(true);
                                     }
                                 })
@@ -43,6 +42,7 @@ public class EiffelClassNameCompletionUtil {
         }
         if (element.getNode().getTreeParent() == null) return false;
         if (element.getNode().getTreeParent().getTreeParent() == null) return false;
-        return element.getNode().getTreeParent().getTreeParent().getElementType().equals(EiffelTypes.CLASS_TYPE);
+//        return element.getNode().getTreeParent().getTreeParent().getElementType().equals(EiffelTypes.CLASS_TYPE);
+        return false;
     }
 }

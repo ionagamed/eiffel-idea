@@ -57,12 +57,18 @@
     <framework.type implementation="com.eiffel.sdk.EiffelFrameworkType"/>
 
     <lang.braceMatcher language="Eiffel" implementationClass="com.eiffel.formatting.EiffelBraceMatcher"/>
-    <enterHandlerDelegate implementation="com.eiffel.formatting.EiffelEnterHandlerDelegate"/>
+    <lang.commenter language="Eiffel" implementationClass="com.eiffel.EiffelCommenter"/>
+    <!--<enterHandlerDelegate implementation="com.eiffel.formatting.EiffelEnterHandlerDelegate"/>-->
 
     <completion.contributor language="Eiffel" implementationClass="com.eiffel.codeInsight.completion.EiffelCompletionContributor"/>
     <gotoDeclarationHandler implementation="com.eiffel.ide.EiffelGotoDeclarationHandler"/>
+
+    <stubElementTypeHolder class="com.eiffel.psi.EiffelTypes"/>
+    <stubIndex implementation="com.eiffel.psi.EiffelClassDeclarationStubIndex"/>
     <!--<moduleType id="EIFFEL_MODULE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>-->
     <!--<moduleBuilder builderClass="com.eiffel.sdk.EiffelModuleBuilder"/>-->
+
+    <library.type implementation="com.eiffel.ide.library.EiffelLibraryType"/>
   </extensions>
 
   <extensionPoints>

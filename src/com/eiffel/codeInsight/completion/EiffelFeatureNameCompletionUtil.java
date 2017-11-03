@@ -29,7 +29,9 @@ public class EiffelFeatureNameCompletionUtil {
         List<String> featureNames = EiffelClassUtil.findFeatureNames(project, className);
         for (String featureName : featureNames) {
             final String formalArguments = EiffelClassUtil.findSerializedFeatureFormalArguments(project, className, featureName);
+//            final String formalArguments = "";
             final String returnType = EiffelClassUtil.findFeatureReturnType(project, className, featureName);
+//            final String returnType = "";
             result.addElement(
                     LookupElementBuilder
                             .create(featureName + (formalArguments == null ? "" : "("))
@@ -37,9 +39,9 @@ public class EiffelFeatureNameCompletionUtil {
                                 @Override
                                 public void renderElement(LookupElement element, LookupElementPresentation presentation) {
                                     presentation.setIcon(AllIcons.Nodes.Function);
-                                    presentation.setItemText(featureName);
+                                    presentation.setItemText(EiffelClassUtil.formalizeName(featureName));
                                     presentation.setItemTextBold(true);
-                                    presentation.setTailText(formalArguments);
+                                    presentation.setTailText(EiffelClassUtil.formalizeName(formalArguments));
                                     presentation.setTypeText(returnType);
                                 }
                             })

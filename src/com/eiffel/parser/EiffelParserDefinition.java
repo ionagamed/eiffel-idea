@@ -15,7 +15,7 @@ public class EiffelParserDefinition implements ParserDefinition {
     public static final TokenSet WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE);
     public static final TokenSet COMMENTS = TokenSet.create(EiffelTypes.COMMENT);
 
-    public static final IFileElementType FILE = new IFileElementType(EiffelLanguage.INSTANCE);
+    public static final IFileElementType FILE = new IStubFileElementType<>(EiffelLanguage.INSTANCE);
 
     @NotNull
     @Override

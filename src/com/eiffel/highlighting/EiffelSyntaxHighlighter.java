@@ -67,7 +67,6 @@ public class EiffelSyntaxHighlighter extends SyntaxHighlighterBase {
             THEN_KEYWORD,
             ELSE_KEYWORD,
             IMPLIES_KEYWORD,
-            ASSIGN_KEYWORD,
             INHERIT_KEYWORD,
             NONE_KEYWORD,
             RENAME_KEYWORD,
@@ -110,29 +109,19 @@ public class EiffelSyntaxHighlighter extends SyntaxHighlighterBase {
             C_EXTERNAL_KEYWORD,
             CPP_EXTERNAL_KEYWORD,
             DLL_EXTERNAL_KEYWORD,
-            USE_KEYWORD
+            USE_KEYWORD,
+            ATTACHED_KEYWORD
     ));
 
     private static final ArrayList<IElementType> operators = new ArrayList<>(Arrays.asList(
             EQ,
-            PLUS,
-            MINUS,
-            ASTERISK,
-            SLASH,
-            DSLASH,
-            DBACKSLASH,
-            CARET,
             DDOT,
             LT,
             GT,
-            LTE,
-            GTE,
             DOT,
-            NOT_EQ,
-            TILDE,
-            NOT_TILDE,
             ASSIGN,
-            DOLLAR
+            DOLLAR,
+            FREE_OPERATOR
     ));
 
     @NotNull

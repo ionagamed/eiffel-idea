@@ -12,6 +12,8 @@ import com.intellij.psi.codeStyle.CodeStyleSettings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import static com.eiffel.psi.EiffelTypes.*;
+
 public class EiffelFormattingModelBuilder implements FormattingModelBuilder {
     @NotNull
     @Override
@@ -22,7 +24,8 @@ public class EiffelFormattingModelBuilder implements FormattingModelBuilder {
                         element.getNode(),
                         Wrap.createWrap(WrapType.NONE, false),
                         Alignment.createAlignment(),
-                        createSpaceBuilder(settings)
+                        createSpaceBuilder(settings),
+                        Indent.getNoneIndent()
                 ),
                 settings
         );
@@ -31,12 +34,22 @@ public class EiffelFormattingModelBuilder implements FormattingModelBuilder {
     @Nullable
     @Override
     public TextRange getRangeAffectingIndent(PsiFile file, int offset, ASTNode elementAtOffset) {
-        return null;
+        return elementAtOffset.getTextRange();
+//        int dt = 20;
+//        int a = elementAtOffset.getStartOffset();
+//        int b = a + elementAtOffset.getTextLength();
+//        return new TextRange(a - dt, b + dt);
     }
 
     private static SpacingBuilder createSpaceBuilder(CodeStyleSettings settings) {
         return new SpacingBuilder(settings, EiffelLanguage.INSTANCE)
-                .around(EiffelTypes.COMPOUND).blankLines(0)
+                .after(COMMA).spaces(1)
+                .after(SEMICOLON).spaces(1)
+                .after(LEFT_SQUARE_BRACKET).spaces(1)
+                .before(RIGHT_SQUARE_BRACKET).spaces(1)
+                .after(COLON).spaces(1)
+                .around(ASSIGN).spaces(1)
+                .before(LEFT_PAREN).spaces(1)
                 ;
     }
 }

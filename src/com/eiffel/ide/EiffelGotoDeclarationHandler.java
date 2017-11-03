@@ -9,8 +9,6 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Stack;
-
 public class EiffelGotoDeclarationHandler extends GotoDeclarationHandlerBase {
     @Nullable
     @Override
@@ -27,6 +25,8 @@ public class EiffelGotoDeclarationHandler extends GotoDeclarationHandlerBase {
         if (grandparent.getNode().getElementType().equals(EiffelTypes.UNQUALIFIED_CALL))
             return getFeatureDeclarationByUnqualifiedCallElement(grandparent, editor);
 
+        if (parent.getNode().getElementType().equals(EiffelTypes.FEATURE_NAME))
+            return getFeatureDeclarationByPlainName(parent, editor);
         return null;
     }
 
@@ -40,6 +40,16 @@ public class EiffelGotoDeclarationHandler extends GotoDeclarationHandlerBase {
 
         ASTNode featureName = unqualifiedCall.getNode().findChildByType(EiffelTypes.FEATURE_NAME);
         if (featureName == null) return null;
+
+        return EiffelClassUtil.findFeatureDeclaration(editor.getProject(), currentClass, featureName.getText());
+    }
+
+    private PsiElement getFeatureDeclarationByPlainName(PsiElement featureName, Editor editor) {
+        EiffelClassDeclaration classDeclaration = EiffelClassUtil.findClassDeclaration(featureName);
+        if (classDeclaration == null) return null;
+
+        String currentClass = classDeclaration.getName();
+        if (currentClass == null) return null;
 
         return EiffelClassUtil.findFeatureDeclaration(editor.getProject(), currentClass, featureName.getText());
     }

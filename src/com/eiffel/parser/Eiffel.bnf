@@ -11,8 +11,87 @@
   elementTypeHolderClass="com.eiffel.psi.EiffelTypes"
   elementTypeClass="com.eiffel.psi.EiffelElementType"
   tokenTypeClass="com.eiffel.psi.EiffelTokenType"
+  elementTypeFactory="com.eiffel.psi.EiffelElementTypeFactory.createElement"
 
   psiImplUtilClass="com.eiffel.psi.impl.EiffelPsiImplUtil"
+
+  tokens=[
+    OR_KEYWORD='or'
+    XOR_KEYWORD='xor'
+    AND_KEYWORD='and'
+    NOT_KEYWORD='not'
+    IMPLIES_KEYWORD='implies'
+    THEN_KEYWORD='then'
+    ELSE_KEYWORD='else'
+    EQ='='
+    COLON=':'
+    COMMA=','
+    SEMICOLON=';'
+    ASSIGN=':='
+    LEFT_CURLY_BRACKET='{'
+    RIGHT_CURLY_BRACKET='}'
+    LEFT_SQUARE_BRACKET='['
+    RIGHT_SQUARE_BRACKET=']'
+    LEFT_PAREN='('
+    RIGHT_PAREN=')'
+    END_KEYWORD='end'
+    DEFERRED_KEYWORD='deferred'
+    EXPANDED_KEYWORD='expanded'
+    FROZEN_KEYWORD='frozen'
+    NOTE_KEYWORD='note'
+    OBSOLETE_KEYWORD='obsolete'
+    FEATURE_KEYWORD='feature'
+    ALIAS_KEYWORD='alias'
+    CONVERT_KEYWORD='convert'
+    INHERIT_KEYWORD='inherit'
+    RENAME_KEYWORD='rename'
+    AS_KEYWORD='as'
+    NONE_KEYWORD='none'
+    ALL_KEYWORD='all'
+    ASSIGN_KEYWORD='assign'
+    CLASS_KEYWORD='class'
+    EXPORT_KEYWORD='export'
+    DO_KEYWORD='do'
+    ONCE_KEYWORD='once'
+    LOCAL_KEYWORD='local'
+    ENSURE_KEYWORD='ensure'
+    ELSEIF_KEYWORD='elseif'
+    ACROSS_KEYWORD='across'
+    FROM_KEYWORD='from'
+    REQUIRE_KEYWORD='require'
+    INVARIANT_KEYWORD='invariant'
+    OLD_KEYWORD='old'
+    ONLY_KEYWORD='only'
+    CHECK_KEYWORD='check'
+    VARIANT_KEYWORD='variant'
+    PRECURSOR_KEYWORD='precursor'
+    REDEFINE_KEYWORD='redefine'
+    UNDEFINE_KEYWORD='undefine'
+    LIKE_KEYWORD='like'
+    CURRENT_KEYWORD='current'
+    CREATE_KEYWORD='create'
+    TUPLE_KEYWORD='tuple'
+    SELECT_KEYWORD='select'
+    IF_KEYWORD='if'
+    INSPECT_KEYWORD='inspect'
+    WHEN_KEYWORD='when'
+    UNTIL_KEYWORD='until'
+    LOOP_KEYWORD='loop'
+    SOME_KEYWORD='some'
+    DEBUG_KEYWORD='debug'
+    RESULT_KEYWORD='result'
+    ATTACHED_KEYWORD='attached'
+    QUESTION='?'
+    EXCLAMATION='!'
+    RESCUE_KEYWORD='rescue'
+    RETRY_KEYWORD='retry'
+    ATTRIBUTE_KEYWORD='attribute'
+    DOT='.'
+    DDOT='..'
+    ARROW='->'
+    AGENT_KEYWORD='agent'
+    DOLLAR='$'
+  ]
 }
 
 eiffelFile ::= class_declaration
@@ -32,296 +111,280 @@ class_declaration ::=
     [notes]
     [invariant]
     [notes]
-    END_KEYWORD
+    'end'
     {
-        methods=[getName setName getNameIdentifier]
-        mixin="com.eiffel.psi.impl.EiffelClassDeclarationMixin"
-        implements="com.eiffel.psi.EiffelNamedElement"
+        methods=[getName setName getNameIdentifier getFeatureDeclarations getFeatureNames]
+        stubClass="com.eiffel.psi.EiffelClassDeclarationStub"
     }
-class_header ::= [header_mark] CLASS_KEYWORD class_name
-header_mark ::= DEFERRED_KEYWORD | EXPANDED_KEYWORD | FROZEN_KEYWORD
+class_header ::= [header_mark] 'class' class_name
+header_mark ::= 'deferred' | 'expanded' | 'frozen'
 
-notes ::= NOTE_KEYWORD note_list
-note_list ::= (note_entry SEMICOLON?)*
+notes ::= 'note' note_list
+private note_list ::= (note_entry ';'?)*
 note_entry ::= note_name note_values
-note_name ::= IDENTIFIER COLON
-note_values ::= note_item (SEMICOLON? note_item)*
+note_name ::= IDENTIFIER ':'
+private note_values ::= note_item (',' note_item)*
 note_item ::= IDENTIFIER | manifest_constant
 
-obsolete ::= OBSOLETE_KEYWORD message
+obsolete ::= 'obsolete' message
 message ::= manifest_string
 
 features ::= feature_clause+
-feature_clause ::= FEATURE_KEYWORD [clients] [header_comment] feature_declaration_list
-feature_declaration_list ::= (feature_declaration SEMICOLON?)*
+feature_clause ::= 'feature' [clients] [header_comment] feature_declaration_list
+private feature_declaration_list ::= (feature_declaration ';'?)*
 header_comment ::= comment
 
 feature_declaration ::= new_feature_list declaration_body
-declaration_body ::= [formal_arguments] [query_mark] [feature_value]
-query_mark ::= type_mark [assigner_mark]
-type_mark ::= COLON type { pin = 1 }
-feature_value ::= [explicit_value] [obsolete] [header_comment] [attribute_or_routine]
-explicit_value ::= EQ manifest_constant { pin = 1 }
+private declaration_body ::= [formal_arguments] [query_mark] [feature_value]
+private query_mark ::= type_mark [assigner_mark]
+private type_mark ::= ':' type { pin = 1 }
+feature_value ::= [explicit_value] [obsolete] [header_comment] [notes] [attribute_or_routine]
+explicit_value ::= '=' manifest_constant { pin = 1 }
 
-new_feature_list ::= new_feature (COMMA? new_feature)*
-new_feature ::= [FROZEN_KEYWORD] extended_feature_name
+private new_feature_list ::= new_feature (','? new_feature)*
+new_feature ::= ['frozen'] extended_feature_name
 
-attribute_or_routine ::= [precondition] [local_declarations] feature_body [postcondition] [rescue] END_KEYWORD { pin = 3 }
-feature_body ::= deferred | effective_routine | attribute
+private attribute_or_routine ::= [precondition] [local_declarations] feature_body [postcondition] [rescue] END_KEYWORD { pin = 3 }
+private feature_body ::= deferred | effective_routine | attribute
 
-extended_feature_name ::= feature_name [alias]
+private extended_feature_name ::= feature_name [alias]
 feature_name ::= IDENTIFIER
-alias ::= ALIAS_KEYWORD DQUOTE alias_name DQUOTE [CONVERT_KEYWORD]
-alias_name ::= operator | bracket
-bracket ::= ALIAS_BRACKETS
+private alias ::= 'alias' alias_name ['convert']
+//alias_name ::= operator | bracket
+alias_name ::= STRING_LITERAL // later checked for consistency by annotations
+//bracket ::= ALIAS_BRACKETS
 
-operator ::= unary | binary
-unary ::= NOT_KEYWORD | PLUS | MINUS | FREE_OPERATOR
-binary ::=
-    PLUS |
-    MINUS |
-    ASTERISK |
-    SLASH |
-    DSLASH |
-    DBACKSLASH |
-    CARET |
-    DDOT |
-    RANGE |
-    LT |
-    GT |
-    LTE |
-    GTE |
-    AT |
-    AND_KEYWORD |
-    OR_KEYWORD |
-    XOR_KEYWORD |
-    (AND_KEYWORD THEN_KEYWORD) |
-    (OR_KEYWORD ELSE_KEYWORD) |
-    IMPLIES_KEYWORD |
-    FREE_OPERATOR
+private operator ::= binary_operator | unary_operator | FREE_OPERATOR
+private binary_operator ::= ('and' 'then') | ('or' 'else') | 'and' | 'or' | 'implies' | '='
+private unary_operator ::= 'not'
 
-assigner_mark ::= ASSIGN_KEYWORD feature_name
+private assigner_mark ::= 'assign' feature_name
 
 inheritance ::= inherit_clause+
-inherit_clause ::= INHERIT_KEYWORD [non_conformance] parent_list
-non_conformance ::= LEFT_CURLY_BRACKET NONE_KEYWORD RIGHT_CURLY_BRACKET
-parent_list ::= parent (SEMICOLON? parent)*
+private inherit_clause ::= 'inherit' [non_conformance] parent_list { pin = 1 }
+non_conformance ::= '{' 'none' '}' { pin = 1 }
+private parent_list ::= parent (';'? parent)*
 parent ::= class_type [feature_adaption]
-feature_adaption ::= [undefine] [redefine] [rename] [new_exports] [select] END_KEYWORD
+feature_adaption ::= [rename] [new_exports] [undefine] [redefine] [select] 'end'
 
-rename ::= RENAME_KEYWORD rename_list
-rename_list ::= rename_pair (COMMA? rename_pair)*
-rename_pair ::= feature_name AS_KEYWORD extended_feature_name
+private rename ::= 'rename' rename_list
+private rename_list ::= rename_pair (','? rename_pair)*
+rename_pair ::= feature_name 'as' extended_feature_name
 
-clients ::= LEFT_CURLY_BRACKET (class_list | NONE_KEYWORD | ALL_KEYWORD) RIGHT_CURLY_BRACKET
-class_list ::= class_name (COMMA? class_name)*
+clients ::= '{' (class_list | 'none' | 'all') '}' { pin = 1 }
+private class_list ::= class_name (','? class_name)*
 
-new_exports ::= EXPORT_KEYWORD new_export_list
-new_export_list ::= new_export_item (COMMA? new_export_item)*
-new_export_item ::= clients [header_comment] feature_set
-feature_set ::= feature_list | ALL_KEYWORD
-feature_list ::= feature_name (COMMA? feature_name)*
+new_exports ::= 'export' new_export_list
+private new_export_list ::= new_export_item (','? new_export_item)*
+private new_export_item ::= clients [header_comment] feature_set
+private feature_set ::= feature_list | 'all'
+feature_list ::= feature_name (','? feature_name)*
 
-formal_arguments ::= LEFT_PAREN entity_declaration_list RIGHT_PAREN
-entity_declaration_list ::= entity_declaration_group (SEMICOLON? entity_declaration_group)*
+formal_arguments ::= '(' entity_declaration_list ')'
+private entity_declaration_list ::= entity_declaration_group (';'? entity_declaration_group)*
 entity_declaration_group ::= identifier_list type_mark
-identifier_list ::= IDENTIFIER (COMMA IDENTIFIER)*
+private identifier_list ::= IDENTIFIER (',' IDENTIFIER)*
 
-deferred ::= DEFERRED_KEYWORD
-effective_routine ::= internal | ext
-internal ::= routine_mark compound
-routine_mark ::= DO_KEYWORD | once
-once ::= ONCE_KEYWORD [LEFT_PAREN key_list RIGHT_PAREN]
-key_list ::= manifest_string (COMMA? manifest_string)*
+deferred ::= 'deferred'
+private effective_routine ::= internal | ext
+private internal ::= routine_mark compound { pin = 1 }
+private routine_mark ::= 'do' | once
+once ::= 'once' ['(' key_list ')'] { pin = 1 }
+private key_list ::= manifest_string (','? manifest_string)*
 
-local_declarations ::= LOCAL_KEYWORD [entity_declaration_list]
+local_declarations ::= 'local' [entity_declaration_list]
 
-compound ::= (instruction SEMICOLON?)*
-private compound_without_loop ::= (instruction_without_loop SEMICOLON?)* // HACK: see next rule
-private instruction_without_loop ::=
+compound ::= (instruction ';'?)*
+instruction ::=
+    conditional |
     creation_instruction |
+    multi_branch |
     assignment |
     assigner_call |
-    conditional |
+    loop |
     call |
-    multi_branch |
     debug |
     precursor |
     check |
     retry
-instruction ::= instruction_without_loop | loop // HACK: maybe there someday will be a person, who knows how to deal with BNF
-{
-  recoverWhile=instruction_recovery
-}
-private instruction_recovery ::= !(instruction | END_KEYWORD)
+    {
+      recoverWhile=instruction_recovery
+    }
+private instruction_recovery ::= !(
+    keyword_recovery |
+    instruction
+) // contains a lot of hax to make conditionals etc. possible
 
-precondition ::= REQUIRE_KEYWORD [ELSE_KEYWORD] assertion
-postcondition ::= ENSURE_KEYWORD [THEN_KEYWORD] assertion [only]
-invariant ::= INVARIANT_KEYWORD assertion
-assertion ::= (assertion_clause SEMICOLON?)*
+precondition ::= 'require' ['else'] assertion { pin = 1 }
+postcondition ::= 'ensure' ['then'] assertion [only] { pin = 1 }
+invariant ::= 'invariant' assertion { pin = 1 }
+private assertion ::= (assertion_clause ';'?)*
 assertion_clause ::= [tag_mark] unlabeled_assertion_clause
-unlabeled_assertion_clause ::= boolean_loop | boolean_expression | comment
-tag_mark ::= tag COLON
+private unlabeled_assertion_clause ::= boolean_loop | boolean_expression | comment
+private tag_mark ::= tag ':'
 tag ::= IDENTIFIER
 
-old ::= OLD_KEYWORD expression
+old ::= 'old' expression
 
-only ::= ONLY_KEYWORD [feature_list]
+only ::= 'only' [feature_list]
 
-check ::= CHECK_KEYWORD assertion [notes] END_KEYWORD
+check ::= 'check' assertion [notes] 'end'
 
-variant ::= VARIANT_KEYWORD [tag_mark] expression
+variant ::= 'variant' [tag_mark] expression
 
-precursor ::= PRECURSOR_KEYWORD [parent_qualification] [actuals]
-parent_qualification ::= LEFT_CURLY_BRACKET class_name RIGHT_CURLY_BRACKET
+precursor ::= 'precursor' [parent_qualification] [actuals]
+parent_qualification ::= '{' class_name '}'
 
-redefine ::= REDEFINE_KEYWORD feature_list
-undefine ::= UNDEFINE_KEYWORD feature_list
+redefine ::= 'redefine' feature_list
+undefine ::= 'undefine' feature_list
 
 type ::= class_or_tuple_type | formal_generic_name | anchored
-class_or_tuple_type ::= class_type | tuple_type
-class_type ::= [attachment_mark] class_name [actual_generics]
-attachment_mark ::= QUESTION | EXCLAMATION
-anchored ::= [attachment_mark] LIKE_KEYWORD anchor
-anchor ::= feature_name | CURRENT_KEYWORD
+private class_or_tuple_type ::= tuple_type | class_type
+private class_type ::= [attachment_mark] class_name [actual_generics]
+attachment_mark ::= '?' | '!'
+private anchored ::= [attachment_mark] 'like' anchor
+private anchor ::= feature_name | 'current'
 
-actual_generics ::= LEFT_SQUARE_BRACKET type_list RIGHT_SQUARE_BRACKET
-type_list ::= type (COMMA? type)*
+actual_generics ::= '[' type_list ']'
+private type_list ::= type (',' type)*
 
-formal_generics ::= LEFT_SQUARE_BRACKET formal_generic_list RIGHT_SQUARE_BRACKET
-formal_generic_list ::= formal_generic (COMMA? formal_generic)*
-formal_generic ::= [FROZEN_KEYWORD] formal_generic_name [constraint]
-formal_generic_name ::= [QUESTION] IDENTIFIER
+formal_generics ::= '[' formal_generic_list ']'
+private formal_generic_list ::= formal_generic (',' formal_generic)*
+formal_generic ::= ['frozen'] formal_generic_name [constraint]
+formal_generic_name ::= ['?'] IDENTIFIER
 
-constraint ::= ARROW constraining_types [constraint_creators]
+private constraint ::= '->' constraining_types [constraint_creators]
 constraining_types ::= single_constraint | multiple_constraint
-single_constraint ::= type [renaming]
-renaming ::= rename END_KEYWORD
-multiple_constraint ::= LEFT_CURLY_BRACKET constraint_list RIGHT_CURLY_BRACKET
-constraint_list ::= single_constraint (COMMA? single_constraint)*
-constraint_creators ::= CREATE_KEYWORD feature_list END_KEYWORD
+private single_constraint ::= type [renaming]
+private renaming ::= rename 'end'
+multiple_constraint ::= '{' constraint_list '}'
+private constraint_list ::= single_constraint (',' single_constraint)*
+constraint_creators ::= 'create' feature_list 'end'
 
-tuple_type ::= TUPLE_KEYWORD [tuple_parameter_list]
-tuple_parameter_list ::= LEFT_SQUARE_BRACKET tuple_parameters RIGHT_SQUARE_BRACKET
-tuple_parameters ::= type_list | entity_declaration_list
+tuple_type ::= 'tuple' [tuple_parameter_list]
+private tuple_parameter_list ::= '[' tuple_parameters ']'
+private tuple_parameters ::= entity_declaration_list | type_list
 
-manifest_tuple ::= LEFT_SQUARE_BRACKET expression_list RIGHT_SQUARE_BRACKET
-expression_list ::= (expression COMMA?)*
+manifest_tuple ::= '[' expression_list ']'
+private expression_list ::= (expression ',')*
 
-converters ::= CONVERT_KEYWORD converter_list
-converter_list ::= converter (COMMA? converter)*
-converter ::= conversion_procedure | conversion_query
-conversion_procedure ::= feature_name LEFT_PAREN LEFT_CURLY_BRACKET type_list RIGHT_CURLY_BRACKET RIGHT_PAREN
-conversion_query ::= feature_name COLON LEFT_CURLY_BRACKET type_list RIGHT_CURLY_BRACKET
+converters ::= 'convert' converter_list
+private converter_list ::= converter (',' converter)*
+private converter ::= conversion_procedure | conversion_query
+conversion_procedure ::= feature_name '(' '{' type_list '}' ')'
+conversion_query ::= feature_name ':' '{' type_list '}'
 
-select ::= SELECT_KEYWORD feature_list
+select ::= 'select' feature_list
 
-conditional ::= IF_KEYWORD then_part_list [else_part] END_KEYWORD
-then_part_list ::= then_part (ELSEIF_KEYWORD then_part)*
-then_part ::= boolean_expression THEN_KEYWORD compound
-else_part ::= ELSE_KEYWORD compound
+conditional ::= 'if' then_part_list [else_part] 'end' { pin = 1 }
+private then_part_list ::= then_part ('elseif' then_part)*
+private then_part ::= boolean_expression 'then' compound
+private else_part ::= 'else' compound
 
-multi_branch ::= INSPECT_KEYWORD expression [when_part_list] [else_part] END_KEYWORD
+multi_branch ::= 'inspect' expression [when_part_list] [else_part] END_KEYWORD
 when_part_list ::= when_part+
-when_part ::= WHEN_KEYWORD choices THEN_KEYWORD compound
-choices ::= choice (COMMA? choice)*
+when_part ::= 'when' choices 'then' compound
+choices ::= choice (',' choice)*
 choice ::= constant | manifest_type | constant_interval | type_interval
-constant_interval ::= constant DDOT constant
-type_interval ::= manifest_type DDOT manifest_type
+constant_interval ::= constant '..' constant
+type_interval ::= manifest_type '..' manifest_type
 
 loop ::=
-    [iteration]
-    [initialization]
-    [invariant]
-    [exit_condition]
-    loop_body
-    [variant]
-    END_KEYWORD
-iteration ::= ACROSS_KEYWORD across_expression AS_KEYWORD IDENTIFIER
+    (initialization [invariant] exit_condition loop_body [variant] 'end') |
+    (iteration loop_body 'end')
+iteration ::= 'across' across_expression 'as' IDENTIFIER { pin = 1 }
 across_expression ::= expression
-initialization ::= FROM_KEYWORD compound_without_loop
-exit_condition ::= UNTIL_KEYWORD boolean_expression
-loop_body ::= (LOOP_KEYWORD compound) | (ALL_KEYWORD boolean_expression) | (SOME_KEYWORD boolean_expression)
+initialization ::= 'from' compound { pin = 1 }
+exit_condition ::= 'until' boolean_expression { pin = 1 }
+loop_body ::= ('loop' compound) | ('all' boolean_expression) | ('some' boolean_expression) { pin = 1 }
 
 boolean_loop ::=
     iteration
-    ((ALL_KEYWORD boolean_expression) | (SOME_KEYWORD boolean_expression))
-    END_KEYWORD
+    (('all' boolean_expression) | ('some' boolean_expression))
+    'end'
 
-debug ::= DEBUG_KEYWORD [LEFT_PAREN key_list RIGHT_PAREN] compound END_KEYWORD
+debug ::= 'debug' ['(' key_list ')'] compound 'end'
 
-attribute ::= ATTRIBUTE_KEYWORD compound
+attribute ::= 'attribute' compound
 
 entity ::= variable | read_only
 variable ::= local | variable_attribute
 variable_attribute ::= feature_name
-local ::= IDENTIFIER | RESULT_KEYWORD
-read_only ::= formal | constant_attribute | CURRENT_KEYWORD
+local ::= IDENTIFIER | 'result'
+read_only ::= formal | constant_attribute | 'current'
 formal ::= IDENTIFIER
 constant_attribute ::= feature_name
 
 creators ::= creation_clause+
-creation_clause ::= CREATE_KEYWORD [clients] [header_comment] creation_procedure_list
-creation_procedure_list ::= creation_procedure (COMMA creation_procedure)*
-creation_procedure ::= feature_name
+private creation_clause ::= 'create' [clients] [header_comment] creation_procedure_list
+private creation_procedure_list ::= creation_procedure (',' creation_procedure)*
+private creation_procedure ::= feature_name
 
-creation_instruction ::= CREATE_KEYWORD [explicit_creation_type] creation_call
-explicit_creation_type ::= LEFT_CURLY_BRACKET type RIGHT_CURLY_BRACKET
-creation_call ::= variable [explicit_creation_call]
-explicit_creation_call ::= DOT unqualified_call
+creation_instruction ::= 'create' [explicit_creation_type] creation_call { pin = 1 }
+private explicit_creation_type ::= '{' type '}' { pin = 1 }
+private creation_call ::= variable [explicit_creation_call]
+private explicit_creation_call ::= '.' unqualified_call { pin = 1 }
 
-creation_expression ::= CREATE_KEYWORD explicit_creation_type [explicit_creation_call]
+creation_expression ::= 'create' explicit_creation_type [explicit_creation_call] { pin = 1 }
 
-equality ::= expression comparison expression
-comparison ::= EQ | NOT_EQ | TILDE | NOT_TILDE
+assignment ::= variable ':=' expression { pin = 2 }
 
-assignment ::= variable ASSIGN expression
+assigner_call ::= expression ':=' expression { pin = 2 }
 
-assigner_call ::= expression ASSIGN expression
+private call ::= object_call | non_object_call | non_object_parenthesized_call | casting_call
+object_call ::= (target_atomic bracketed_actuals) | (target_atomic '.' call) | unqualified_call
+unqualified_call ::= (feature_name [actuals]) | ('current' bracketed_actuals)
+private target_atomic ::= casting_call | unqualified_call | local | read_only | non_object_call | parenthesized
+private target ::= target_atomic ['.' call]
+non_object_call ::= '{' type '}' '.' unqualified_call
+non_object_parenthesized_call ::= '(' '{' type '}' ')' DOT unqualified_call
 
-call ::= object_call | non_object_call
-object_call ::= (target_no_left DOT call) | unqualified_call
-unqualified_call ::= feature_name [actuals]
-target_no_left ::= unqualified_call | local | read_only | non_object_call
-target ::= target_no_left [DOT call]
-non_object_call ::= LEFT_CURLY_BRACKET type RIGHT_CURLY_BRACKET DOT unqualified_call
+casting_call ::= '{' type '}' actuals
 
-actuals ::= LEFT_PAREN actual_list RIGHT_PAREN
-actual_list ::= expression (COMMA expression)*
+actuals ::= parenthesized_actuals | bracketed_actuals
+private parenthesized_actuals ::= '(' actual_list ')'
+private bracketed_actuals ::= '[' actual_list ']'
+actual_list ::= expression (',' expression)*
 
-object_test ::= LEFT_CURLY_BRACKET IDENTIFIER COLON type RIGHT_CURLY_BRACKET expression
+object_test ::= attached_object_test | deprecated_object_test
+private deprecated_object_test ::= '{' IDENTIFIER ':' type '}' expression // not really sure if it's deprecated
+private attached_object_test ::= 'attached' attached_object_test_type? call attached_object_test_redefinition? { pin = 1 }
+private attached_object_test_type ::= '{' type '}'
+private attached_object_test_redefinition ::= 'as' IDENTIFIER
 
-rescue ::= RESCUE_KEYWORD compound
-retry ::= RETRY_KEYWORD
+rescue ::= 'rescue' compound
+retry ::= 'retry'
 
 agent ::= call_agent | inline_agent
-call_agent ::= AGENT_KEYWORD call_agent_body
-inline_agent ::= AGENT_KEYWORD [formal_arguments] [type_mark] [attribute_or_routine] [agent_actuals]
+call_agent ::= 'agent' call_agent_body
+inline_agent ::= 'agent' [formal_arguments] [type_mark] [attribute_or_routine] [agent_actuals]
 
 call_agent_body ::= agent_qualified | agent_unqualified
-agent_qualified ::= agent_target DOT agent_unqualified
+agent_qualified ::= agent_target '.' agent_unqualified
 agent_unqualified ::= feature_name [agent_actuals]
 agent_target ::= entity | parenthesized | manifest_type
-agent_actuals ::= LEFT_PAREN agent_actual_list RIGHT_PAREN
-agent_actual_list ::= agent_actual (COMMA agent_actual)*
+agent_actuals ::= '(' agent_actual_list ')'
+agent_actual_list ::= agent_actual (',' agent_actual)*
 agent_actual ::= expression | placeholder
-placeholder ::= [manifest_type] QUESTION
+placeholder ::= [manifest_type] '?'
 
 expression ::= basic_expression | special_expression
-basic_expression_no_left ::=
+private basic_expression_term ::=
+    object_test |
     call |
     local |
     read_only |
+    boolean_loop |
     precursor |
+    manifest_tuple |
     //equality |
     parenthesized |
     old |
     //operator_expression |
     bracket_expression |
     creation_expression |
-    manifest_constant |
-    manifest_tuple
-basic_expression ::= (basic_expression_no_left binary expression) | (basic_expression_no_left comparison expression) | unary_expression | basic_expression_no_left
+    manifest_constant
+basic_expression ::= (basic_expression_term operator expression) | (basic_expression_term comparison expression) | (operator expression) | basic_expression_term { extends = expression }
 special_expression ::=
     manifest_constant |
     manifest_tuple |
@@ -329,35 +392,32 @@ special_expression ::=
     object_test |
     once_string |
     address
-parenthesized ::= LEFT_PAREN expression RIGHT_PAREN
-address ::= DOLLAR variable
-once_string ::= ONCE_KEYWORD manifest_string
+    { extends = expression }
+parenthesized ::= '(' expression ')' { pin = 1 }
+address ::= '$' variable { pin = 1 }
+once_string ::= 'once' manifest_string { pin = 1 }
 boolean_expression ::= basic_expression | boolean_constant | object_test
 
-operator_expression ::= unary_expression | binary_expression
-unary_expression ::= unary expression
-binary_expression ::= expression binary expression
-
-bracket_expression ::= bracket_target LEFT_SQUARE_BRACKET actuals RIGHT_SQUARE_BRACKET
+bracket_expression ::= bracket_target '[' actuals ']'
 bracket_target ::= target | once_string | manifest_constant | manifest_tuple
 
-constant ::= manifest_constant | constant_attribute
+private constant ::= manifest_constant | constant_attribute
 
 manifest_constant ::= [manifest_type] manifest_value
-manifest_type ::= LEFT_CURLY_BRACKET type RIGHT_CURLY_BRACKET
-manifest_value ::=
+private manifest_type ::= '{' type '}'
+private manifest_value ::=
     boolean_constant |
     character_constant |
     integer_constant |
     real_constant |
     manifest_string |
     manifest_type
-integer_constant ::= INTEGER_LITERAL
-character_constant ::= CHARACTER_LITERAL
-boolean_constant ::= TRUE_KEYWORD | FALSE_KEYWORD
-real_constant ::= REAL_LITERAL
+private integer_constant ::= INTEGER_LITERAL
+private character_constant ::= CHARACTER_LITERAL
+private boolean_constant ::= TRUE_KEYWORD | FALSE_KEYWORD
+private real_constant ::= REAL_LITERAL
 
-manifest_string ::= STRING_LITERAL
+private manifest_string ::= STRING_LITERAL
 
 ext ::= EXTERNAL_KEYWORD external_language [external_name]
 external_language ::= unregistered_language | registered_language
@@ -378,3 +438,14 @@ external_user_file ::= DQUOTE STRING_ONELINE DQUOTE
 external_system_file ::= LT STRING_ONELINE GT
 
 /* TODO: externals */
+
+private keyword_recovery ::=
+    'if' |
+    'else' |
+    'create' |
+    'from' |
+    'until' |
+    'end' |
+    'ensure' |
+    'elseif' |
+    'do'

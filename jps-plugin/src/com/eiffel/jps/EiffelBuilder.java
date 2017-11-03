@@ -172,6 +172,7 @@ public class EiffelBuilder extends TargetBuilder<EiffelSourceRootDescriptor, Eif
     class GECProcessListener implements ProcessListener {
         private final CompileContext context;
         private final Pattern ERROR_MATCHING_PATTERN = Pattern.compile(".* class (.*) \\((\\d+),(\\d+)\\): (.*)");
+        private final Pattern SYNTAX_ERROR_EXTRACTION_PATTERN = Pattern.compile("line (\\d+) column (\\d+) in (.+)");
         private final String sourceRoot;
 
         public GECProcessListener(CompileContext context, String sourceRoot) {
@@ -212,6 +213,23 @@ public class EiffelBuilder extends TargetBuilder<EiffelSourceRootDescriptor, Eif
                             message,
                             sourceRoot + "/" + className.toLowerCase() + ".e",
                             -1, -1, -1,
+                            lineNo,
+                            colNo
+                    ));
+                }
+            } else {
+                Matcher matcher = SYNTAX_ERROR_EXTRACTION_PATTERN.matcher(line);
+                if (matcher.find()) {
+                    int lineNo = Integer.parseInt(matcher.group(1));
+                    int colNo = Integer.parseInt(matcher.group(2));
+                    String fileName = matcher.group(3);
+
+                    context.processMessage(new CompilerMessage(
+                            "gec",
+                            BuildMessage.Kind.ERROR,
+                            "Syntax error",
+                            fileName,
+                            -1 ,-1 ,-1,
                             lineNo,
                             colNo
                     ));
