@@ -91,6 +91,8 @@
     ARROW='->'
     AGENT_KEYWORD='agent'
     DOLLAR='$'
+    LEFT_TRIANGLE_DBRACKET='<<'
+    RIGHT_TRIANGLE_DBRACKET='>>'
   ]
 }
 
@@ -114,9 +116,10 @@ class_declaration ::=
     'end'
     {
         methods=[getName setName getNameIdentifier getFeatureDeclarations getFeatureNames]
+        pin = 2
         stubClass="com.eiffel.psi.EiffelClassDeclarationStub"
     }
-class_header ::= [header_mark] 'class' class_name
+class_header ::= [header_mark] 'class' class_name { pin = 2 }
 header_mark ::= 'deferred' | 'expanded' | 'frozen'
 
 notes ::= 'note' note_list
@@ -130,7 +133,7 @@ obsolete ::= 'obsolete' message
 message ::= manifest_string
 
 features ::= feature_clause+
-feature_clause ::= 'feature' [clients] [header_comment] feature_declaration_list
+feature_clause ::= 'feature' [clients] [header_comment] feature_declaration_list { pin = 1 }
 private feature_declaration_list ::= (feature_declaration ';'?)*
 header_comment ::= comment
 
@@ -266,7 +269,7 @@ private tuple_parameter_list ::= '[' tuple_parameters ']'
 private tuple_parameters ::= entity_declaration_list | type_list
 
 manifest_tuple ::= '[' expression_list ']'
-private expression_list ::= (expression ',')*
+private expression_list ::= (expression (',' expression)*)?
 
 converters ::= 'convert' converter_list
 private converter_list ::= converter (',' converter)*
@@ -316,7 +319,7 @@ formal ::= IDENTIFIER
 constant_attribute ::= feature_name
 
 creators ::= creation_clause+
-private creation_clause ::= 'create' [clients] [header_comment] creation_procedure_list
+private creation_clause ::= 'create' [clients] [header_comment] creation_procedure_list { pin = 1 }
 private creation_procedure_list ::= creation_procedure (',' creation_procedure)*
 private creation_procedure ::= feature_name
 
@@ -370,6 +373,7 @@ placeholder ::= [manifest_type] '?'
 
 expression ::= basic_expression | special_expression
 private basic_expression_term ::=
+    array_literal |
     object_test |
     call |
     local |
@@ -418,6 +422,7 @@ private boolean_constant ::= TRUE_KEYWORD | FALSE_KEYWORD
 private real_constant ::= REAL_LITERAL
 
 private manifest_string ::= STRING_LITERAL
+array_literal ::= '<<' expression_list '>>'
 
 ext ::= EXTERNAL_KEYWORD external_language [external_name]
 external_language ::= unregistered_language | registered_language

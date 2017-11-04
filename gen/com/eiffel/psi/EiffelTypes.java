@@ -21,6 +21,7 @@ public interface EiffelTypes {
   IElementType AGENT_TARGET = EiffelElementTypeFactory.createElement("AGENT_TARGET");
   IElementType AGENT_UNQUALIFIED = EiffelElementTypeFactory.createElement("AGENT_UNQUALIFIED");
   IElementType ALIAS_NAME = EiffelElementTypeFactory.createElement("ALIAS_NAME");
+  IElementType ARRAY_LITERAL = EiffelElementTypeFactory.createElement("ARRAY_LITERAL");
   IElementType ASSERTION_CLAUSE = EiffelElementTypeFactory.createElement("ASSERTION_CLAUSE");
   IElementType ASSIGNER_CALL = EiffelElementTypeFactory.createElement("ASSIGNER_CALL");
   IElementType ASSIGNMENT = EiffelElementTypeFactory.createElement("ASSIGNMENT");
@@ -202,6 +203,7 @@ public interface EiffelTypes {
   IElementType LEFT_CURLY_BRACKET = new EiffelTokenType("{");
   IElementType LEFT_PAREN = new EiffelTokenType("(");
   IElementType LEFT_SQUARE_BRACKET = new EiffelTokenType("[");
+  IElementType LEFT_TRIANGLE_DBRACKET = new EiffelTokenType("<<");
   IElementType LIKE_KEYWORD = new EiffelTokenType("like");
   IElementType LOCAL_KEYWORD = new EiffelTokenType("local");
   IElementType LOOP_KEYWORD = new EiffelTokenType("loop");
@@ -226,6 +228,7 @@ public interface EiffelTypes {
   IElementType RIGHT_CURLY_BRACKET = new EiffelTokenType("}");
   IElementType RIGHT_PAREN = new EiffelTokenType(")");
   IElementType RIGHT_SQUARE_BRACKET = new EiffelTokenType("]");
+  IElementType RIGHT_TRIANGLE_DBRACKET = new EiffelTokenType(">>");
   IElementType SELECT_KEYWORD = new EiffelTokenType("select");
   IElementType SEMICOLON = new EiffelTokenType(";");
   IElementType SIGNATURE_KEYWORD = new EiffelTokenType("SIGNATURE_KEYWORD");
@@ -283,6 +286,9 @@ public interface EiffelTypes {
       }
       else if (type == ALIAS_NAME) {
         return new EiffelAliasNameImpl(node);
+      }
+      else if (type == ARRAY_LITERAL) {
+        return new EiffelArrayLiteralImpl(node);
       }
       else if (type == ASSERTION_CLAUSE) {
         return new EiffelAssertionClauseImpl(node);

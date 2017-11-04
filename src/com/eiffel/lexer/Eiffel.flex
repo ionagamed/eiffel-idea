@@ -124,6 +124,8 @@ FREE_OPERATOR=({OPERATOR_SYMBOL}{OPERATOR_SYMBOL}+)|{OPERATOR_SINGLE_SYMBOL}
 
   "->" { return EiffelTypes.ARROW; }
   "." { return EiffelTypes.DOT; }
+  "<<" { return EiffelTypes.LEFT_TRIANGLE_DBRACKET; }
+  ">>" { return EiffelTypes.RIGHT_TRIANGLE_DBRACKET; }
 
   {FREE_OPERATOR} { return EiffelTypes.FREE_OPERATOR; }
 

@@ -59,6 +59,10 @@ public class EiffelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitArrayLiteral(@NotNull EiffelArrayLiteral o) {
+    visitPsiElement(o);
+  }
+
   public void visitAssertionClause(@NotNull EiffelAssertionClause o) {
     visitPsiElement(o);
   }

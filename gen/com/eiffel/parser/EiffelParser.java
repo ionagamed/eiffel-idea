@@ -62,6 +62,9 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     else if (t == ALIAS_NAME) {
       r = alias_name(b, 0);
     }
+    else if (t == ARRAY_LITERAL) {
+      r = array_literal(b, 0);
+    }
     else if (t == ASSERTION_CLAUSE) {
       r = assertion_clause(b, 0);
     }
@@ -722,6 +725,20 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // '<<' expression_list '>>'
+  public static boolean array_literal(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "array_literal")) return false;
+    if (!nextTokenIs(b, LEFT_TRIANGLE_DBRACKET)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LEFT_TRIANGLE_DBRACKET);
+    r = r && expression_list(b, l + 1);
+    r = r && consumeToken(b, RIGHT_TRIANGLE_DBRACKET);
+    exit_section_(b, m, ARRAY_LITERAL, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // (assertion_clause ';'?)*
   static boolean assertion(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assertion")) return false;
@@ -990,7 +1007,8 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // object_test |
+  // array_literal |
+  //     object_test |
   //     call |
   //     local |
   //     read_only |
@@ -1008,7 +1026,8 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "basic_expression_term")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = object_test(b, l + 1);
+    r = array_literal(b, l + 1);
+    if (!r) r = object_test(b, l + 1);
     if (!r) r = call(b, l + 1);
     if (!r) r = local(b, l + 1);
     if (!r) r = read_only(b, l + 1);
@@ -1323,22 +1342,23 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     'end'
   public static boolean class_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "class_declaration")) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, CLASS_DECLARATION, "<class declaration>");
     r = class_declaration_0(b, l + 1);
     r = r && class_header(b, l + 1);
-    r = r && class_declaration_2(b, l + 1);
-    r = r && class_declaration_3(b, l + 1);
-    r = r && class_declaration_4(b, l + 1);
-    r = r && class_declaration_5(b, l + 1);
-    r = r && class_declaration_6(b, l + 1);
-    r = r && class_declaration_7(b, l + 1);
-    r = r && class_declaration_8(b, l + 1);
-    r = r && class_declaration_9(b, l + 1);
-    r = r && class_declaration_10(b, l + 1);
-    r = r && consumeToken(b, END_KEYWORD);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    p = r; // pin = 2
+    r = r && report_error_(b, class_declaration_2(b, l + 1));
+    r = p && report_error_(b, class_declaration_3(b, l + 1)) && r;
+    r = p && report_error_(b, class_declaration_4(b, l + 1)) && r;
+    r = p && report_error_(b, class_declaration_5(b, l + 1)) && r;
+    r = p && report_error_(b, class_declaration_6(b, l + 1)) && r;
+    r = p && report_error_(b, class_declaration_7(b, l + 1)) && r;
+    r = p && report_error_(b, class_declaration_8(b, l + 1)) && r;
+    r = p && report_error_(b, class_declaration_9(b, l + 1)) && r;
+    r = p && report_error_(b, class_declaration_10(b, l + 1)) && r;
+    r = p && consumeToken(b, END_KEYWORD) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // [notes]
@@ -1415,13 +1435,14 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // [header_mark] 'class' class_name
   public static boolean class_header(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "class_header")) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, CLASS_HEADER, "<class header>");
     r = class_header_0(b, l + 1);
     r = r && consumeToken(b, CLASS_KEYWORD);
+    p = r; // pin = 2
     r = r && class_name(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // [header_mark]
@@ -1856,14 +1877,15 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   static boolean creation_clause(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "creation_clause")) return false;
     if (!nextTokenIs(b, CREATE_KEYWORD)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
     r = consumeToken(b, CREATE_KEYWORD);
-    r = r && creation_clause_1(b, l + 1);
-    r = r && creation_clause_2(b, l + 1);
-    r = r && creation_procedure_list(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, creation_clause_1(b, l + 1));
+    r = p && report_error_(b, creation_clause_2(b, l + 1)) && r;
+    r = p && creation_procedure_list(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // [clients]
@@ -2248,25 +2270,43 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (expression ',')*
+  // (expression (',' expression)*)?
   static boolean expression_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression_list")) return false;
-    int c = current_position_(b);
-    while (true) {
-      if (!expression_list_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "expression_list", c)) break;
-      c = current_position_(b);
-    }
+    expression_list_0(b, l + 1);
     return true;
   }
 
-  // expression ','
+  // expression (',' expression)*
   private static boolean expression_list_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression_list_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = expression(b, l + 1);
-    r = r && consumeToken(b, COMMA);
+    r = r && expression_list_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (',' expression)*
+  private static boolean expression_list_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "expression_list_0_1")) return false;
+    int c = current_position_(b);
+    while (true) {
+      if (!expression_list_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "expression_list_0_1", c)) break;
+      c = current_position_(b);
+    }
+    return true;
+  }
+
+  // ',' expression
+  private static boolean expression_list_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "expression_list_0_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && expression(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -2590,14 +2630,15 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   public static boolean feature_clause(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "feature_clause")) return false;
     if (!nextTokenIs(b, FEATURE_KEYWORD)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, FEATURE_CLAUSE, null);
     r = consumeToken(b, FEATURE_KEYWORD);
-    r = r && feature_clause_1(b, l + 1);
-    r = r && feature_clause_2(b, l + 1);
-    r = r && feature_declaration_list(b, l + 1);
-    exit_section_(b, m, FEATURE_CLAUSE, r);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, feature_clause_1(b, l + 1));
+    r = p && report_error_(b, feature_clause_2(b, l + 1)) && r;
+    r = p && feature_declaration_list(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // [clients]
