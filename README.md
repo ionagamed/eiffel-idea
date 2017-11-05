@@ -26,6 +26,16 @@ Both of the above can be shown on this example
             it.item <= n
         end
     end
+    
+* Array literal expressions
+
+
+    local
+        a: ARRAY [INTEGER]
+    do
+        a := << 1, 2, 3, 4, 5 >>
+    end
+        
 
 ### What is currently being done or WIP (but may be for the time being)
 * Project Wizard
