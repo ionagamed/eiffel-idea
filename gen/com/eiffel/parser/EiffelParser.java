@@ -2656,16 +2656,23 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // new_feature_list declaration_body
+  // new_feature_list [declaration_body]
   public static boolean feature_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "feature_declaration")) return false;
     if (!nextTokenIs(b, "<feature declaration>", FROZEN_KEYWORD, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FEATURE_DECLARATION, "<feature declaration>");
     r = new_feature_list(b, l + 1);
-    r = r && declaration_body(b, l + 1);
+    r = r && feature_declaration_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  // [declaration_body]
+  private static boolean feature_declaration_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_declaration_1")) return false;
+    declaration_body(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -2768,52 +2775,83 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [explicit_value] [obsolete] [header_comment] [notes] [attribute_or_routine]
+  // (explicit_value [obsolete] [header_comment] [notes]) |
+  //     ([obsolete] [header_comment] [notes] attribute_or_routine)
   public static boolean feature_value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "feature_value")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FEATURE_VALUE, "<feature value>");
     r = feature_value_0(b, l + 1);
-    r = r && feature_value_1(b, l + 1);
-    r = r && feature_value_2(b, l + 1);
-    r = r && feature_value_3(b, l + 1);
-    r = r && feature_value_4(b, l + 1);
+    if (!r) r = feature_value_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // [explicit_value]
+  // explicit_value [obsolete] [header_comment] [notes]
   private static boolean feature_value_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "feature_value_0")) return false;
-    explicit_value(b, l + 1);
-    return true;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = explicit_value(b, l + 1);
+    r = r && feature_value_0_1(b, l + 1);
+    r = r && feature_value_0_2(b, l + 1);
+    r = r && feature_value_0_3(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   // [obsolete]
-  private static boolean feature_value_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "feature_value_1")) return false;
+  private static boolean feature_value_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_value_0_1")) return false;
     obsolete(b, l + 1);
     return true;
   }
 
   // [header_comment]
-  private static boolean feature_value_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "feature_value_2")) return false;
+  private static boolean feature_value_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_value_0_2")) return false;
     header_comment(b, l + 1);
     return true;
   }
 
   // [notes]
-  private static boolean feature_value_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "feature_value_3")) return false;
+  private static boolean feature_value_0_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_value_0_3")) return false;
     notes(b, l + 1);
     return true;
   }
 
-  // [attribute_or_routine]
-  private static boolean feature_value_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "feature_value_4")) return false;
-    attribute_or_routine(b, l + 1);
+  // [obsolete] [header_comment] [notes] attribute_or_routine
+  private static boolean feature_value_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_value_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = feature_value_1_0(b, l + 1);
+    r = r && feature_value_1_1(b, l + 1);
+    r = r && feature_value_1_2(b, l + 1);
+    r = r && attribute_or_routine(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [obsolete]
+  private static boolean feature_value_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_value_1_0")) return false;
+    obsolete(b, l + 1);
+    return true;
+  }
+
+  // [header_comment]
+  private static boolean feature_value_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_value_1_1")) return false;
+    header_comment(b, l + 1);
+    return true;
+  }
+
+  // [notes]
+  private static boolean feature_value_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_value_1_2")) return false;
+    notes(b, l + 1);
     return true;
   }
 

@@ -137,11 +137,13 @@ feature_clause ::= 'feature' [clients] [header_comment] feature_declaration_list
 private feature_declaration_list ::= (feature_declaration ';'?)*
 header_comment ::= comment
 
-feature_declaration ::= new_feature_list declaration_body
+feature_declaration ::= new_feature_list [declaration_body]
 private declaration_body ::= [formal_arguments] [query_mark] [feature_value]
 private query_mark ::= type_mark [assigner_mark]
 private type_mark ::= ':' type { pin = 1 }
-feature_value ::= [explicit_value] [obsolete] [header_comment] [notes] [attribute_or_routine]
+feature_value ::=
+    (explicit_value [obsolete] [header_comment] [notes]) |
+    ([obsolete] [header_comment] [notes] attribute_or_routine)
 explicit_value ::= '=' manifest_constant { pin = 1 }
 
 private new_feature_list ::= new_feature (','? new_feature)*

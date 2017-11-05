@@ -1,6 +1,8 @@
 package com.eiffel.formatting;
 
 import static com.eiffel.psi.EiffelTypes.*;
+import static com.intellij.psi.TokenType.ERROR_ELEMENT;
+
 import com.intellij.formatting.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
@@ -20,6 +22,7 @@ public class EiffelBlock extends AbstractBlock {
     private Indent myIndent;
 
     private static TokenSet indentedTokens = TokenSet.create(
+            ERROR_ELEMENT, // newline blocks hack
             FEATURE_LIST,
 //            INSTRUCTION,
             COMPOUND,
@@ -34,6 +37,9 @@ public class EiffelBlock extends AbstractBlock {
             COMMENT,
             CONVERSION_PROCEDURE,
             CONVERSION_QUERY
+    );
+    private static TokenSet checkPrevFor = TokenSet.create(
+
     );
     private static HashMap<IElementType, TokenSet> indentedNestedTokens = new HashMap<>();
     static {
@@ -102,6 +108,8 @@ public class EiffelBlock extends AbstractBlock {
 
     @Override
     public Indent getIndent() {
+        if (myNode.getTextLength() == 0)
+            return Indent.getNoneIndent();
         return myIndent;
     }
 
@@ -124,14 +132,23 @@ public class EiffelBlock extends AbstractBlock {
         if (newChildIndex == 0) {
             return super.getChildAttributes(newChildIndex);
         }
-        ASTNode lastChildNodeOfPrev = ((ASTBlock) subBlocks.get(newChildIndex - 1)).getNode().getLastChildNode();
-        IElementType prevBlockElementType = null;
-        if (lastChildNodeOfPrev != null) {
-            prevBlockElementType = lastChildNodeOfPrev.getElementType();
+        ASTNode prevNode = null;
+        ASTNode lastChildNodeOfPrev = null;
+        ASTNode thisNode = null;
+        if (newChildIndex - 1 < subBlocks.size()) {
+            prevNode = ((ASTBlock)subBlocks.get(newChildIndex - 1)).getNode();
+            lastChildNodeOfPrev = prevNode.getLastChildNode();
         }
-        IElementType thisBlockElementType = ((ASTBlock) subBlocks.get(newChildIndex)).getNode().getElementType();
-        if (indentedTokens.contains(prevBlockElementType) || indentedTokens.contains(thisBlockElementType)) {
-            return new ChildAttributes(Indent.getSpaceIndent(4), null);
+        if (newChildIndex < subBlocks.size()) {
+            thisNode = ((ASTBlock)subBlocks.get(newChildIndex)).getNode();
+        }
+        if (isIndented(lastChildNodeOfPrev)
+                || isIndented(prevNode)
+                || isIndented(thisNode)) {
+            return new ChildAttributes(Indent.getSmartIndent(Indent.Type.NORMAL), null);
+        } else if (prevNode != null && prevNode.getElementType().equals(FEATURES) &&
+                thisNode != null && !TokenSet.create(FEATURES, FEATURE_VALUE).contains(thisNode.getElementType())) {
+            return new ChildAttributes(Indent.getSmartIndent(Indent.Type.NORMAL), null);
         } else {
             return super.getChildAttributes(newChildIndex);
         }
@@ -142,8 +159,19 @@ public class EiffelBlock extends AbstractBlock {
         return myNode.getFirstChildNode() == null;
     }
 
-    //    @Override
-//    public boolean isIncomplete() {
-//        return myNode.getElementType().equals(COMPOUND) || myNode.getElementType().equals(LOCAL_DECLARATIONS);
-//    }
+    @Override
+    public boolean isIncomplete() {
+        if (myNode.getElementType().equals(COMPOUND)) {
+            ASTNode lastChildNode = myNode.getLastChildNode();
+            return lastChildNode == null || lastChildNode.getElementType().equals(END_KEYWORD);
+        }
+        if (myNode.getElementType().equals(CLASS_DECLARATION)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isIndented(ASTNode node) {
+        return node != null && indentedTokens.contains(node.getElementType());
+    }
 }
