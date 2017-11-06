@@ -20,13 +20,17 @@ public class EiffelClassUtil {
     public static String formalizeName(String name) {
         if (name == null) return null;
         return name
-                .replace("like", "$") // HACK well, you see it
+                .replace("like", "$like$") // HACK well, you see it
+                .replace("detachable", "$det$")
+                .replace("separate", "$sep$")
                 .replace(" ", "")
                 .replace("[", " [")
                 .replace(",", ", ")
                 .replace(":", ": ")
                 .replace(";", "; ")
-                .replace("$", " like ");
+                .replace("$like$", " like ")
+                .replace("$det$", " detachable ")
+                .replace("$sep$", " separate ");
     }
 
     public static String ungenerify(String className) {
@@ -72,7 +76,13 @@ public class EiffelClassUtil {
     }
 
     public static EiffelClassDeclaration findClassDeclaration(Project project, String name) {
-        Collection<EiffelClassDeclaration> declarations = StubIndex.getElements(EiffelStubIndexKeys.CLASS_DECLARATION_KEY, ungenerify(name), project, GlobalSearchScope.allScope(project), EiffelClassDeclaration.class);
+        Collection<EiffelClassDeclaration> declarations = StubIndex.getElements(
+                EiffelStubIndexKeys.CLASS_DECLARATION_KEY,
+                ungenerify(name),
+                project,
+                GlobalSearchScope.allScope(project),
+                EiffelClassDeclaration.class
+        );
         if (declarations.size() == 0) return null;
         return declarations.toArray(new EiffelClassDeclaration[1])[0];
     }
@@ -80,12 +90,9 @@ public class EiffelClassUtil {
     public static EiffelFeatureDeclaration findFeatureDeclaration(Project project, String className, String feature) {
         EiffelClassDeclaration classDeclaration = findClassDeclaration(project, className);
         if (classDeclaration == null) return null;
-        List<EiffelFeatureDeclaration> featureDeclarations = classDeclaration.getFeatureDeclarations();
-        for (EiffelFeatureDeclaration featureDeclaration : featureDeclarations) {
-            for (EiffelNewFeature newFeature : featureDeclaration.getNewFeatureList()) {
-                if (newFeature.getFeatureName().getText().equals(feature)) {
-                    return featureDeclaration;
-                }
+        for (EiffelNewFeature newFeature : classDeclaration.getAllNewFeatures()) {
+            if (newFeature.getFeatureName().getText().equals(feature)) {
+                return newFeature.getFeatureDeclaration();
             }
         }
         return null;

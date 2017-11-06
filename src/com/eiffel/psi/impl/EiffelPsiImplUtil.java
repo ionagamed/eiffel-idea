@@ -4,13 +4,12 @@ import com.eiffel.psi.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.TokenSet;
+import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class EiffelPsiImplUtil {
     @Nullable
@@ -18,6 +17,9 @@ public class EiffelPsiImplUtil {
         if (classDeclaration.getStub() != null) return classDeclaration.getStub().getName();
         EiffelClassHeader classHeader = classDeclaration.getClassHeader();
         EiffelClassName className = classHeader.getClassName();
+        if (className == null) {
+            int dbg = 0;
+        }
         return EiffelClassUtil.formalizeName(className.getText());
     }
 
@@ -70,12 +72,76 @@ public class EiffelPsiImplUtil {
     }
 
     @NotNull
+    public static List<EiffelNewFeature> getAllNewFeatures(EiffelClassDeclaration classDeclaration) {
+        List<EiffelNewFeature> result = new ArrayList<>();
+        result.addAll(classDeclaration.getNewFeatures());
+        for (EiffelClassDeclaration parent : classDeclaration.getParents()) {
+            result.addAll(parent.getNewFeatures());
+        }
+        return result;
+    }
+
+    @NotNull
     public static List<String> getFeatureNames(EiffelClassDeclaration classDeclaration) {
         List<String> result = new ArrayList<>();
         for (EiffelFeatureDeclaration declaration : classDeclaration.getFeatureDeclarations()) {
             for (EiffelNewFeature newFeature : declaration.getNewFeatureList()) {
                 result.add(newFeature.getFeatureName().getText());
             }
+        }
+        return result;
+    }
+
+    @NotNull
+    public static List<EiffelClassDeclaration> getDirectParents(EiffelClassDeclaration classDeclaration) {
+        // TODO: refactor to use getDirectParentNames
+        List<EiffelClassDeclaration> result = new ArrayList<>();
+        if (classDeclaration.getName() != null && !classDeclaration.getName().equals("ANY"))
+            result.add(EiffelClassUtil.findClassDeclaration(classDeclaration.getProject(), "ANY"));
+
+        EiffelInheritance inheritance = classDeclaration.getInheritance();
+        if (inheritance == null) return result;
+        for (EiffelParent parent : inheritance.getParentList()) {
+            result.add(EiffelClassUtil.findClassDeclaration(classDeclaration.getProject(), parent.getClassName().getText()));
+        }
+
+        return result;
+    }
+
+    @NotNull
+    public static Set<String> getDirectParentNames(EiffelClassDeclaration classDeclaration) {
+        Set<String> result = new HashSet<>();
+        if (classDeclaration.getName() != null && !classDeclaration.getName().equals("ANY")) result.add("ANY");
+
+        EiffelInheritance inheritance = classDeclaration.getInheritance();
+        if (inheritance == null) return result;
+        for (EiffelParent parent : inheritance.getParentList()) {
+            result.add(parent.getClassName().getText());
+        }
+
+        return result;
+    }
+
+    @NotNull
+    public static List<EiffelClassDeclaration> getParents(EiffelClassDeclaration classDeclaration) {
+        return ContainerUtil.mapNotNull(classDeclaration.getParentNames(),
+                (String s) -> EiffelClassUtil.findClassDeclaration(classDeclaration.getProject(), s)
+        );
+    }
+
+    @NotNull
+    public static Set<String> getParentNames(EiffelClassDeclaration classDeclaration) {
+        Set<String> result = new HashSet<>();
+        Queue<EiffelClassDeclaration> processingQueue = new LinkedBlockingQueue<>();
+        processingQueue.add(classDeclaration);
+        boolean first = true;
+        while (!processingQueue.isEmpty()) {
+            EiffelClassDeclaration current = processingQueue.remove();
+            if (!first) {
+                result.add(current.getName());
+            }
+            processingQueue.addAll(current.getDirectParents());
+            first = false;
         }
         return result;
     }
@@ -90,8 +156,10 @@ public class EiffelPsiImplUtil {
         if (newFeature.getParent() instanceof EiffelFeatureDeclaration) {
             EiffelFeatureDeclaration featureDeclaration = (EiffelFeatureDeclaration) newFeature.getParent();
             EiffelType type = featureDeclaration.getType();
-            if (type != null) {
-                return EiffelClassUtil.formalizeName(type.getText());
+            if (type == null) return null;
+            EiffelClassName className = type.getClassName();
+            if (className != null) {
+                return EiffelClassUtil.formalizeName(className.getText());
             }
         }
         return null;
@@ -99,12 +167,19 @@ public class EiffelPsiImplUtil {
 
     @Nullable
     public static String getSerializedFormalArguments(EiffelNewFeature newFeature) {
+        EiffelFeatureDeclaration featureDeclaration = newFeature.getFeatureDeclaration();
+        if (featureDeclaration == null) return null;
+        EiffelFormalArguments arguments = featureDeclaration.getFormalArguments();
+        if (arguments != null) {
+            return EiffelClassUtil.formalizeName(arguments.getText());
+        }
+        return null;
+    }
+
+    @Nullable
+    public static EiffelFeatureDeclaration getFeatureDeclaration(EiffelNewFeature newFeature) {
         if (newFeature.getParent() instanceof EiffelFeatureDeclaration) {
-            EiffelFeatureDeclaration featureDeclaration = (EiffelFeatureDeclaration) newFeature.getParent();
-            EiffelFormalArguments arguments = featureDeclaration.getFormalArguments();
-            if (arguments != null) {
-                return EiffelClassUtil.formalizeName(arguments.getText());
-            }
+            return (EiffelFeatureDeclaration) newFeature.getParent();
         }
         return null;
     }

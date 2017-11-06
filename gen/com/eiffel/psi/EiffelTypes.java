@@ -169,6 +169,7 @@ public interface EiffelTypes {
   IElementType DDOT = new EiffelTokenType("..");
   IElementType DEBUG_KEYWORD = new EiffelTokenType("debug");
   IElementType DEFERRED_KEYWORD = new EiffelTokenType("deferred");
+  IElementType DETACHABLE_KEYWORD = new EiffelTokenType("detachable");
   IElementType DLL_EXTERNAL_KEYWORD = new EiffelTokenType("DLL_EXTERNAL_KEYWORD");
   IElementType DOLLAR = new EiffelTokenType("$");
   IElementType DOT = new EiffelTokenType(".");
@@ -227,6 +228,7 @@ public interface EiffelTypes {
   IElementType RIGHT_TRIANGLE_DBRACKET = new EiffelTokenType(">>");
   IElementType SELECT_KEYWORD = new EiffelTokenType("select");
   IElementType SEMICOLON = new EiffelTokenType(";");
+  IElementType SEPARATE_KEYWORD = new EiffelTokenType("separate");
   IElementType SIGNATURE_KEYWORD = new EiffelTokenType("SIGNATURE_KEYWORD");
   IElementType SOME_KEYWORD = new EiffelTokenType("some");
   IElementType STRING_LITERAL = new EiffelTokenType("STRING_LITERAL");

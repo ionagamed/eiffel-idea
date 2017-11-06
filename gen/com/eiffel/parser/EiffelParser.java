@@ -691,21 +691,48 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [attachment_mark] 'like' anchor
+  // ['detachable' | 'attached'] ['separate'] [attachment_mark] 'like' anchor
   static boolean anchored(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "anchored")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = anchored_0(b, l + 1);
+    r = r && anchored_1(b, l + 1);
+    r = r && anchored_2(b, l + 1);
     r = r && consumeToken(b, LIKE_KEYWORD);
     r = r && anchor(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // [attachment_mark]
+  // ['detachable' | 'attached']
   private static boolean anchored_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "anchored_0")) return false;
+    anchored_0_0(b, l + 1);
+    return true;
+  }
+
+  // 'detachable' | 'attached'
+  private static boolean anchored_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "anchored_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DETACHABLE_KEYWORD);
+    if (!r) r = consumeToken(b, ATTACHED_KEYWORD);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ['separate']
+  private static boolean anchored_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "anchored_1")) return false;
+    consumeToken(b, SEPARATE_KEYWORD);
+    return true;
+  }
+
+  // [attachment_mark]
+  private static boolean anchored_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "anchored_2")) return false;
     attachment_mark(b, l + 1);
     return true;
   }
@@ -756,22 +783,27 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [tag_mark] unlabeled_assertion_clause
+  // (tag_mark unlabeled_assertion_clause) | tag_mark | unlabeled_assertion_clause
   public static boolean assertion_clause(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assertion_clause")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, ASSERTION_CLAUSE, "<assertion clause>");
     r = assertion_clause_0(b, l + 1);
-    r = r && unlabeled_assertion_clause(b, l + 1);
+    if (!r) r = tag_mark(b, l + 1);
+    if (!r) r = unlabeled_assertion_clause(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // [tag_mark]
+  // tag_mark unlabeled_assertion_clause
   private static boolean assertion_clause_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assertion_clause_0")) return false;
-    tag_mark(b, l + 1);
-    return true;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = tag_mark(b, l + 1);
+    r = r && unlabeled_assertion_clause(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -817,7 +849,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'attached' attached_object_test_type? call attached_object_test_redefinition?
+  // 'attached' attached_object_test_type? (call | 'current') attached_object_test_redefinition?
   static boolean attached_object_test(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attached_object_test")) return false;
     if (!nextTokenIs(b, ATTACHED_KEYWORD)) return false;
@@ -826,7 +858,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, ATTACHED_KEYWORD);
     p = r; // pin = 1
     r = r && report_error_(b, attached_object_test_1(b, l + 1));
-    r = p && report_error_(b, call(b, l + 1)) && r;
+    r = p && report_error_(b, attached_object_test_2(b, l + 1)) && r;
     r = p && attached_object_test_3(b, l + 1) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
@@ -837,6 +869,17 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "attached_object_test_1")) return false;
     attached_object_test_type(b, l + 1);
     return true;
+  }
+
+  // call | 'current'
+  private static boolean attached_object_test_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "attached_object_test_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = call(b, l + 1);
+    if (!r) r = consumeToken(b, CURRENT_KEYWORD);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   // attached_object_test_redefinition?
@@ -1441,7 +1484,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // class_name (','? class_name)*
   static boolean class_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "class_list")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    if (!nextTokenIs(b, "", TUPLE_KEYWORD, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = class_name(b, l + 1);
@@ -1481,14 +1524,15 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER
+  // IDENTIFIER | 'tuple'
   public static boolean class_name(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "class_name")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    if (!nextTokenIs(b, "<class name>", TUPLE_KEYWORD, IDENTIFIER)) return false;
     boolean r;
-    Marker m = enter_section_(b);
+    Marker m = enter_section_(b, l, _NONE_, CLASS_NAME, "<class name>");
     r = consumeToken(b, IDENTIFIER);
-    exit_section_(b, m, CLASS_NAME, r);
+    if (!r) r = consumeToken(b, TUPLE_KEYWORD);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -1505,28 +1549,55 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [attachment_mark] class_name [actual_generics]
+  // ['detachable' | 'attached'] ['separate'] [attachment_mark] class_name [actual_generics]
   static boolean class_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "class_type")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = class_type_0(b, l + 1);
-    r = r && class_name(b, l + 1);
+    r = r && class_type_1(b, l + 1);
     r = r && class_type_2(b, l + 1);
+    r = r && class_name(b, l + 1);
+    r = r && class_type_4(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // [attachment_mark]
+  // ['detachable' | 'attached']
   private static boolean class_type_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "class_type_0")) return false;
+    class_type_0_0(b, l + 1);
+    return true;
+  }
+
+  // 'detachable' | 'attached'
+  private static boolean class_type_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "class_type_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DETACHABLE_KEYWORD);
+    if (!r) r = consumeToken(b, ATTACHED_KEYWORD);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ['separate']
+  private static boolean class_type_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "class_type_1")) return false;
+    consumeToken(b, SEPARATE_KEYWORD);
+    return true;
+  }
+
+  // [attachment_mark]
+  private static boolean class_type_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "class_type_2")) return false;
     attachment_mark(b, l + 1);
     return true;
   }
 
   // [actual_generics]
-  private static boolean class_type_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "class_type_2")) return false;
+  private static boolean class_type_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "class_type_4")) return false;
     actual_generics(b, l + 1);
     return true;
   }
@@ -2947,23 +3018,16 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ['?'] IDENTIFIER
+  // '?' | IDENTIFIER
   public static boolean formal_generic_name(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "formal_generic_name")) return false;
     if (!nextTokenIs(b, "<formal generic name>", QUESTION, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FORMAL_GENERIC_NAME, "<formal generic name>");
-    r = formal_generic_name_0(b, l + 1);
-    r = r && consumeToken(b, IDENTIFIER);
+    r = consumeToken(b, QUESTION);
+    if (!r) r = consumeToken(b, IDENTIFIER);
     exit_section_(b, l, m, r, false, null);
     return r;
-  }
-
-  // ['?']
-  private static boolean formal_generic_name_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "formal_generic_name_0")) return false;
-    consumeToken(b, QUESTION);
-    return true;
   }
 
   /* ********************************************************** */
@@ -2993,16 +3057,37 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'deferred' | 'expanded' | 'frozen'
+  // ['frozen'] ['expanded'] ['deferred']
   public static boolean header_mark(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "header_mark")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, HEADER_MARK, "<header mark>");
-    r = consumeToken(b, DEFERRED_KEYWORD);
-    if (!r) r = consumeToken(b, EXPANDED_KEYWORD);
-    if (!r) r = consumeToken(b, FROZEN_KEYWORD);
+    r = header_mark_0(b, l + 1);
+    r = r && header_mark_1(b, l + 1);
+    r = r && header_mark_2(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  // ['frozen']
+  private static boolean header_mark_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "header_mark_0")) return false;
+    consumeToken(b, FROZEN_KEYWORD);
+    return true;
+  }
+
+  // ['expanded']
+  private static boolean header_mark_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "header_mark_1")) return false;
+    consumeToken(b, EXPANDED_KEYWORD);
+    return true;
+  }
+
+  // ['deferred']
+  private static boolean header_mark_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "header_mark_2")) return false;
+    consumeToken(b, DEFERRED_KEYWORD);
+    return true;
   }
 
   /* ********************************************************** */
@@ -3296,6 +3381,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     'end' |
   //     'ensure' |
   //     'elseif' |
+  //     'when' |
   //     'do'
   static boolean keyword_recovery(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "keyword_recovery")) return false;
@@ -3309,6 +3395,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, END_KEYWORD);
     if (!r) r = consumeToken(b, ENSURE_KEYWORD);
     if (!r) r = consumeToken(b, ELSEIF_KEYWORD);
+    if (!r) r = consumeToken(b, WHEN_KEYWORD);
     if (!r) r = consumeToken(b, DO_KEYWORD);
     exit_section_(b, m, null, r);
     return r;

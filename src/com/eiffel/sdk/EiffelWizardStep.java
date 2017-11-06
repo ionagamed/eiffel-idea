@@ -13,7 +13,7 @@ import javax.swing.*;
 
 public class EiffelWizardStep extends ModuleBuilder {
     public void setupRootModel(ModifiableRootModel modifiableRootModel) throws ConfigurationException {
-
+        modifiableRootModel.inheritSdk();
     }
 
     public ModuleType getModuleType() {

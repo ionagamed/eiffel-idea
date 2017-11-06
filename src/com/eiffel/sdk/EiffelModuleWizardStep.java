@@ -12,6 +12,6 @@ public class EiffelModuleWizardStep extends ModuleWizardStep {
 
     @Override
     public void updateDataModel() {
-        //todo update model according to UI
+        
     }
 }

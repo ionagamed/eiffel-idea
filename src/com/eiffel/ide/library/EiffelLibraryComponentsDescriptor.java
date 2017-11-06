@@ -30,9 +30,8 @@ public class EiffelLibraryComponentsDescriptor extends LibraryRootsComponentDesc
     @NotNull
     @Override
     public List<? extends RootDetector> getRootDetectors() {
-        return Arrays.asList(
-                new EiffelLibRootDetector(OrderRootType.SOURCES, "Source detector"),
-                new EiffelLibRootDetector(OrderRootType.CLASSES, "Class detector")
+        return Collections.singletonList(
+                new EiffelLibRootDetector(OrderRootType.SOURCES, "Source detector")
         );
     }
 

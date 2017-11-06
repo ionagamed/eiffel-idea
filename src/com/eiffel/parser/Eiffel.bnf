@@ -93,12 +93,14 @@
     DOLLAR='$'
     LEFT_TRIANGLE_DBRACKET='<<'
     RIGHT_TRIANGLE_DBRACKET='>>'
+    DETACHABLE_KEYWORD='detachable'
+    SEPARATE_KEYWORD='separate'
   ]
 }
 
 eiffelFile ::= class_declaration
 
-class_name ::= IDENTIFIER
+class_name ::= IDENTIFIER | 'tuple'
 comment ::= COMMENT_ONELINE
 
 class_declaration ::=
@@ -115,12 +117,24 @@ class_declaration ::=
     [notes]
     'end'
     {
-        methods=[getName setName getNameIdentifier getFeatureDeclarations getNewFeatures getFeatureNames]
+        methods=[
+            getName
+            setName
+            getNameIdentifier
+            getFeatureDeclarations
+            getNewFeatures
+            getFeatureNames
+            getAllNewFeatures
+            getDirectParentNames
+            getDirectParents
+            getParentNames
+            getParents
+        ]
         pin = 2
         stubClass="com.eiffel.psi.EiffelClassDeclarationStub"
     }
 class_header ::= [header_mark] 'class' class_name { pin = 2 }
-header_mark ::= 'deferred' | 'expanded' | 'frozen'
+header_mark ::= ['frozen'] ['expanded'] ['deferred']
 
 notes ::= 'note' note_list
 private note_list ::= (note_entry ';'?)*
@@ -149,7 +163,12 @@ explicit_value ::= '=' manifest_constant { pin = 1 }
 private new_feature_list ::= new_feature (','? new_feature)*
 new_feature ::= ['frozen'] extended_feature_name
 {
-    methods = [getName getReturnTypeString getSerializedFormalArguments]
+    methods = [
+        getName
+        getReturnTypeString
+        getSerializedFormalArguments
+        getFeatureDeclaration
+    ]
 }
 
 private attribute_or_routine ::= [precondition] [local_declarations] feature_body [postcondition] [rescue] END_KEYWORD { pin = 3 }
@@ -227,7 +246,11 @@ precondition ::= 'require' ['else'] assertion { pin = 1 }
 postcondition ::= 'ensure' ['then'] assertion [only] { pin = 1 }
 invariant ::= 'invariant' assertion { pin = 1 }
 private assertion ::= (assertion_clause ';'?)*
-assertion_clause ::= [tag_mark] unlabeled_assertion_clause
+
+    // second one is optional for some unknown reason, but there are examples of this in elks library
+    // see integer_8.e in gobo free_elks
+assertion_clause ::= (tag_mark unlabeled_assertion_clause) | tag_mark | unlabeled_assertion_clause
+
 private unlabeled_assertion_clause ::= boolean_loop | boolean_expression | comment
 private tag_mark ::= tag ':'
 tag ::= IDENTIFIER
@@ -248,9 +271,9 @@ undefine ::= 'undefine' feature_list
 
 type ::= class_or_tuple_type | formal_generic_name | anchored
 private class_or_tuple_type ::= tuple_type | class_type
-private class_type ::= [attachment_mark] class_name [actual_generics]
+private class_type ::= ['detachable' | 'attached'] ['separate'] [attachment_mark] class_name [actual_generics]
 attachment_mark ::= '?' | '!'
-private anchored ::= [attachment_mark] 'like' anchor
+private anchored ::= ['detachable' | 'attached'] ['separate'] [attachment_mark] 'like' anchor
 private anchor ::= feature_name | 'current'
 
 actual_generics ::= '[' type_list ']'
@@ -259,7 +282,7 @@ private type_list ::= type (',' type)*
 formal_generics ::= '[' formal_generic_list ']'
 private formal_generic_list ::= formal_generic (',' formal_generic)*
 formal_generic ::= ['frozen'] formal_generic_name [constraint]
-formal_generic_name ::= ['?'] IDENTIFIER
+formal_generic_name ::= ('?' | IDENTIFIER)
 
 private constraint ::= '->' constraining_types [constraint_creators]
 constraining_types ::= single_constraint | multiple_constraint
@@ -356,7 +379,7 @@ actual_list ::= expression (',' expression)*
 
 object_test ::= attached_object_test | deprecated_object_test
 private deprecated_object_test ::= '{' IDENTIFIER ':' type '}' expression // not really sure if it's deprecated
-private attached_object_test ::= 'attached' attached_object_test_type? call attached_object_test_redefinition? { pin = 1 }
+private attached_object_test ::= 'attached' attached_object_test_type? (call | 'current') attached_object_test_redefinition? { pin = 1 }
 private attached_object_test_type ::= '{' type '}'
 private attached_object_test_redefinition ::= 'as' IDENTIFIER
 
@@ -458,4 +481,5 @@ private keyword_recovery ::=
     'end' |
     'ensure' |
     'elseif' |
+    'when' |
     'do'

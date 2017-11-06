@@ -26,7 +26,7 @@ public class EiffelFeatureNameCompletionUtil {
         if (className == null) return;
         EiffelClassDeclaration classDeclaration = EiffelClassUtil.findClassDeclaration(project, className);
         if (classDeclaration == null) return;
-        List<EiffelNewFeature> newFeatures = classDeclaration.getNewFeatures();
+        List<EiffelNewFeature> newFeatures = classDeclaration.getAllNewFeatures();
         for (EiffelNewFeature newFeature : newFeatures) {
             final String formalArguments = newFeature.getSerializedFormalArguments();
             final String returnType = newFeature.getReturnTypeString();

@@ -2,10 +2,8 @@ package com.eiffel.sdk;
 
 import com.eiffel.sdk.EiffelModuleType;
 import com.eiffel.sdk.EiffelModuleWizardStep;
-import com.intellij.ide.util.projectWizard.ModuleBuilder;
-import com.intellij.ide.util.projectWizard.ModuleBuilderListener;
-import com.intellij.ide.util.projectWizard.ModuleWizardStep;
-import com.intellij.ide.util.projectWizard.WizardContext;
+import com.intellij.execution.impl.ModuleRunConfigurationManager;
+import com.intellij.ide.util.projectWizard.*;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.application.WriteAction;
@@ -17,15 +15,16 @@ import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkType;
 import com.intellij.openapi.projectRoots.SdkTypeId;
-import com.intellij.openapi.roots.ContentEntry;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.roots.ModuleRootManager;
+import com.intellij.openapi.roots.*;
 import com.intellij.openapi.roots.impl.SdkFinder;
+import com.intellij.openapi.roots.libraries.Library;
+import com.intellij.openapi.roots.ui.configuration.ModulesProvider;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.project.model.JpsSdkManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -101,6 +100,8 @@ public class EiffelModuleBuilder extends ModuleBuilder implements ModuleBuilderL
 
         VirtualFile ecf = createECF(model.getProject().getName(), sourceRoot);
         if (ecf == null) throw new ConfigurationException("Can't create ECF file");
+
+//        Library.ModifiableModel libraryModel = model.getModuleLibraryTable().getModifiableModel().createLibrary()
     }
 
     @Override
@@ -112,6 +113,13 @@ public class EiffelModuleBuilder extends ModuleBuilder implements ModuleBuilderL
     @Override
     public ModuleWizardStep getCustomOptionsStep(WizardContext context, Disposable parentDisposable) {
         return new EiffelModuleWizardStep();
+    }
+
+    @Override
+    public ModuleWizardStep[] createWizardSteps(@NotNull WizardContext wizardContext, @NotNull ModulesProvider modulesProvider) {
+        return new ModuleWizardStep[] {
+                new ProjectJdkStep(wizardContext)
+        };
     }
 
     @Override

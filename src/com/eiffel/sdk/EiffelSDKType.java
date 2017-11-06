@@ -16,10 +16,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class EiffelSDKType extends SdkType {
-//    public EiffelSDKType(@NotNull String name) {
-//        super(name);
-//    }
-
     public EiffelSDKType() {
         super("EIFFEL_SDK");
     }

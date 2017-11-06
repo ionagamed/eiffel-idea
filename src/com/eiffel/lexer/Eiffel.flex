@@ -109,6 +109,8 @@ FREE_OPERATOR=({OPERATOR_SYMBOL}{OPERATOR_SYMBOL}+)|{OPERATOR_SINGLE_SYMBOL}
   "false" { return EiffelTypes.FALSE_KEYWORD; }
   "external" { return EiffelTypes.EXTERNAL_KEYWORD; }
   "attached" { return EiffelTypes.ATTACHED_KEYWORD; }
+  "detachable" { return EiffelTypes.DETACHABLE_KEYWORD; }
+  "separate" { return EiffelTypes.SEPARATE_KEYWORD; }
 
   "C_external" { return EiffelTypes.C_EXTERNAL_KEYWORD; }
   "C++_external" { return EiffelTypes.CPP_EXTERNAL_KEYWORD; }
