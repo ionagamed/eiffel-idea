@@ -29,7 +29,6 @@ Both of the above can be shown on this example
     
 * Array literal expressions
 
-
     local
         a: ARRAY [INTEGER]
     do
