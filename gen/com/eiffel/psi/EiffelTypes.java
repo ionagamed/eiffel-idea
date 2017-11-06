@@ -8,7 +8,6 @@ import com.eiffel.psi.impl.*;
 
 public interface EiffelTypes {
 
-  IElementType ACROSS_EXPRESSION = EiffelElementTypeFactory.createElement("ACROSS_EXPRESSION");
   IElementType ACTUALS = EiffelElementTypeFactory.createElement("ACTUALS");
   IElementType ACTUAL_GENERICS = EiffelElementTypeFactory.createElement("ACTUAL_GENERICS");
   IElementType ACTUAL_LIST = EiffelElementTypeFactory.createElement("ACTUAL_LIST");
@@ -37,7 +36,6 @@ public interface EiffelTypes {
   IElementType CASTING_CALL = EiffelElementTypeFactory.createElement("CASTING_CALL");
   IElementType CHECK = EiffelElementTypeFactory.createElement("CHECK");
   IElementType CHOICE = EiffelElementTypeFactory.createElement("CHOICE");
-  IElementType CHOICES = EiffelElementTypeFactory.createElement("CHOICES");
   IElementType CLASS_DECLARATION = EiffelElementTypeFactory.createElement("CLASS_DECLARATION");
   IElementType CLASS_HEADER = EiffelElementTypeFactory.createElement("CLASS_HEADER");
   IElementType CLASS_NAME = EiffelElementTypeFactory.createElement("CLASS_NAME");
@@ -145,7 +143,6 @@ public interface EiffelTypes {
   IElementType VARIABLE_ATTRIBUTE = EiffelElementTypeFactory.createElement("VARIABLE_ATTRIBUTE");
   IElementType VARIANT = EiffelElementTypeFactory.createElement("VARIANT");
   IElementType WHEN_PART = EiffelElementTypeFactory.createElement("WHEN_PART");
-  IElementType WHEN_PART_LIST = EiffelElementTypeFactory.createElement("WHEN_PART_LIST");
 
   IElementType ACROSS_KEYWORD = new EiffelTokenType("across");
   IElementType AGENT_KEYWORD = new EiffelTokenType("agent");
@@ -248,10 +245,7 @@ public interface EiffelTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-       if (type == ACROSS_EXPRESSION) {
-        return new EiffelAcrossExpressionImpl(node);
-      }
-      else if (type == ACTUALS) {
+       if (type == ACTUALS) {
         return new EiffelActualsImpl(node);
       }
       else if (type == ACTUAL_GENERICS) {
@@ -334,9 +328,6 @@ public interface EiffelTypes {
       }
       else if (type == CHOICE) {
         return new EiffelChoiceImpl(node);
-      }
-      else if (type == CHOICES) {
-        return new EiffelChoicesImpl(node);
       }
       else if (type == CLASS_DECLARATION) {
         return new EiffelClassDeclarationImpl(node);
@@ -655,9 +646,6 @@ public interface EiffelTypes {
       }
       else if (type == WHEN_PART) {
         return new EiffelWhenPartImpl(node);
-      }
-      else if (type == WHEN_PART_LIST) {
-        return new EiffelWhenPartListImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

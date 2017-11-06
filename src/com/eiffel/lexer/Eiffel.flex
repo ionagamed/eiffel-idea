@@ -25,13 +25,11 @@ import com.eiffel.psi.EiffelTypes;
 %ignorecase
 
 EOL=\R
-CRLF=\R
 WHITE_SPACE=\s+
 
 SIGN=[+-]
 INTEGER_LITERAL={SIGN}?{INTEGER}
 INTEGER=(0[bB][01_]+)|(0[cC][0-7_]+)|(0[xX][0-9a-fA-F_]+)|([0-9_]+)
-INTEGER_BASE=0[bcxBCX]
 CHARACTER_LITERAL='.'
 IDENTIFIER=[a-zA-Z][a-zA-Z0-9_]*
 REAL=(\.{INTEGER}|{INTEGER}\.|{INTEGER}\.{INTEGER})([eE]{SIGN}?{INTEGER})?
@@ -126,10 +124,10 @@ FREE_OPERATOR=({OPERATOR_SYMBOL}{OPERATOR_SYMBOL}+)|{OPERATOR_SINGLE_SYMBOL}
   "." { return EiffelTypes.DOT; }
   "<<" { return EiffelTypes.LEFT_TRIANGLE_DBRACKET; }
   ">>" { return EiffelTypes.RIGHT_TRIANGLE_DBRACKET; }
+  ".." { return EiffelTypes.DDOT; }
 
   {FREE_OPERATOR} { return EiffelTypes.FREE_OPERATOR; }
 
-  ".." { return EiffelTypes.DDOT; }
   ":=" { return EiffelTypes.ASSIGN; }
   ":" { return EiffelTypes.COLON; }
   ";" { return EiffelTypes.SEMICOLON; }

@@ -287,10 +287,10 @@ private then_part ::= boolean_expression 'then' compound
 private else_part ::= 'else' compound
 
 multi_branch ::= 'inspect' expression [when_part_list] [else_part] END_KEYWORD
-when_part_list ::= when_part+
+private when_part_list ::= when_part+
 when_part ::= 'when' choices 'then' compound
-choices ::= choice (',' choice)*
-choice ::= constant | manifest_type | constant_interval | type_interval
+private choices ::= choice (',' choice)*
+choice ::= constant_interval | type_interval | constant | manifest_type
 constant_interval ::= constant '..' constant
 type_interval ::= manifest_type '..' manifest_type
 
@@ -298,7 +298,7 @@ loop ::=
     (initialization [invariant] exit_condition loop_body [variant] 'end') |
     (iteration loop_body 'end')
 iteration ::= 'across' across_expression 'as' IDENTIFIER { pin = 1 }
-across_expression ::= expression
+private across_expression ::= expression
 initialization ::= 'from' compound { pin = 1 }
 exit_condition ::= 'until' boolean_expression { pin = 1 }
 loop_body ::= ('loop' compound) | ('all' boolean_expression) | ('some' boolean_expression) { pin = 1 }

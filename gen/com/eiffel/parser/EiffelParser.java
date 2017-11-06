@@ -23,10 +23,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     boolean r;
     b = adapt_builder_(t, b, this, EXTENDS_SETS_);
     Marker m = enter_section_(b, 0, _COLLAPSE_, null);
-    if (t == ACROSS_EXPRESSION) {
-      r = across_expression(b, 0);
-    }
-    else if (t == ACTUAL_GENERICS) {
+    if (t == ACTUAL_GENERICS) {
       r = actual_generics(b, 0);
     }
     else if (t == ACTUAL_LIST) {
@@ -109,9 +106,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     }
     else if (t == CHOICE) {
       r = choice(b, 0);
-    }
-    else if (t == CHOICES) {
-      r = choices(b, 0);
     }
     else if (t == CLASS_DECLARATION) {
       r = class_declaration(b, 0);
@@ -434,9 +428,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     else if (t == WHEN_PART) {
       r = when_part(b, 0);
     }
-    else if (t == WHEN_PART_LIST) {
-      r = when_part_list(b, 0);
-    }
     else {
       r = parse_root_(t, b, 0);
     }
@@ -453,13 +444,8 @@ public class EiffelParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // expression
-  public static boolean across_expression(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "across_expression")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, ACROSS_EXPRESSION, "<across expression>");
-    r = expression(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+  static boolean across_expression(PsiBuilder b, int l) {
+    return expression(b, l + 1);
   }
 
   /* ********************************************************** */
@@ -1279,28 +1265,28 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // constant | manifest_type | constant_interval | type_interval
+  // constant_interval | type_interval | constant | manifest_type
   public static boolean choice(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "choice")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CHOICE, "<choice>");
-    r = constant(b, l + 1);
-    if (!r) r = manifest_type(b, l + 1);
-    if (!r) r = constant_interval(b, l + 1);
+    r = constant_interval(b, l + 1);
     if (!r) r = type_interval(b, l + 1);
+    if (!r) r = constant(b, l + 1);
+    if (!r) r = manifest_type(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   /* ********************************************************** */
   // choice (',' choice)*
-  public static boolean choices(PsiBuilder b, int l) {
+  static boolean choices(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "choices")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, CHOICES, "<choices>");
+    Marker m = enter_section_(b);
     r = choice(b, l + 1);
     r = r && choices_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -4881,7 +4867,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // when_part+
-  public static boolean when_part_list(PsiBuilder b, int l) {
+  static boolean when_part_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "when_part_list")) return false;
     if (!nextTokenIs(b, WHEN_KEYWORD)) return false;
     boolean r;
@@ -4893,7 +4879,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
       if (!empty_element_parsed_guard_(b, "when_part_list", c)) break;
       c = current_position_(b);
     }
-    exit_section_(b, m, WHEN_PART_LIST, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
