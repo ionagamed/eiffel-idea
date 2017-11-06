@@ -20,18 +20,20 @@ public class EiffelClassNameCompletionUtil {
         if (isClassType(parameters.getPosition())) {
             List<EiffelClassDeclaration> classDeclarations = EiffelClassUtil.findClassDeclarations(parameters.getEditor().getProject());
             for (EiffelClassDeclaration declaration : classDeclarations) {
-                resultSet.addElement(
-                        LookupElementBuilder
-                                .create(declaration.getName())
-                                .withRenderer(new LookupElementRenderer<LookupElement>() {
-                                    @Override
-                                    public void renderElement(LookupElement element, LookupElementPresentation presentation) {
-                                        presentation.setIcon(AllIcons.Nodes.Class);
-                                        presentation.setItemText(EiffelClassUtil.formalizeName(declaration.getName()));
-                                        presentation.setItemTextBold(true);
-                                    }
-                                })
-                );
+                if (declaration.getName() != null) {
+                    resultSet.addElement(
+                            LookupElementBuilder
+                                    .create(declaration.getName())
+                                    .withRenderer(new LookupElementRenderer<LookupElement>() {
+                                        @Override
+                                        public void renderElement(LookupElement element, LookupElementPresentation presentation) {
+                                            presentation.setIcon(AllIcons.Nodes.Class);
+                                            presentation.setItemText(EiffelClassUtil.formalizeName(declaration.getName()));
+                                            presentation.setItemTextBold(true);
+                                        }
+                                    })
+                    );
+                }
             }
         }
     }
