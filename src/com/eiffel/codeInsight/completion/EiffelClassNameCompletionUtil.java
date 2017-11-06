@@ -42,7 +42,6 @@ public class EiffelClassNameCompletionUtil {
         }
         if (element.getNode().getTreeParent() == null) return false;
         if (element.getNode().getTreeParent().getTreeParent() == null) return false;
-//        return element.getNode().getTreeParent().getTreeParent().getElementType().equals(EiffelTypes.CLASS_TYPE);
-        return false;
+        return element.getNode().getTreeParent().getTreeParent().getElementType().equals(EiffelTypes.TYPE);
     }
 }
