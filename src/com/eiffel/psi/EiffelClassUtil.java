@@ -1,8 +1,6 @@
 package com.eiffel.psi;
 
 import com.eiffel.EiffelSourceFileType;
-import com.eiffel.model.EiffelClassModel;
-import com.eiffel.model.EiffelFeatureModel;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -14,8 +12,6 @@ import com.intellij.psi.stubs.StubIndex;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.util.indexing.FileBasedIndex;
-import org.apache.commons.lang.NotImplementedException;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -31,6 +27,11 @@ public class EiffelClassUtil {
                 .replace(":", ": ")
                 .replace(";", "; ")
                 .replace("$", " like ");
+    }
+
+    public static String ungenerify(String className) {
+        if (className == null) return null;
+        return className.replaceAll("\\[.*]", "").trim();
     }
 
     public static List<EiffelClassDeclaration> findClassDeclarations(Project project) {
@@ -71,15 +72,9 @@ public class EiffelClassUtil {
     }
 
     public static EiffelClassDeclaration findClassDeclaration(Project project, String name) {
-        Collection<EiffelClassDeclaration> declarations = StubIndex.getElements(EiffelStubIndexKeys.CLASS_DECLARATION_KEY, name, project, GlobalSearchScope.allScope(project), EiffelClassDeclaration.class);
+        Collection<EiffelClassDeclaration> declarations = StubIndex.getElements(EiffelStubIndexKeys.CLASS_DECLARATION_KEY, ungenerify(name), project, GlobalSearchScope.allScope(project), EiffelClassDeclaration.class);
         if (declarations.size() == 0) return null;
         return declarations.toArray(new EiffelClassDeclaration[1])[0];
-    }
-
-    public static List<String> findFeatureNames(Project project, String className) {
-        EiffelClassDeclaration declaration = findClassDeclaration(project, className);
-        if (declaration == null) return Collections.emptyList();
-        return declaration.getFeatureNames();
     }
 
     public static EiffelFeatureDeclaration findFeatureDeclaration(Project project, String className, String feature) {
@@ -96,11 +91,6 @@ public class EiffelClassUtil {
         return null;
     }
 
-    public static String findFeatureDocstring(Project project, String className, String feature) {
-        EiffelFeatureDeclaration declaration = findFeatureDeclaration(project, className, feature);
-        return null;
-    }
-
     @Nullable
     public static String findFeatureReturnType(Project project, String className, String feature) {
         EiffelFeatureDeclaration featureDeclaration = findFeatureDeclaration(project, className, feature);
@@ -108,17 +98,6 @@ public class EiffelClassUtil {
         EiffelType typeList = featureDeclaration.getType();
         if (typeList != null) {
             return typeList.getText();
-        }
-        return null;
-    }
-
-    @Nullable
-    public static String findSerializedFeatureFormalArguments(Project project, String className, String feature) {
-        EiffelFeatureDeclaration featureDeclaration = findFeatureDeclaration(project, className, feature);
-        if (featureDeclaration == null) return null;
-        EiffelFormalArguments formalArguments = featureDeclaration.getFormalArguments();
-        if (formalArguments != null) {
-            return formalizeName(formalArguments.getText());
         }
         return null;
     }
@@ -136,37 +115,6 @@ public class EiffelClassUtil {
 
     @Nullable
     public static String findParentingClassForFeatureCall(Project project, PsiElement unqualifiedCall) {
-        EiffelClassDeclaration currentClassDeclaration = EiffelClassUtil.findClassDeclaration(unqualifiedCall);
-        if (currentClassDeclaration == null) return null;
-
-        Stack<ASTNode> processingStack = new Stack<>();
-        ASTNode storedObjectCall = EiffelClassUtil.findParentOfType(unqualifiedCall.getNode(), EiffelTypes.OBJECT_CALL);
-        if (storedObjectCall == null) return null;
-        ASTNode currentNode = storedObjectCall.getTreeParent();
-        while (currentNode != null && !currentNode.getElementType().equals(EiffelTypes.INSTRUCTION)) {
-            if (currentNode.getElementType().equals(EiffelTypes.OBJECT_CALL)) {
-                processingStack.push(currentNode);
-            }
-            currentNode = currentNode.getTreeParent();
-        }
-
-        String currentClass = currentClassDeclaration.getName();
-        while (!processingStack.empty()) {
-            ASTNode objectCall = processingStack.pop();
-//            ASTNode target = objectCall.findChildByType(EiffelTypes.TARGET_NO_LEFT);
-//            if (target == null) return null;
-//            ASTNode currentUnqualifiedCall = target.findChildByType(EiffelTypes.UNQUALIFIED_CALL);
-//            if (currentUnqualifiedCall == null) return null;
-//            ASTNode currentFeatureName = currentUnqualifiedCall.findChildByType(EiffelTypes.FEATURE_NAME);
-//            if (currentFeatureName == null) return null;
-//            currentClass = EiffelClassUtil.findFeatureReturnType(project, currentClass, currentFeatureName.getText());
-//            if (currentClass == null) return null;
-        }
-
-        return currentClass;
-    }
-
-    public static String getType(Project project, PsiElement element) {
-        return null;
+        return EiffelTypeResolutionUtil.getTypeString(project, unqualifiedCall);
     }
 }

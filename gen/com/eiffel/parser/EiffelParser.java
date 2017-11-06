@@ -944,7 +944,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (basic_expression_term operator expression) | (basic_expression_term comparison expression) | (operator expression) | basic_expression_term
+  // (basic_expression_term operator expression) | (basic_expression_term '=' expression) | (operator expression) | basic_expression_term
   public static boolean basic_expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "basic_expression")) return false;
     boolean r;
@@ -969,13 +969,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // basic_expression_term comparison expression
+  // basic_expression_term '=' expression
   private static boolean basic_expression_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "basic_expression_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = basic_expression_term(b, l + 1);
-    r = r && consumeToken(b, COMPARISON);
+    r = r && consumeToken(b, EQ);
     r = r && expression(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -1030,7 +1030,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ('and' 'then') | ('or' 'else') | 'and' | 'or' | 'implies' | '='
+  // ('and' 'then') | ('or' 'else') | 'and' | 'or' | 'implies'
   static boolean binary_operator(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "binary_operator")) return false;
     boolean r;
@@ -1040,7 +1040,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, AND_KEYWORD);
     if (!r) r = consumeToken(b, OR_KEYWORD);
     if (!r) r = consumeToken(b, IMPLIES_KEYWORD);
-    if (!r) r = consumeToken(b, EQ);
     exit_section_(b, m, null, r);
     return r;
   }

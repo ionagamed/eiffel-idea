@@ -161,7 +161,6 @@ public interface EiffelTypes {
   IElementType COLON = new EiffelTokenType(":");
   IElementType COMMA = new EiffelTokenType(",");
   IElementType COMMENT_ONELINE = new EiffelTokenType("COMMENT_ONELINE");
-  IElementType COMPARISON = new EiffelTokenType("comparison");
   IElementType CONVERT_KEYWORD = new EiffelTokenType("convert");
   IElementType CPP_EXTERNAL_KEYWORD = new EiffelTokenType("CPP_EXTERNAL_KEYWORD");
   IElementType CREATE_KEYWORD = new EiffelTokenType("create");

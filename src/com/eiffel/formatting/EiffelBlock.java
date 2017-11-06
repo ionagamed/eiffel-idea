@@ -36,7 +36,8 @@ public class EiffelBlock extends AbstractBlock {
             ASSERTION_CLAUSE,
             COMMENT,
             CONVERSION_PROCEDURE,
-            CONVERSION_QUERY
+            CONVERSION_QUERY,
+            BASIC_EXPRESSION
     );
     private static TokenSet checkPrevFor = TokenSet.create(
 
@@ -86,11 +87,13 @@ public class EiffelBlock extends AbstractBlock {
         Alignment alignment = Alignment.createAlignment();
 
         if (indentedTokens.contains(node.getElementType())) {
-            indent = Indent.getSmartIndent(Indent.Type.NORMAL);
+//            indent = Indent.getSmartIndent(Indent.Type.NORMAL);
+            indent = Indent.getNormalIndent();
         }
         if (indentedNestedTokens.containsKey(myNode.getElementType())) {
             if (indentedNestedTokens.get(myNode.getElementType()).contains(node.getElementType())) {
-                indent = Indent.getSmartIndent(Indent.Type.NORMAL);
+//                indent = Indent.getSmartIndent(Indent.Type.NORMAL);
+                indent = Indent.getNormalIndent();
             }
         }
         if (myNode.getElementType().equals(FEATURE_DECLARATION) && node.getElementType() == COMMENT) {
@@ -148,7 +151,7 @@ public class EiffelBlock extends AbstractBlock {
             return new ChildAttributes(Indent.getSmartIndent(Indent.Type.NORMAL), null);
         } else if (prevNode != null && prevNode.getElementType().equals(FEATURES) &&
                 thisNode != null && !TokenSet.create(FEATURES, FEATURE_VALUE).contains(thisNode.getElementType())) {
-            return new ChildAttributes(Indent.getSmartIndent(Indent.Type.NORMAL), null);
+            return new ChildAttributes(Indent.getNormalIndent(), null);
         } else {
             return super.getChildAttributes(newChildIndex);
         }

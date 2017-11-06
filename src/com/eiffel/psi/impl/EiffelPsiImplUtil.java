@@ -61,6 +61,15 @@ public class EiffelPsiImplUtil {
     }
 
     @NotNull
+    public static List<EiffelNewFeature> getNewFeatures(EiffelClassDeclaration classDeclaration) {
+        List<EiffelNewFeature> newFeatures = new ArrayList<>();
+        for (EiffelFeatureDeclaration featureDeclaration : classDeclaration.getFeatureDeclarations()) {
+            newFeatures.addAll(featureDeclaration.getNewFeatureList());
+        }
+        return newFeatures;
+    }
+
+    @NotNull
     public static List<String> getFeatureNames(EiffelClassDeclaration classDeclaration) {
         List<String> result = new ArrayList<>();
         for (EiffelFeatureDeclaration declaration : classDeclaration.getFeatureDeclarations()) {
@@ -69,5 +78,34 @@ public class EiffelPsiImplUtil {
             }
         }
         return result;
+    }
+
+    @NotNull
+    public static String getName(EiffelNewFeature newFeature) {
+        return newFeature.getFeatureName().getText();
+    }
+
+    @Nullable
+    public static String getReturnTypeString(EiffelNewFeature newFeature) {
+        if (newFeature.getParent() instanceof EiffelFeatureDeclaration) {
+            EiffelFeatureDeclaration featureDeclaration = (EiffelFeatureDeclaration) newFeature.getParent();
+            EiffelType type = featureDeclaration.getType();
+            if (type != null) {
+                return EiffelClassUtil.formalizeName(type.getText());
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public static String getSerializedFormalArguments(EiffelNewFeature newFeature) {
+        if (newFeature.getParent() instanceof EiffelFeatureDeclaration) {
+            EiffelFeatureDeclaration featureDeclaration = (EiffelFeatureDeclaration) newFeature.getParent();
+            EiffelFormalArguments arguments = featureDeclaration.getFormalArguments();
+            if (arguments != null) {
+                return EiffelClassUtil.formalizeName(arguments.getText());
+            }
+        }
+        return null;
     }
 }

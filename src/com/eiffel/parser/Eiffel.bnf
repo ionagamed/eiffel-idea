@@ -115,7 +115,7 @@ class_declaration ::=
     [notes]
     'end'
     {
-        methods=[getName setName getNameIdentifier getFeatureDeclarations getFeatureNames]
+        methods=[getName setName getNameIdentifier getFeatureDeclarations getNewFeatures getFeatureNames]
         pin = 2
         stubClass="com.eiffel.psi.EiffelClassDeclarationStub"
     }
@@ -148,6 +148,9 @@ explicit_value ::= '=' manifest_constant { pin = 1 }
 
 private new_feature_list ::= new_feature (','? new_feature)*
 new_feature ::= ['frozen'] extended_feature_name
+{
+    methods = [getName getReturnTypeString getSerializedFormalArguments]
+}
 
 private attribute_or_routine ::= [precondition] [local_declarations] feature_body [postcondition] [rescue] END_KEYWORD { pin = 3 }
 private feature_body ::= deferred | effective_routine | attribute
@@ -160,7 +163,7 @@ alias_name ::= STRING_LITERAL // later checked for consistency by annotations
 //bracket ::= ALIAS_BRACKETS
 
 private operator ::= binary_operator | unary_operator | FREE_OPERATOR
-private binary_operator ::= ('and' 'then') | ('or' 'else') | 'and' | 'or' | 'implies' | '='
+private binary_operator ::= ('and' 'then') | ('or' 'else') | 'and' | 'or' | 'implies'
 private unary_operator ::= 'not'
 
 private assigner_mark ::= 'assign' feature_name
@@ -390,7 +393,7 @@ private basic_expression_term ::=
     bracket_expression |
     creation_expression |
     manifest_constant
-basic_expression ::= (basic_expression_term operator expression) | (basic_expression_term comparison expression) | (operator expression) | basic_expression_term { extends = expression }
+basic_expression ::= (basic_expression_term operator expression) | (basic_expression_term '=' expression) | (operator expression) | basic_expression_term { extends = expression }
 special_expression ::=
     manifest_constant |
     manifest_tuple |
