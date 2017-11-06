@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/eiffel.iml" filepath="$PROJECT_DIR$/eiffel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jps-plugin/eiffel-jps-plugin.iml" filepath="$PROJECT_DIR$/jps-plugin/eiffel-jps-plugin.iml" />
     </modules>
   </component>
 </project>

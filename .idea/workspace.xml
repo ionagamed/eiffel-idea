@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="eiffel-jps-plugin:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="3ce41165-14ea-48d5-9733-a1082b12cbd6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/eiffel/actions/BuildInjected.java" afterPath="$PROJECT_DIR$/src/com/eiffel/actions/BuildInjected.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/eiffel/windows/run/RunInToolWindowPerformer.java" afterPath="$PROJECT_DIR$/src/com/eiffel/windows/run/RunInToolWindowPerformer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/eiffel/windows/run/RunToolWindowFactory.form" afterPath="$PROJECT_DIR$/src/com/eiffel/windows/run/RunToolWindowFactory.form" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/eiffel/windows/run/RunToolWindowFactory.java" afterPath="$PROJECT_DIR$/src/com/eiffel/windows/run/RunToolWindowFactory.java" />
+    <list default="true" id="3ce41165-14ea-48d5-9733-a1082b12cbd6" name="Default" comment="remove injected builder">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,43 +23,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RunToolWindowFactory.form" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/eiffel/windows/run/RunToolWindowFactory.form">
-          <provider selected="true" editor-type-id="ui-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RunInToolWindowPerformer.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/eiffel/windows/run/RunInToolWindowPerformer.java">
+      <file leaf-file-name="Eiffel.bnf" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/eiffel/parser/Eiffel.bnf">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="61" column="99" lean-forward="true" selection-start-line="61" selection-start-column="99" selection-end-line="61" selection-end-column="99" />
+            <state relative-caret-position="461">
+              <caret line="314" column="31" lean-forward="false" selection-start-line="314" selection-start-column="31" selection-end-line="314" selection-end-column="31" />
               <folding>
-                <element signature="e#794#1445#0" expanded="true" />
-                <element signature="e#1444#1445#0" expanded="true" />
-                <element signature="e#1465#2207#0" expanded="true" />
-                <element signature="e#2206#2207#0" expanded="true" />
+                <element signature="e#0#2478#0" expanded="true" />
+                <element signature="e#537#2476#0" expanded="true" />
+                <marker date="1509976953310" expanded="true" signature="6443:6503" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProjectManager.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/project/ProjectManager.class">
+      <file leaf-file-name="EiffelBlock.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/eiffel/formatting/EiffelBlock.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="47" column="27" lean-forward="false" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RunToolWindowFactory.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/eiffel/windows/run/RunToolWindowFactory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="44" column="38" lean-forward="true" selection-start-line="44" selection-start-column="38" selection-end-line="44" selection-end-column="38" />
+            <state relative-caret-position="285">
+              <caret line="162" column="26" lean-forward="false" selection-start-line="162" selection-start-column="26" selection-end-line="162" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -62,21 +49,87 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BuildInjected.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/eiffel/actions/BuildInjected.java">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="50" column="34" lean-forward="true" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="34" />
+            <state relative-caret-position="195">
+              <caret line="13" column="27" lean-forward="true" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InputStream.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/io/InputStream.java">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="210">
+                <caret line="14" column="52" lean-forward="false" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EiffelSourceRootDescriptor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jps-plugin/src/com/eiffel/jps/EiffelSourceRootDescriptor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="64" column="24" lean-forward="false" selection-start-line="64" selection-start-column="24" selection-end-line="64" selection-end-column="24" />
+            <state relative-caret-position="285">
+              <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChildAttributes.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../idea/platform/lang-api/src/com/intellij/formatting/ChildAttributes.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Eiffel.flex" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/eiffel/lexer/Eiffel.flex">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="254">
+              <caret line="26" column="6" lean-forward="false" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AbstractBlock.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../idea/platform/lang-impl/src/com/intellij/psi/formatter/common/AbstractBlock.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1935">
+              <caret line="171" column="42" lean-forward="false" selection-start-line="171" selection-start-column="42" selection-end-line="171" selection-end-column="42" />
+              <folding>
+                <element signature="e#4792#4793#0" expanded="true" />
+                <element signature="e#4813#4814#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FormatterUtil.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../idea/platform/lang-impl/src/com/intellij/psi/formatter/FormatterUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2985">
+              <caret line="232" column="24" lean-forward="false" selection-start-line="232" selection-start-column="24" selection-end-line="232" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JsonBlock.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../idea/json/src/com/intellij/json/formatter/JsonBlock.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2355">
+              <caret line="192" column="5" lean-forward="false" selection-start-line="192" selection-start-column="5" selection-end-line="192" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -87,45 +140,61 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Simple</find>
-      <find>SimpleTypes</find>
-      <find>Type</find>
-      <find>bnf</find>
-      <find>build</find>
-      <find>ModuleType</find>
-      <find>*</find>
-      <find>icon</find>
-      <find>moduleBuilder</find>
-      <find>createWizardSteps</find>
-      <find>EiffelIcons</find>
-      <find>error</find>
-      <find>color</find>
-      <find>erro</find>
-      <find>OutputContent</find>
-      <find>ERROR_C</find>
-      <find>post</find>
-      <find>Event</find>
-      <find>System.out</find>
-      <find>/library/free_elks/library.ecf</find>
-      <find>^</find>
-      <find>args</find>
-      <find>getProject</find>
+      <find>call</find>
+      <find>assign_keyword</find>
+      <find>object_test</find>
+      <find>redefine</find>
+      <find>feature_adap</find>
+      <find>export</find>
+      <find>from</find>
+      <find>compound_with</find>
+      <find>instruct</find>
+      <find>loop</find>
+      <find>creation_instruct</find>
+      <find>instruction_re</find>
+      <find>recovery</find>
+      <find>convert</find>
+      <find>compound</find>
+      <find>enter</find>
+      <find>feature_declaration</find>
+      <find>local_</find>
+      <find>create</find>
+      <find>local</find>
+      <find>shiftLeft</find>
+      <find>isIncomplete</find>
+      <find>creat</find>
+      <find>compa</find>
+      <find>instruction</find>
+      <find>expression</find>
+      <find>unqualified</find>
+      <find>expression_list</find>
+      <find>feature_decl</find>
+      <find>inspect</find>
     </findStrings>
     <replaceStrings>
       <replace>EiffelEiffel</replace>
       <replace>EiffelTypes</replace>
       <replace>Eiffel</replace>
     </replaceStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/src/com/eiffel</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="build" />
+      </map>
+    </option>
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -135,42 +204,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/eiffel/EiffelLanguage.java" />
-        <option value="$PROJECT_DIR$/eiffel.iml" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/icons/ecf/ecf@16px.svg" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/EiffelTokenType.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/pci/EiffelTokenType.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/pci/EiffelTypes.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/pci/EiffelElementType.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/Eiffel.bnf" />
-        <option value="$PROJECT_DIR$/gen/com/eiffel/psi/EiffelTypes.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/EiffelFileType.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/EiffelIcons.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/impl/EiffelNamedElementImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/EiffelASTUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/EiffelElementFactory.java" />
+        <option value="$PROJECT_DIR$/LICENSE" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/codeInsight/completion/EiffelFeatureNameCompletionContributor.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/codeInsight/completion/EiffelClassNameCompletionContributor.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/EiffelCommenter.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/model/EiffelFeatureActualModel.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/model/EiffelClassModel.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/model/EiffelFeatureModel.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/actions/TypedActionHandler.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/EditorRoutines.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/EiffelClassDeclaration.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/impl/EiffelClassDeclarationMixin.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/EiffelClassDeclarationStub.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/EiffelElementTypeFactory.java" />
         <option value="$PROJECT_DIR$/src/com/eiffel/EiffelSourceFileType.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/EiffelFileTypeFactory.java" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/EiffelLexerAdapter.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/pci/EiffelFile.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/EiffelParserDefinition.java" />
-        <option value="$PROJECT_DIR$/gen/com/eiffel/EiffelLexer.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/Eiffel.flex" />
-        <option value="$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/fileTypes/LanguageFileType.class" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/EiffelProjectFileType.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelWizzardStep.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardFirstStepForm.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardFirstStepForm.form" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleType.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelWizardStep.java" />
-        <option value="$USER_HOME$/Downloads/sourceCode/src/net/jay/parser/Lexer/ParserLexer.flex" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleBuilder.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardStep.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/GECRunProcessState.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/parser/EiffelParserDefinition.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/ide/PsiTreeReindexChangeListener.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/ide/EiffelGotoDeclarationHandler.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/actions/EiffelTypedActionHandler.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/EiffelStubIndexKeys.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/impl/EiffelClassDeclarationStubElementType.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/EiffelPsiUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/EiffelStubIndex.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/impl/EiffelClassDeclarationStubImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/indexing/EiffelClassIndex.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/codeInsight/completion/EiffelFeatureNameCompletionUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/EiffelClassDeclarationStubIndex.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/ide/EiffelLibraryType.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/ide/library/EiffelLibRootDetector.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/ide/library/EiffelLibraryType.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/codeInsight/completion/EiffelCompletionContributor.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/formatting/EiffelBraceMatcher.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/codeInsight/completion/EiffelClassNameCompletionUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/ide/library/EiffelLibraryComponentsDescriptor.java" />
+        <option value="$PROJECT_DIR$/jps-plugin/src/com/eiffel/jps/EiffelBuilder.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/highlighting/EiffelSyntaxHighlighter.java" />
+        <option value="/Eiffel.bnf.preview" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/EiffelIndentedElement.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/impl/EiffelPsiImplUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/parser/EiffelParserUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/formatting/EiffelEnterHandlerDelegate.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/psi/EiffelClassUtil.java" />
         <option value="$PROJECT_DIR$/resources/META-INF/plugin.xml" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/sdk/EiffelModuleWizardFirstStepForm.form" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/windows/run/RunToolWindowFactory.form" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/windows/run/RunToolWindowFactory.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/actions/BuildInjected.java" />
-        <option value="$PROJECT_DIR$/src/com/eiffel/windows/run/RunInToolWindowPerformer.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/formatting/EiffelFormattingModelBuilder.java" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/formatting/EiffelBlock.java" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/parser/Eiffel.bnf" />
+        <option value="$PROJECT_DIR$/src/com/eiffel/lexer/Eiffel.flex" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -201,62 +285,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="1280" />
-    <option name="height" value="800" />
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
   </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-          <State>
-            <id>CSS</id>
-          </State>
-          <State>
-            <id>Dependency issuesJava</id>
-          </State>
-          <State>
-            <id>Encapsulation issuesJava</id>
-          </State>
-          <State>
-            <id>Error handlingJava</id>
-          </State>
-          <State>
-            <id>Invalid elementsCSS</id>
-          </State>
-          <State>
-            <id>J2ME issuesJava</id>
-          </State>
-          <State>
-            <id>Java</id>
-          </State>
-          <State>
-            <id>Kotlin</id>
-          </State>
-          <State>
-            <id>Naming conventionsJava</id>
-          </State>
-          <State>
-            <id>Packaging issuesJava</id>
-          </State>
-          <State>
-            <id>Probable bugsJava</id>
-          </State>
-          <State>
-            <id>Threading issuesJava</id>
-          </State>
-          <State>
-            <id>TypeScript</id>
-          </State>
-        </expanded-state>
-      </profile-state>
-    </entry>
-  </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -272,164 +304,132 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
+              <item name="jps-plugin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
+              <item name="jps-plugin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
+              <item name="jps-plugin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="jps" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="META-INF" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="eiffel" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="eiffel" type="462c0819:PsiDirectoryNode" />
               <item name="actions" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
-              <item name="annotators" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="eiffel" type="462c0819:PsiDirectoryNode" />
               <item name="formatting" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="eiffel" type="462c0819:PsiDirectoryNode" />
               <item name="highlighting" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="eiffel" type="462c0819:PsiDirectoryNode" />
               <item name="lexer" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="eiffel" type="462c0819:PsiDirectoryNode" />
               <item name="parser" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="eiffel" type="462c0819:PsiDirectoryNode" />
-              <item name="pci" type="462c0819:PsiDirectoryNode" />
+              <item name="psi" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
+              <item name="eiffel-idea" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eiffel-idea" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="eiffel" type="462c0819:PsiDirectoryNode" />
-              <item name="sdk" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
-              <item name="run" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="eiffel" type="462c0819:PsiDirectoryNode" />
-              <item name="run" type="462c0819:PsiDirectoryNode" />
-              <item name="RunToolWindowFactory" type="e9f4de52:FormNode" />
-            </path>
-            <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; IntelliJ IDEA IU-172.3544.35 &gt;" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; IntelliJ IDEA IU-172.3544.35 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="icons.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; IntelliJ IDEA IU-172.3544.35 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="icons.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="general" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; IntelliJ IDEA IU-172.3544.35 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="icons.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="ide" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="eiffel" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; IntelliJ IDEA IU-172.3544.35 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="icons.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="toolwindows" type="462c0819:PsiDirectoryNode" />
+              <item name="psi" type="462c0819:PsiDirectoryNode" />
+              <item name="impl" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Language Defaults" />
+    <property name="settings.editor.selected.configurable" value="debugger.hotswap" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="303" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="326" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="200" />
+    <property name="jdk.selected.JAVA_MODULE" value="1.8" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/ionagamed/projects/eiffel-idea/src/com/eiffel/formatting/EiffelBlock.java&#10;JsonBlock&#9;FILE&#9;file:///Users/ionagamed/projects/idea/json/src/com/intellij/json/formatter/JsonBlock.java&#10;JsonLexe&#9;PSI&#9;JAVA://com.intellij.json._JsonLexer&#10;JsonLexer&#9;PSI&#9;JAVA://com.intellij.json.JsonLexer&#10;JsonSmar&#9;PSI&#9;JAVA://com.intellij.json.editor.smartEnter.JsonSmartEnterProcessor&#10;JsonEnter&#9;PSI&#9;JAVA://com.intellij.json.editor.smartEnter.JsonSmartEnterProcessor.JsonEnterProcessor&#10;JsonFor&#9;FILE&#9;file:///Users/ionagamed/projects/idea/json/src/com/intellij/json/formatter/JsonFormattingBuilderModel.java&#10;JsonFormat&#9;PSI&#9;JAVA://com.intellij.json.formatter.JsonFormattingBuilderModel&#10;EiffelClassDeclarationImpl&#9;FILE&#9;file:///Users/ionagamed/projects/eiffel-idea/gen/com/eiffel/psi/impl/EiffelClassDeclarationImpl.java&#10;StubIndexKey&#9;FILE&#9;file:///Users/ionagamed/projects/idea/platform/core-api/src/com/intellij/psi/stubs/StubIndexKey.java&#10;com.intellij.util.indexing&#9;PSI&#9;JAVA://com.intellij.util.indexing.IndexingDataKeys&#10;EiffelTypes&#9;FILE&#9;file:///Users/ionagamed/projects/eiffel-idea/gen/com/eiffel/psi/EiffelTypes.java&#10;StubBasedP&#9;PSI&#9;JAVA://com.intellij.psi.StubBasedPsiElement&#10;EiffelInstructionImpl&#9;PSI&#9;JAVA://com.eiffel.psi.impl.EiffelInstructionImpl&#10;Eiffel.bnf&#9;FILE&#9;file:///Users/ionagamed/projects/eiffel-idea/src/com/eiffel/parser/Eiffel.bnf&#10;AllIcon&#9;PSI&#9;JAVA://com.intellij.icons.AllIcons&#10;PrefixMatcher&#9;PSI&#9;JAVA://com.intellij.codeInsight.completion.PlainPrefixMatcher&#10;PluginSdkMo&#9;FILE&#9;file:///Users/ionagamed/projects/idea/python/pluginMinor/com/jetbrains/python/minor/sdk/PyPluginSdkModuleConfigurable.kt&#10;SdkCon&#9;FILE&#9;file:///Users/ionagamed/projects/idea/python/ide/src/com/jetbrains/python/PythonSdkConfigurator.java&#10;JpsModuleImpl&#9;FILE&#9;file:///Users/ionagamed/projects/idea/jps/model-impl/src/org/jetbrains/jps/model/module/impl/JpsModuleImpl.java&#10;JpsModule&#9;FILE&#9;file:///Users/ionagamed/projects/idea/jps/model-api/src/org/jetbrains/jps/model/module/JpsModule.java&#10;JavaConten&#9;FILE&#9;file:///Users/ionagamed/projects/idea/java/idea-ui/src/com/intellij/openapi/roots/ui/configuration/JavaContentEntriesEditor.java&#10;JavaContent&#9;PSI&#9;JAVA://com.intellij.openapi.roots.ui.configuration.JavaContentEntriesEditor&#10;Json&#9;FILE&#9;file:///Users/ionagamed/projects/idea/json/src/com/intellij/json/formatter/JsonEnterBetweenBracesHandler.java&#10;JsonSma&#9;FILE&#9;file:///Users/ionagamed/projects/idea/json/src/com/intellij/json/editor/smartEnter/JsonSmartEnterProcessor.java&#10;jsonforma&#9;PSI&#9;JAVA://com.intellij.json.formatter.JsonFormattingBuilderModel" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="add_unversioned_files" value="true" />
   </component>
   <component name="PsiViewer.ProjectComponent">
-    <option name="HIGHLIGHT" value="false" />
+    <option name="HIGHLIGHT" value="true" />
     <option name="FILTER_WHITESPACE" value="false" />
     <option name="SHOW_PROPERTIES" value="true" />
     <option name="SPLIT_DIVIDER_POSITION" value="300" />
@@ -437,6 +437,11 @@
     <option name="AUTOSCROLL_FROM_SOURCE" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.eiffel.ide.library" />
+      <recent name="com.eiffel.model" />
+      <recent name="com.eiffel.psi" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/com/eiffel/icons/ecf" />
       <recent name="$PROJECT_DIR$/src/com/eiffel" />
@@ -448,118 +453,6 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/com/eiffel" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
-    <UpdatedFiles>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Updated from server" />
-        <option name="myStatusName" value="Changed on server" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="CHANGED_ON_SERVER" />
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated" />
-          <option name="myStatusName" value="Changed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UPDATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/com/eiffel/sdk/EiffelModuleBuilder.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/com/eiffel/sdk/EiffelModuleType.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/com/eiffel/sdk/EiffelSDKType.java</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Created" />
-          <option name="myStatusName" value="Created" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CREATED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Deleted" />
-          <option name="myStatusName" value="Deleted" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="true" />
-          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Restored" />
-          <option name="myStatusName" value="Will be restored" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="RESTORED" />
-        </FILE-GROUP>
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Modified" />
-        <option name="myStatusName" value="Modified" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MODIFIED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Skipped" />
-        <option name="myStatusName" value="Skipped" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SKIPPED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with conflicts" />
-        <option name="myStatusName" value="Will be merged with conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_CONFLICTS" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with tree conflicts" />
-        <option name="myStatusName" value="Merged with tree conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with property conflicts" />
-        <option name="myStatusName" value="Will be merged with property conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged" />
-        <option name="myStatusName" value="Will be merged" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Not in repository" />
-        <option name="myStatusName" value="Not in repository" />
-        <option name="mySupportsDeletion" value="true" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="UNKNOWN" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally added" />
-        <option name="myStatusName" value="Locally added" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_ADDED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally removed" />
-        <option name="myStatusName" value="Locally removed" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_REMOVED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Switched" />
-        <option name="myStatusName" value="Switched" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SWITCHED" />
-      </FILE-GROUP>
-    </UpdatedFiles>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -574,11 +467,23 @@
     </option>
   </component>
   <component name="RunManager" selected="Plugin.Plugin">
-    <configuration name="Plugin" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+    <configuration name="Plugin" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin" singleton="false">
       <module name="eiffel" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea -Dcompiler.process.debug.port=49050" />
+      <option name="PROGRAM_PARAMETERS" value="" />
       <predefined_log_file id="idea.log" enabled="true" />
+    </configuration>
+    <configuration name="Unnamed" type="Remote" factoryName="Remote">
+      <module name="eiffel-jps-plugin" />
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="49050" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="49050" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
@@ -661,6 +566,10 @@
       <properties />
       <listeners />
     </configuration>
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="Plugin.Plugin" />
+      <item index="1" class="java.lang.String" itemvalue="Remote.Unnamed" />
+    </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -682,14 +591,19 @@
       <workItem from="1505772273625" duration="3405000" />
       <workItem from="1505831922961" duration="579000" />
       <workItem from="1505840388226" duration="8717000" />
-      <workItem from="1507060859289" duration="2315000" />
-      <workItem from="1507100726023" duration="287000" />
-      <workItem from="1507101145669" duration="731000" />
-      <workItem from="1507102042246" duration="52000" />
-      <workItem from="1507123121866" duration="1304000" />
-      <workItem from="1507125767954" duration="291000" />
-      <workItem from="1507126413775" duration="21032000" />
-      <workItem from="1507204480768" duration="10075000" />
+      <workItem from="1507060859289" duration="1526000" />
+      <workItem from="1507661864459" duration="39151000" />
+      <workItem from="1507971901672" duration="23833000" />
+      <workItem from="1508152862597" duration="99000" />
+      <workItem from="1508228949427" duration="28556000" />
+      <workItem from="1508592478157" duration="2000" />
+      <workItem from="1509112262022" duration="709000" />
+      <workItem from="1509196623612" duration="279000" />
+      <workItem from="1509365594605" duration="8170000" />
+      <workItem from="1509391842394" duration="12451000" />
+      <workItem from="1509510852996" duration="30108000" />
+      <workItem from="1509892189508" duration="182000" />
+      <workItem from="1509970568652" duration="1358000" />
     </task>
     <task id="LOCAL-00001" summary="&gt; Initial commit&#10;- Basic class definition&#10;- Icons for .ecf files (Retina ready)&#10;- .ecf files definition">
       <created>1505168041215</created>
@@ -719,477 +633,613 @@
       <option name="project" value="LOCAL" />
       <updated>1507061251138</updated>
     </task>
-    <task id="LOCAL-00005" summary="Modal FIX">
-      <created>1507062562964</created>
+    <task id="LOCAL-00005" summary="tmp">
+      <created>1507650423542</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1507062562964</updated>
+      <updated>1507650423542</updated>
     </task>
-    <task id="LOCAL-00006" summary="Icons&#10;Gobo terminal">
-      <created>1507180338977</created>
+    <task id="LOCAL-00006" summary="add build support">
+      <created>1507729065386</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1507180338977</updated>
+      <updated>1507729065387</updated>
     </task>
-    <task id="LOCAL-00007" summary="GOBO console">
-      <created>1507209665295</created>
+    <task id="LOCAL-00007" summary="remove injected builder">
+      <created>1507729160068</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1507209665296</updated>
+      <updated>1507729160068</updated>
     </task>
-    <task id="LOCAL-00008" summary="GOBO console">
-      <created>1507209760641</created>
+    <task id="LOCAL-00008" summary="remove injected builder">
+      <created>1507729455662</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1507209760641</updated>
+      <updated>1507729455662</updated>
     </task>
-    <task id="LOCAL-00009" summary="Program output to console">
-      <created>1507211589344</created>
+    <task id="LOCAL-00009" summary="remove injected builder">
+      <created>1507729473943</created>
       <option name="number" value="00009" />
       <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
-      <updated>1507211589344</updated>
+      <updated>1507729473943</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="remove injected builder">
+      <created>1507729500617</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1507729500617</updated>
+    </task>
+    <task id="LOCAL-00011" summary="stopped module builder from adding files as separate entries">
+      <created>1507747196364</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1507747196364</updated>
+    </task>
+    <task id="LOCAL-00012" summary="minor tweaks">
+      <created>1507811508621</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1507811508621</updated>
+    </task>
+    <task id="LOCAL-00013" summary="minor tweaks again">
+      <created>1507812760394</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1507812760394</updated>
+    </task>
+    <task id="LOCAL-00014" summary="add msvc windows builder support">
+      <created>1507895164324</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1507895164325</updated>
+    </task>
+    <task id="LOCAL-00015" summary="move msvc settings to sdk configurable">
+      <created>1507902572432</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1507902572432</updated>
+    </task>
+    <task id="LOCAL-00016" summary="tweak sdk configurable form size">
+      <created>1507903539610</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1507903539610</updated>
+    </task>
+    <task id="LOCAL-00017" summary="update readme and plugin description">
+      <created>1507903646804</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1507903646804</updated>
+    </task>
+    <task id="LOCAL-00018" summary="add tag">
+      <created>1507903792932</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1507903792932</updated>
+    </task>
+    <task id="LOCAL-00019" summary="update version to 0.0.2a">
+      <created>1507904011088</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1507904011088</updated>
+    </task>
+    <task id="LOCAL-00020" summary="basic completion and psi utils">
+      <created>1507979920287</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1507979920287</updated>
+    </task>
+    <task id="LOCAL-00021" summary="fix psi package name">
+      <created>1507980088775</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1507980088775</updated>
+    </task>
+    <task id="LOCAL-00022" summary="codeInsight: add goto feature simple implementation">
+      <created>1507994196793</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1507994196793</updated>
+    </task>
+    <task id="LOCAL-00023" summary="add license">
+      <created>1508004313422</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1508004313422</updated>
+    </task>
+    <task id="LOCAL-00024" summary="basic completion">
+      <created>1508057506030</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1508057506030</updated>
+    </task>
+    <task id="LOCAL-00025" summary="add free operators to grammar">
+      <created>1508075325928</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1508075325928</updated>
+    </task>
+    <task id="LOCAL-00026" summary="some psi, this and that, formatting">
+      <created>1509750665820</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1509750665820</updated>
+    </task>
+    <task id="LOCAL-00027" summary="add array literal to grammar">
+      <created>1509814136838</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1509814136838</updated>
+    </task>
+    <task id="LOCAL-00028" summary="formatting getChildAttributes">
+      <created>1509863205006</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1509863205006</updated>
+    </task>
+    <task id="LOCAL-00029" summary="update readme (array literals)">
+      <created>1509863318535</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1509863318535</updated>
+    </task>
+    <task id="LOCAL-00030" summary="refactor parser: inspect &amp; move '..' operator up in lexer&#10;&#10;&#10;* parser:&#10;&#10;Shrink AST depth by moving when_part_list to private.&#10;&#10;&#10;* lexer:&#10;&#10;'..' operator was under FREE_OPERATOR and could never be reached.&#10;Also, some minor fixes">
+      <created>1509977390616</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1509977390616</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63856000" />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
+    <option name="totallyTimeSpent" value="175607000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.49030694" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22696011" sideWeight="0.50646204" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="PsiViewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.49676898" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33287483" sideWeight="0.49353796" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22294022" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282353" sideWeight="0.48194444" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282353" sideWeight="0.51805556" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="PsiViewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19722222" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22588235" sideWeight="0.53055555" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.49676898" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3282353" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25833333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3764706" sideWeight="0.8055556" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.49722221" order="1" side_tool="false" content_ui="tabs" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.49030694" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22696011" sideWeight="0.50646204" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="PsiViewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.49676898" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33287483" sideWeight="0.49353796" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22294022" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="Vcs.Log.History.Properties">
-    <option name="COLUMN_ORDER">
-      <list>
-        <option value="0" />
-        <option value="2" />
-        <option value="3" />
-        <option value="1" />
-      </list>
-    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="&gt; Initial commit&#10;- Basic class definition&#10;- Icons for .ecf files (Retina ready)&#10;- .ecf files definition" />
-    <MESSAGE value="±" />
     <MESSAGE value="±2" />
     <MESSAGE value="Modal" />
-    <MESSAGE value="Modal FIX" />
-    <MESSAGE value="Icons&#10;Gobo terminal" />
-    <MESSAGE value="GOBO console" />
-    <MESSAGE value="Program output to console" />
-    <option name="LAST_COMMIT_MESSAGE" value="Program output to console" />
+    <MESSAGE value="tmp" />
+    <MESSAGE value="add build support" />
+    <MESSAGE value="remove injected builder" />
+    <MESSAGE value="stopped module builder from adding files as separate entries" />
+    <MESSAGE value="minor tweaks" />
+    <MESSAGE value="minor tweaks again" />
+    <MESSAGE value="add msvc windows builder support" />
+    <MESSAGE value="move msvc settings to sdk configurable" />
+    <MESSAGE value="tweak sdk configurable form size" />
+    <MESSAGE value="update readme and plugin description" />
+    <MESSAGE value="add tag" />
+    <MESSAGE value="update version to 0.0.2a" />
+    <MESSAGE value="basic completion and psi utils" />
+    <MESSAGE value="fix psi package name" />
+    <MESSAGE value="codeInsight: add goto feature simple implementation" />
+    <MESSAGE value="add license" />
+    <MESSAGE value="basic completion" />
+    <MESSAGE value="add free operators to grammar" />
+    <MESSAGE value="some psi, this and that, formatting" />
+    <MESSAGE value="add array literal to grammar" />
+    <MESSAGE value="formatting getChildAttributes" />
+    <MESSAGE value="update readme (array literals)" />
+    <MESSAGE value="refactor parser: inspect &amp; move '..' operator up in lexer&#10;&#10;&#10;* parser:&#10;&#10;Shrink AST depth by moving when_part_list to private.&#10;&#10;&#10;* lexer:&#10;&#10;'..' operator was under FREE_OPERATOR and could never be reached.&#10;Also, some minor fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor parser: inspect &amp; move '..' operator up in lexer&#10;&#10;&#10;* parser:&#10;&#10;Shrink AST depth by moving when_part_list to private.&#10;&#10;&#10;* lexer:&#10;&#10;'..' operator was under FREE_OPERATOR and could never be reached.&#10;Also, some minor fixes" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
-    <watches-manager />
+    <breakpoint-manager>
+      <option name="time" value="143" />
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Remote">
+        <watch expression="target.getModule().getSdk(JpsEiffelSdkType.getInstance()).getSdkProperties()" language="JAVA" />
+        <watch expression="new File(&quot;/tmp\\Tools\\VsDevCmd.bat&quot;).exists()" language="JAVA" />
+      </configuration>
+      <configuration name="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
+        <watch expression="getSubBlocks()" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/javaee/local.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/bullet.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/balloon@2x.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/autohideOff.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/add.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/Configure.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/pathVariables.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/progress.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/progress@2x.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/projectConfigurableBanner@2x.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/projectSettings.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/projectStructure@2x.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/runWithCoverage.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/settings.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/warningDecorator.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/warning@2x.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/web@2x.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/webSettings.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/webSettings@2x.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/CreateNewProjectfromExistingFiles@2x.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/icons.jar!/general/createNewProject@2x.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/actionSystem/AnAction.class">
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/codeInsight/completion/EiffelClassNameCompletionUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1433">
-          <caret line="54" column="35" lean-forward="false" selection-start-line="54" selection-start-column="35" selection-end-line="54" selection-end-column="35" />
+        <state relative-caret-position="420">
+          <caret line="44" column="57" lean-forward="false" selection-start-line="44" selection-start-column="57" selection-end-line="44" selection-end-column="57" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/actions/CreateECF.java" />
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/editor/DefaultLanguageHighlighterColors.class">
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/annotators/EiffelClassNameAnnotator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-847">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        <state relative-caret-position="120">
+          <caret line="14" column="71" lean-forward="false" selection-start-line="14" selection-start-column="64" selection-end-line="14" selection-end-column="71" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/EiffelIcons.java">
+    <entry file="file://$PROJECT_DIR$/gen/com/eiffel/EiffelLexer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="4" column="24" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="24" />
+        <state relative-caret-position="20220">
+          <caret line="1371" column="32" lean-forward="false" selection-start-line="1371" selection-start-column="32" selection-end-line="1371" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/execution/process/AnsiEscapeDecoder.class">
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ide/library/EiffelLibRootDetector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3067">
-          <caret line="24" column="36" lean-forward="false" selection-start-line="24" selection-start-column="36" selection-end-line="24" selection-end-column="36" />
+        <state relative-caret-position="195">
+          <caret line="20" column="21" lean-forward="false" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/execution/process/ColoredProcessHandler.class">
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ide/EiffelGotoDeclarationHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="17" column="86" lean-forward="false" selection-start-line="17" selection-start-column="86" selection-end-line="17" selection-end-column="86" />
+        <state relative-caret-position="420">
+          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/GECRunProcessState.java">
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/psi/EiffelFile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="38" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding>
-            <element signature="e#644#645#0" expanded="true" />
-            <element signature="e#678#679#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="60">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/annotators/EiffelBuiltinAnnotator.java">
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ide/library/EiffelLibraryType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="61" lean-forward="false" selection-start-line="5" selection-start-column="61" selection-end-line="5" selection-end-column="61" />
-          <folding />
+        <state relative-caret-position="480">
+          <caret line="52" column="35" lean-forward="false" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ide/library/EiffelLibraryComponentsDescriptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jps-plugin/src/com/eiffel/jps/EiffelBuilderService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jps-plugin/src/com/eiffel/jps/EiffelBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="179" column="19" lean-forward="false" selection-start-line="179" selection-start-column="19" selection-end-line="179" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gen/com/eiffel/psi/impl/EiffelEqualityImpl.java" />
+    <entry file="file://$PROJECT_DIR$/gen/com/eiffel/psi/impl/EiffelComparisonImpl.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/psi/EiffelElementTypeFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="10" column="19" lean-forward="false" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/psi/EiffelStubIndexKeys.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/psi/EiffelNamedElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="5" column="57" lean-forward="false" selection-start-line="5" selection-start-column="57" selection-end-line="5" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../idea/platform/core-api/src/com/intellij/psi/PsiNameIdentifierOwner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="22" column="52" lean-forward="false" selection-start-line="22" selection-start-column="52" selection-end-line="22" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../idea/platform/core-api/src/com/intellij/psi/PsiNamedElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="24" column="45" lean-forward="false" selection-start-line="24" selection-start-column="45" selection-end-line="24" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../idea/platform/core-api/src/com/intellij/psi/PsiElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/psi/EiffelIndentedElement.java" />
+    <entry file="file://$PROJECT_DIR$/gen/com/eiffel/psi/impl/EiffelHeaderClassNameImpl.java" />
+    <entry file="file://$PROJECT_DIR$/../idea/platform/core-api/src/com/intellij/psi/tree/TokenSet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="174" column="71" lean-forward="false" selection-start-line="174" selection-start-column="71" selection-end-line="174" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gen/com/eiffel/psi/impl/EiffelCreationProcedureImpl.java" />
+    <entry file="file://$PROJECT_DIR$/../idea/platform/core-api/src/com/intellij/lang/PsiParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="28" column="17" lean-forward="false" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/parser/EiffelParserDefinition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="31" column="33" lean-forward="false" selection-start-line="31" selection-start-column="33" selection-end-line="31" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/parser/EiffelParserUtil.java" />
+    <entry file="file://$PROJECT_DIR$/gen/com/eiffel/parser/EiffelParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="762">
+          <caret line="4813" column="4" lean-forward="false" selection-start-line="4813" selection-start-column="4" selection-end-line="4813" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gen/com/eiffel/psi/impl/EiffelTupleParametersImpl.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/EiffelCommenter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="32" column="21" lean-forward="false" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/formatting/EiffelBraceMatcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="16" column="6" lean-forward="false" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/eiffel/highlighting/EiffelSyntaxHighlighter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="138" column="10" lean-forward="false" selection-start-line="138" selection-start-column="10" selection-end-line="138" selection-end-column="10" />
-          <folding />
+        <state relative-caret-position="197">
+          <caret line="122" column="19" lean-forward="false" selection-start-line="122" selection-start-column="19" selection-end-line="122" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/ModuleWizard/EiffelModuleWizardFirstStepForm.form" />
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/awt/Dimension.java">
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/psi/EiffelClassUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="120" column="11" lean-forward="false" selection-start-line="120" selection-start-column="11" selection-end-line="120" selection-end-column="11" />
+        <state relative-caret-position="363">
+          <caret line="169" column="20" lean-forward="false" selection-start-line="169" selection-start-column="20" selection-end-line="169" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/EditorRoutines.java">
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/psi/impl/EiffelPsiImplUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+        <state relative-caret-position="360">
+          <caret line="34" column="3" lean-forward="false" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="3" />
         </state>
       </provider>
     </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/javax/swing/JTextField.java">
+    <entry file="file://$PROJECT_DIR$/../idea/platform/util/src/com/intellij/openapi/util/TextRange.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3573">
-          <caret line="562" column="72" lean-forward="false" selection-start-line="562" selection-start-column="67" selection-end-line="562" selection-end-column="72" />
-          <folding>
-            <element signature="e#25988#25989#0" expanded="false" />
-            <element signature="e#26025#26026#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="219">
+          <caret line="41" column="26" lean-forward="false" selection-start-line="41" selection-start-column="26" selection-end-line="41" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/wm/ToolWindowFactory.class">
+    <entry file="file://$PROJECT_DIR$/../idea/platform/core-api/src/com/intellij/lang/ASTNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        <state relative-caret-position="174">
+          <caret line="75" column="6" lean-forward="false" selection-start-line="75" selection-start-column="6" selection-end-line="75" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/awt/event/KeyEvent.java">
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/formatting/EiffelEnterHandlerDelegate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="867" column="23" lean-forward="false" selection-start-line="867" selection-start-column="13" selection-end-line="867" selection-end-column="23" />
-          <folding>
-            <element signature="e#39153#39154#0" expanded="false" />
-            <element signature="e#39183#39184#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/javax/swing/text/JTextComponent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="1664" column="16" lean-forward="false" selection-start-line="1664" selection-start-column="16" selection-end-line="1664" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/sdk/EiffelModuleWizardFirstStepForm.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/io/InputStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="64" column="24" lean-forward="false" selection-start-line="64" selection-start-column="24" selection-end-line="64" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/sdk/EiffelSDKType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4">
-          <caret line="51" column="5" lean-forward="true" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
-          <folding />
+        <state relative-caret-position="525">
+          <caret line="53" column="21" lean-forward="false" selection-start-line="53" selection-start-column="21" selection-end-line="53" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-321">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        <state relative-caret-position="352">
+          <caret line="67" column="20" lean-forward="false" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/lang/ProcessBuilder.java">
+    <entry file="file://$PROJECT_DIR$/../idea/platform/lang-api/src/com/intellij/formatting/FormattingModelBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="214" column="11" lean-forward="false" selection-start-line="214" selection-start-column="11" selection-end-line="214" selection-end-column="11" />
-          <folding />
+        <state relative-caret-position="370">
+          <caret line="59" column="11" lean-forward="false" selection-start-line="59" selection-start-column="11" selection-end-line="59" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../idea/platform/lang-api/src/com/intellij/formatting/Block.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="78" column="8" lean-forward="false" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../idea/platform/lang-api/src/com/intellij/formatting/Alignment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="25" column="14" lean-forward="false" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/eiffel/formatting/EiffelFormattingModelBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/formatting/EiffelBlock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-448">
-          <caret line="23" column="34" lean-forward="true" selection-start-line="23" selection-start-column="34" selection-end-line="23" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/actionSystem/AnActionEvent.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="77" column="18" lean-forward="false" selection-start-line="77" selection-start-column="11" selection-end-line="77" selection-end-column="18" />
-          <folding>
-            <element signature="e#3426#3427#0" expanded="true" />
-            <element signature="e#3494#3495#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/sdk/EiffelModuleBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-612">
-          <caret line="88" column="50" lean-forward="false" selection-start-line="88" selection-start-column="40" selection-end-line="88" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/windows/run/RunToolWindowFactory.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/project/ProjectManager.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="47" column="27" lean-forward="false" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/windows/run/RunToolWindowFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="44" column="38" lean-forward="true" selection-start-line="44" selection-start-column="38" selection-end-line="44" selection-end-column="38" />
+        <state relative-caret-position="540">
+          <caret line="36" column="46" lean-forward="false" selection-start-line="36" selection-start-column="46" selection-end-line="36" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/actions/BuildInjected.java">
+    <entry file="file://$PROJECT_DIR$/../idea/platform/lang-impl/src/com/intellij/psi/formatter/common/AbstractBlock.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="50" column="34" lean-forward="true" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="34" />
+        <state relative-caret-position="1935">
+          <caret line="171" column="42" lean-forward="false" selection-start-line="171" selection-start-column="42" selection-end-line="171" selection-end-column="42" />
+          <folding>
+            <element signature="e#4792#4793#0" expanded="true" />
+            <element signature="e#4813#4814#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../idea/platform/lang-impl/src/com/intellij/psi/formatter/FormatterUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2985">
+          <caret line="232" column="24" lean-forward="false" selection-start-line="232" selection-start-column="24" selection-end-line="232" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/eiffel/windows/run/RunInToolWindowPerformer.java">
+    <entry file="file://$PROJECT_DIR$/../idea/json/src/com/intellij/json/formatter/JsonBlock.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="61" column="99" lean-forward="true" selection-start-line="61" selection-start-column="99" selection-end-line="61" selection-end-column="99" />
+        <state relative-caret-position="2355">
+          <caret line="192" column="5" lean-forward="false" selection-start-line="192" selection-start-column="5" selection-end-line="192" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../idea/platform/lang-api/src/com/intellij/formatting/ChildAttributes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/innogram.apk">
+      <provider selected="true" editor-type-id="apk-viewer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="210">
+            <caret line="14" column="52" lean-forward="false" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jps-plugin/src/com/eiffel/jps/EiffelSourceRootDescriptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/lexer/Eiffel.flex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="26" column="6" lean-forward="false" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/parser/Eiffel.bnf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="461">
+          <caret line="314" column="31" lean-forward="false" selection-start-line="314" selection-start-column="31" selection-end-line="314" selection-end-column="31" />
           <folding>
-            <element signature="e#794#1445#0" expanded="true" />
-            <element signature="e#1444#1445#0" expanded="true" />
-            <element signature="e#1465#2207#0" expanded="true" />
-            <element signature="e#2206#2207#0" expanded="true" />
+            <element signature="e#0#2478#0" expanded="true" />
+            <element signature="e#537#2476#0" expanded="true" />
+            <marker date="1509976953310" expanded="true" signature="6443:6503" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/eiffel/formatting/EiffelBlock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="162" column="26" lean-forward="false" selection-start-line="162" selection-start-column="26" selection-end-line="162" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="27" lean-forward="true" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1199,10 +1249,12 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <last-edited>eiffel-jps-plugin:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
@@ -1234,7 +1286,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>IntelliJ IDEA IU-172.3544.35</last-edited>
+          <last-edited>IntelliJ IDEA IU-172.3968.16</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
