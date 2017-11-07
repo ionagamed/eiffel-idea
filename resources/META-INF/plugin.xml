@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>com.eiffel</id>
   <name>Eiffel</name>
-  <version>0.0.2a</version>
+  <version>0.0.3a</version>
   <vendor email="ionagamed@gmail.com" url="https://github.com/ionagamed/eiffel-idea">ionagamed</vendor>
 
   <description><![CDATA[
@@ -10,6 +10,17 @@
 
   <change-notes><![CDATA[
       <ul>
+        <li>
+          <b>0.0.2</b>: <br>
+          <ul>
+            <li>Rework AST tree: shrink depth for optimised performance and kinda-good-looking autoformatting of complex blocks</li>
+            <li>Add completion for object calls (inheritance included)</li>
+            <li>Fix a lot of issues related to SDK support and library support</li>
+            <li>Add array literals support</li>
+            <li>Begin drafting on some annotations, inspections and other code insight features</li>
+            <li>Some weird free_elks nonsense with blank postconditions and non-blank tags for them</li>
+          </ul>
+        </li>
         <li>
           <b>0.0.1</b>: <br>
           <ul>
