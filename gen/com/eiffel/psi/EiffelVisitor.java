@@ -83,10 +83,6 @@ public class EiffelVisitor extends PsiElementVisitor {
     visitExpression(o);
   }
 
-  public void visitBooleanExpression(@NotNull EiffelBooleanExpression o) {
-    visitPsiElement(o);
-  }
-
   public void visitBooleanLoop(@NotNull EiffelBooleanLoop o) {
     visitPsiElement(o);
   }

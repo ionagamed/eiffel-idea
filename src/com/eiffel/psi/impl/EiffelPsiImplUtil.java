@@ -17,9 +17,6 @@ public class EiffelPsiImplUtil {
         if (classDeclaration.getStub() != null) return classDeclaration.getStub().getName();
         EiffelClassHeader classHeader = classDeclaration.getClassHeader();
         EiffelClassName className = classHeader.getClassName();
-        if (className == null) {
-            int dbg = 0;
-        }
         return EiffelClassUtil.formalizeName(className.getText());
     }
 
@@ -79,6 +76,19 @@ public class EiffelPsiImplUtil {
             result.addAll(parent.getNewFeatures());
         }
         return result;
+    }
+
+    @NotNull
+    public static List<EiffelNewFeature> getAllNewFeatures(EiffelClassDeclaration classDeclaration, String context) {
+        return ContainerUtil.mapNotNull(classDeclaration.getAllNewFeatures(),
+                (EiffelNewFeature f) -> {
+                    if (f.isAccessibleBy(context)) {
+                        return f;
+                    } else {
+                        return null;
+                    }
+                }
+        );
     }
 
     @NotNull
@@ -182,5 +192,33 @@ public class EiffelPsiImplUtil {
             return (EiffelFeatureDeclaration) newFeature.getParent();
         }
         return null;
+    }
+
+    @Nullable
+    public static EiffelFeatureClause getFeatureClause(EiffelNewFeature newFeature) {
+        EiffelFeatureDeclaration featureDeclaration = newFeature.getFeatureDeclaration();
+        if (featureDeclaration == null) return null;
+        if (featureDeclaration.getParent() instanceof EiffelFeatureClause) {
+            return (EiffelFeatureClause) featureDeclaration.getParent();
+        }
+        return null;
+    }
+
+    @NotNull
+    public static Set<String> getClientNames(EiffelNewFeature newFeature) {
+        Set<String> result = new HashSet<>();
+        EiffelFeatureClause featureClause = newFeature.getFeatureClause();
+        if (featureClause == null) return result;
+        EiffelClients clients = featureClause.getClients();
+        if (clients == null) return result;
+        for (EiffelClassName className : clients.getClassNameList()) {
+            result.add(className.getText());
+        }
+        return result;
+    }
+
+    public static boolean isAccessibleBy(EiffelNewFeature newFeature, String context) {
+        Set<String> clients = newFeature.getClientNames();
+        return clients.size() == 0 || clients.contains("ALL") || clients.contains(context);
     }
 }

@@ -32,7 +32,7 @@ public class EiffelBlock extends AbstractBlock {
             FEATURE_VALUE,
             ENTITY_DECLARATION_GROUP,
             EXPRESSION,
-            BOOLEAN_EXPRESSION, // used in loops
+//            BOOLEAN_EXPRESSION, // used in loops
             ASSERTION_CLAUSE,
             COMMENT,
             CONVERSION_PROCEDURE,

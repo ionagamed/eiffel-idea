@@ -168,6 +168,9 @@ new_feature ::= ['frozen'] extended_feature_name
         getReturnTypeString
         getSerializedFormalArguments
         getFeatureDeclaration
+        getFeatureClause
+        getClientNames
+        isAccessibleBy
     ]
 }
 
@@ -428,7 +431,7 @@ special_expression ::=
 parenthesized ::= '(' expression ')' { pin = 1 }
 address ::= '$' variable { pin = 1 }
 once_string ::= 'once' manifest_string { pin = 1 }
-boolean_expression ::= basic_expression | boolean_constant | object_test
+private boolean_expression ::= basic_expression | boolean_constant | object_test
 
 bracket_expression ::= bracket_target '[' actuals ']'
 bracket_target ::= target | once_string | manifest_constant | manifest_tuple
@@ -481,5 +484,6 @@ private keyword_recovery ::=
     'end' |
     'ensure' |
     'elseif' |
+    'across' |
     'when' |
     'do'

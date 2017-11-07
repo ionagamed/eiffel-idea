@@ -19,6 +19,8 @@ import java.util.*;
 public class EiffelClassUtil {
     public static String formalizeName(String name) {
         if (name == null) return null;
+        if (name.equals("INTEGER")) name = "INTEGER_32";
+        if (name.equals("CHARACTER")) name = "CHARACTER_8";
         return name
                 .replace("like", "$like$") // HACK well, you see it
                 .replace("detachable", "$det$")

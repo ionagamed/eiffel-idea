@@ -80,9 +80,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     else if (t == BASIC_EXPRESSION) {
       r = basic_expression(b, 0);
     }
-    else if (t == BOOLEAN_EXPRESSION) {
-      r = boolean_expression(b, 0);
-    }
     else if (t == BOOLEAN_LOOP) {
       r = boolean_loop(b, 0);
     }
@@ -1122,14 +1119,14 @@ public class EiffelParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // basic_expression | boolean_constant | object_test
-  public static boolean boolean_expression(PsiBuilder b, int l) {
+  static boolean boolean_expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "boolean_expression")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, BOOLEAN_EXPRESSION, "<boolean expression>");
+    Marker m = enter_section_(b);
     r = basic_expression(b, l + 1);
     if (!r) r = boolean_constant(b, l + 1);
     if (!r) r = object_test(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -3381,6 +3378,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     'end' |
   //     'ensure' |
   //     'elseif' |
+  //     'across' |
   //     'when' |
   //     'do'
   static boolean keyword_recovery(PsiBuilder b, int l) {
@@ -3395,6 +3393,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, END_KEYWORD);
     if (!r) r = consumeToken(b, ENSURE_KEYWORD);
     if (!r) r = consumeToken(b, ELSEIF_KEYWORD);
+    if (!r) r = consumeToken(b, ACROSS_KEYWORD);
     if (!r) r = consumeToken(b, WHEN_KEYWORD);
     if (!r) r = consumeToken(b, DO_KEYWORD);
     exit_section_(b, m, null, r);

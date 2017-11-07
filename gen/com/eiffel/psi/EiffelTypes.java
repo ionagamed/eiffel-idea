@@ -27,7 +27,6 @@ public interface EiffelTypes {
   IElementType ATTACHMENT_MARK = EiffelElementTypeFactory.createElement("ATTACHMENT_MARK");
   IElementType ATTRIBUTE = EiffelElementTypeFactory.createElement("ATTRIBUTE");
   IElementType BASIC_EXPRESSION = EiffelElementTypeFactory.createElement("BASIC_EXPRESSION");
-  IElementType BOOLEAN_EXPRESSION = EiffelElementTypeFactory.createElement("BOOLEAN_EXPRESSION");
   IElementType BOOLEAN_LOOP = EiffelElementTypeFactory.createElement("BOOLEAN_LOOP");
   IElementType BRACKET_EXPRESSION = EiffelElementTypeFactory.createElement("BRACKET_EXPRESSION");
   IElementType BRACKET_TARGET = EiffelElementTypeFactory.createElement("BRACKET_TARGET");
@@ -302,9 +301,6 @@ public interface EiffelTypes {
       }
       else if (type == BASIC_EXPRESSION) {
         return new EiffelBasicExpressionImpl(node);
-      }
-      else if (type == BOOLEAN_EXPRESSION) {
-        return new EiffelBooleanExpressionImpl(node);
       }
       else if (type == BOOLEAN_LOOP) {
         return new EiffelBooleanLoopImpl(node);
