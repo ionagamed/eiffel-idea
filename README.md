@@ -19,6 +19,8 @@ Still under somewhat-active development (see last commit to see if it's still ma
 * Lexer for keywords and symbols
 * Syntax highlighting for keywords, literals, builtin types
 * Building support through GEC
+* Feature name completion with client visibility support (still under testing, but seems to work fine)
+* Project-wide and library-wide class name completion
 
 ##### Extensions of ECMA-367
 * Integer ranges using `|..|` binary operation.
@@ -54,5 +56,4 @@ Example:
 
 ### What is not done (needs to be done)
 * Context-aware highlighting
-* Completion
 * Analysis
