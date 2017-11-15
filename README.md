@@ -4,6 +4,16 @@ IntelliJ IDEA plugin for [Eiffel](http://eiffel.org) language support
 ### Current status
 Still under somewhat-active development (see last commit to see if it's still maintaned)
 
+### How to install
+* Download latest plugin release from [releases page](https://github.com/ionagamed/eiffel-idea/releases)
+* Download [Eiffel GOBO](http://www.gobosoft.com/eiffel/gobo/) (we currently support only this one)
+* (Windows) Download Microsoft Visual Studio C++ (there is a free community edition)
+* Build GOBO using your C compiler (refer to GOBO website for further instructions)
+* Install plugin using IDEA standard menu (IDEA -> preferences -> plugins -> install from disk -> select zip file)
+* Create new Eiffel project in IDEA (you won't miss its menu option)
+* Select GOBO home as SDK
+* Enjoy! (windows building may still be sometimes incorrect as a result of lack of windows testers)
+
 ### What is done
 * Kinda-full EBNF syntax (as of 2006 [ECMA-367](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-367.pdf) with some additions) with parser by [Grammar-Kit](http://github.com/JetBrains/Grammar-Kit)
 * Lexer for keywords and symbols
