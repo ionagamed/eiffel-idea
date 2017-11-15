@@ -8,6 +8,7 @@ Still under somewhat-active development (see last commit to see if it's still ma
 * Download latest plugin release from [releases page](https://github.com/ionagamed/eiffel-idea/releases)
 * Download [Eiffel GOBO](http://www.gobosoft.com/eiffel/gobo/) (we currently support only this one)
 * (Windows) Download Microsoft Visual Studio C++ (there is a free community edition)
+* (\*nix) Download any C compiler that you like (chances are, you need to write `apt install g++` or `brew install g++` if you don't know what that means)
 * Build GOBO using your C compiler (refer to GOBO website for further instructions)
 * Install plugin using IDEA standard menu (IDEA -> preferences -> plugins -> install from disk -> select zip file)
 * Create new Eiffel project in IDEA (you won't miss its menu option)
