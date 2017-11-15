@@ -12,7 +12,8 @@ Still under somewhat-active development (see last commit to see if it's still ma
 * Build GOBO using your C compiler (refer to [GOBO website](https://github.com/gobo-eiffel/gobo#platforms) for further instructions)
 * Install plugin using IDEA standard menu (IDEA -> preferences -> plugins -> install from disk -> select zip file)
 * Create new Eiffel project in IDEA (you won't miss its menu option)
-* Select GOBO home as SDK
+* Press Plus (Add new SDK) and select Eiffel GOBO SDK
+* (Windows) Customize the full path to Microsoft VS home
 * Enjoy! (windows building may still be sometimes incorrect as a result of lack of windows testers)
 
 ### What is done
