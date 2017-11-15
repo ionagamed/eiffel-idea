@@ -22,7 +22,7 @@
           <component id="5fdda" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="msvcLocationField">
             <constraints/>
             <properties>
-              <text value="asdfghjk"/>
+              <text value="Choose studio home path (if you have windows)"/>
             </properties>
           </component>
         </children>
