@@ -110,7 +110,11 @@ public class EiffelSyntaxHighlighter extends SyntaxHighlighterBase {
             CPP_EXTERNAL_KEYWORD,
             DLL_EXTERNAL_KEYWORD,
             USE_KEYWORD,
-            ATTACHED_KEYWORD
+            ATTACHED_KEYWORD,
+            DETACHABLE_KEYWORD,
+            SEPARATE_KEYWORD,
+            TRUE_KEYWORD,
+            FALSE_KEYWORD
     ));
 
     private static final ArrayList<IElementType> operators = new ArrayList<>(Arrays.asList(
@@ -138,7 +142,7 @@ public class EiffelSyntaxHighlighter extends SyntaxHighlighterBase {
         } else if (tokenType.equals(EiffelTypes.INTEGER_LITERAL) ||
                 tokenType.equals(EiffelTypes.REAL_LITERAL)) {
             return NUMBER_KEYS;
-        } else if (tokenType.equals(EiffelTypes.STRING_LITERAL)) {
+        } else if (tokenType.equals(EiffelTypes.STRING_LITERAL) || tokenType.equals(EiffelTypes.CHARACTER_LITERAL)) {
             return STRING_KEYS;
         } else if (keywords.contains(tokenType)) {
             return KEYWORD_KEYS;

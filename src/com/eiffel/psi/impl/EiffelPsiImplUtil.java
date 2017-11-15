@@ -79,7 +79,7 @@ public class EiffelPsiImplUtil {
     }
 
     @NotNull
-    public static List<EiffelNewFeature> getAllNewFeatures(EiffelClassDeclaration classDeclaration, String context) {
+    public static List<EiffelNewFeature> getAllNewFeaturesInContext(EiffelClassDeclaration classDeclaration, String context) {
         return ContainerUtil.mapNotNull(classDeclaration.getAllNewFeatures(),
                 (EiffelNewFeature f) -> {
                     if (f.isAccessibleBy(context)) {

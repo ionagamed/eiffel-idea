@@ -18,17 +18,17 @@ import java.util.List;
 public class EiffelClassNameCompletionUtil {
     public static void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet resultSet) {
         if (isClassType(parameters.getPosition())) {
-            List<EiffelClassDeclaration> classDeclarations = EiffelClassUtil.findClassDeclarations(parameters.getEditor().getProject());
-            for (EiffelClassDeclaration declaration : classDeclarations) {
-                if (declaration.getName() != null) {
+            List<String> classNames = EiffelClassUtil.findClassDeclarationNames(parameters.getEditor().getProject());
+            for (String className : classNames) {
+                if (className != null) {
                     resultSet.addElement(
                             LookupElementBuilder
-                                    .create(declaration.getName())
+                                    .create(className)
                                     .withRenderer(new LookupElementRenderer<LookupElement>() {
                                         @Override
                                         public void renderElement(LookupElement element, LookupElementPresentation presentation) {
                                             presentation.setIcon(AllIcons.Nodes.Class);
-                                            presentation.setItemText(EiffelClassUtil.formalizeName(declaration.getName()));
+                                            presentation.setItemText(EiffelClassUtil.formalizeName(className));
                                             presentation.setItemTextBold(true);
                                         }
                                     })

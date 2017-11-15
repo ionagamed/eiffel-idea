@@ -87,13 +87,13 @@ public class EiffelBlock extends AbstractBlock {
         Alignment alignment = Alignment.createAlignment();
 
         if (indentedTokens.contains(node.getElementType())) {
-//            indent = Indent.getSmartIndent(Indent.Type.NORMAL);
-            indent = Indent.getNormalIndent();
+            indent = Indent.getSmartIndent(Indent.Type.NORMAL);
+//            indent = Indent.getSmartIndent(false);
         }
         if (indentedNestedTokens.containsKey(myNode.getElementType())) {
             if (indentedNestedTokens.get(myNode.getElementType()).contains(node.getElementType())) {
-//                indent = Indent.getSmartIndent(Indent.Type.NORMAL);
-                indent = Indent.getNormalIndent();
+                indent = Indent.getSmartIndent(Indent.Type.NORMAL);
+//                indent = Indent.getNormalIndent(false);
             }
         }
         if (myNode.getElementType().equals(FEATURE_DECLARATION) && node.getElementType() == COMMENT) {
@@ -165,8 +165,8 @@ public class EiffelBlock extends AbstractBlock {
     @Override
     public boolean isIncomplete() {
         if (myNode.getElementType().equals(COMPOUND)) {
-            ASTNode lastChildNode = myNode.getLastChildNode();
-            return lastChildNode == null || lastChildNode.getElementType().equals(END_KEYWORD);
+            ASTNode lastChildNode = myNode.getTreeParent().getLastChildNode();
+            return lastChildNode == null || !lastChildNode.getElementType().equals(END_KEYWORD);
         }
         if (myNode.getElementType().equals(CLASS_DECLARATION)) {
             return true;

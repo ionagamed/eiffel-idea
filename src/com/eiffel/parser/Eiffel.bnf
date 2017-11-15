@@ -125,6 +125,7 @@ class_declaration ::=
             getNewFeatures
             getFeatureNames
             getAllNewFeatures
+            getAllNewFeaturesInContext
             getDirectParentNames
             getDirectParents
             getParentNames

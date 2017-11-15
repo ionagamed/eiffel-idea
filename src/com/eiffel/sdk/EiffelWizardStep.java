@@ -25,7 +25,7 @@ public class EiffelWizardStep extends ModuleBuilder {
         return new ModuleWizardStep[]{new ModuleWizardStep() {
             @Override
             public JComponent getComponent() {
-                return new JLabel("Eiffel SUKA BLYAT'");
+                return new JLabel("");
             }
 
             @Override

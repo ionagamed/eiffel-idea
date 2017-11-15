@@ -15,6 +15,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class EiffelClassUtil {
     public static String formalizeName(String name) {
@@ -37,6 +38,8 @@ public class EiffelClassUtil {
 
     public static String ungenerify(String className) {
         if (className == null) return null;
+        if (className.equals("INTEGER")) return "INTEGER_32";
+        if (className.equals("CHARACTER")) return "CHARACTER_8";
         return className.replaceAll("\\[.*]", "").trim();
     }
 
@@ -64,6 +67,11 @@ public class EiffelClassUtil {
         }
 
         return result;
+    }
+
+    public static List<String> findClassDeclarationNames(Project project) {
+        return (List<String>)
+                StubIndex.getInstance().getAllKeys(EiffelStubIndexKeys.CLASS_DECLARATION_KEY, project).stream().collect(Collectors.toList());
     }
 
     /**
