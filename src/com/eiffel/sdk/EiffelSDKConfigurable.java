@@ -9,6 +9,7 @@ import com.intellij.openapi.projectRoots.SdkAdditionalData;
 import com.intellij.openapi.projectRoots.SdkModificator;
 import com.intellij.openapi.ui.TextBrowseFolderListener;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
+import com.intellij.openapi.util.SystemInfo;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -16,6 +17,7 @@ import javax.swing.*;
 public class EiffelSDKConfigurable implements AdditionalDataConfigurable {
     private JPanel panel1;
     private TextFieldWithBrowseButton msvcLocationField;
+    private JToolBar msvcToolbar;
 
     private Sdk mySdk;
 
@@ -27,20 +29,24 @@ public class EiffelSDKConfigurable implements AdditionalDataConfigurable {
     @Nullable
     @Override
     public JComponent createComponent() {
-        EiffelSDKAdditionalData d = (EiffelSDKAdditionalData) mySdk.getSdkModificator().getSdkAdditionalData();
-        if (d != null) {
-            msvcLocationField.setText(d.msvcLocation);
+        if (SystemInfo.isWindows) {
+            EiffelSDKAdditionalData d = (EiffelSDKAdditionalData) mySdk.getSdkModificator().getSdkAdditionalData();
+            if (d != null) {
+                msvcLocationField.setText(d.msvcLocation);
+            }
+            msvcLocationField.addBrowseFolderListener(new TextBrowseFolderListener(
+                    new FileChooserDescriptor(
+                            false,
+                            true,
+                            false,
+                            false,
+                            false,
+                            false
+                    )
+            ));
+        } else {
+            msvcToolbar.setOpaque(false);
         }
-        msvcLocationField.addBrowseFolderListener(new TextBrowseFolderListener(
-                new FileChooserDescriptor(
-                        false,
-                        true,
-                        false,
-                        false,
-                        false,
-                        false
-                )
-        ));
 
         return panel1;
     }
