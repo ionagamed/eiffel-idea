@@ -130,6 +130,9 @@ class_declaration ::=
             getDirectParents
             getParentNames
             getParents
+            getParentNamesWithDepth
+            getParentsWithDepth
+            getAllNewFeaturesInContextWithDepth
         ]
         pin = 2
         stubClass="com.eiffel.psi.EiffelClassDeclarationStub"
@@ -153,6 +156,11 @@ private feature_declaration_list ::= (feature_declaration ';'?)*
 header_comment ::= comment
 
 feature_declaration ::= new_feature_list [declaration_body]
+    {
+        methods=[
+            getLocalEntityIdentifiers
+        ]
+    }
 private declaration_body ::= [formal_arguments] [query_mark] [feature_value]
 private query_mark ::= type_mark [assigner_mark]
 private type_mark ::= ':' type { pin = 1 }
@@ -213,8 +221,14 @@ feature_list ::= feature_name (','? feature_name)*
 
 formal_arguments ::= '(' entity_declaration_list ')'
 private entity_declaration_list ::= entity_declaration_group (';'? entity_declaration_group)*
-entity_declaration_group ::= identifier_list type_mark
-private identifier_list ::= IDENTIFIER (',' IDENTIFIER)*
+entity_declaration_group ::= entity_identifier_list type_mark
+private entity_identifier_list ::= entity_identifier (',' entity_identifier)*
+entity_identifier ::= IDENTIFIER
+    {
+        methods=[
+            getType
+        ]
+    }
 
 deferred ::= 'deferred'
 private effective_routine ::= internal | ext

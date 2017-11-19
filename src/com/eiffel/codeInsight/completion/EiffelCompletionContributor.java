@@ -1,6 +1,7 @@
 package com.eiffel.codeInsight.completion;
 
 import com.eiffel.EiffelLanguage;
+import com.eiffel.psi.EiffelLocal;
 import com.eiffel.psi.EiffelTypes;
 import com.intellij.codeInsight.completion.*;
 import com.intellij.patterns.PlatformPatterns;
@@ -23,6 +24,7 @@ public class EiffelCompletionContributor extends CompletionContributor {
                     protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet resultSet) {
                         EiffelClassNameCompletionUtil.addCompletions(parameters, context, resultSet);
                         EiffelFeatureNameCompletionUtil.addCompletions(parameters, context, resultSet);
+                        EiffelLocalCompletionUtil.addCompletions(parameters, context, resultSet);
                     }
                 }
         );

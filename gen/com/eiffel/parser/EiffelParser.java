@@ -167,6 +167,9 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     else if (t == ENTITY_DECLARATION_GROUP) {
       r = entity_declaration_group(b, 0);
     }
+    else if (t == ENTITY_IDENTIFIER) {
+      r = entity_identifier(b, 0);
+    }
     else if (t == EXIT_CONDITION) {
       r = exit_condition(b, 0);
     }
@@ -2198,13 +2201,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier_list type_mark
+  // entity_identifier_list type_mark
   public static boolean entity_declaration_group(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "entity_declaration_group")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = identifier_list(b, l + 1);
+    r = entity_identifier_list(b, l + 1);
     r = r && type_mark(b, l + 1);
     exit_section_(b, m, ENTITY_DECLARATION_GROUP, r);
     return r;
@@ -2251,6 +2254,54 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "entity_declaration_list_1_0_0")) return false;
     consumeToken(b, SEMICOLON);
     return true;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER
+  public static boolean entity_identifier(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entity_identifier")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, ENTITY_IDENTIFIER, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // entity_identifier (',' entity_identifier)*
+  static boolean entity_identifier_list(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entity_identifier_list")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = entity_identifier(b, l + 1);
+    r = r && entity_identifier_list_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (',' entity_identifier)*
+  private static boolean entity_identifier_list_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entity_identifier_list_1")) return false;
+    int c = current_position_(b);
+    while (true) {
+      if (!entity_identifier_list_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "entity_identifier_list_1", c)) break;
+      c = current_position_(b);
+    }
+    return true;
+  }
+
+  // ',' entity_identifier
+  private static boolean entity_identifier_list_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "entity_identifier_list_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && entity_identifier(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -3085,41 +3136,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "header_mark_2")) return false;
     consumeToken(b, DEFERRED_KEYWORD);
     return true;
-  }
-
-  /* ********************************************************** */
-  // IDENTIFIER (',' IDENTIFIER)*
-  static boolean identifier_list(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "identifier_list")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
-    r = r && identifier_list_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (',' IDENTIFIER)*
-  private static boolean identifier_list_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "identifier_list_1")) return false;
-    int c = current_position_(b);
-    while (true) {
-      if (!identifier_list_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "identifier_list_1", c)) break;
-      c = current_position_(b);
-    }
-    return true;
-  }
-
-  // ',' IDENTIFIER
-  private static boolean identifier_list_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "identifier_list_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, COMMA, IDENTIFIER);
-    exit_section_(b, m, null, r);
-    return r;
   }
 
   /* ********************************************************** */

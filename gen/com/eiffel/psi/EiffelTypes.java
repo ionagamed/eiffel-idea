@@ -56,6 +56,7 @@ public interface EiffelTypes {
   IElementType DEFERRED = EiffelElementTypeFactory.createElement("DEFERRED");
   IElementType ENTITY = EiffelElementTypeFactory.createElement("ENTITY");
   IElementType ENTITY_DECLARATION_GROUP = EiffelElementTypeFactory.createElement("ENTITY_DECLARATION_GROUP");
+  IElementType ENTITY_IDENTIFIER = EiffelElementTypeFactory.createElement("ENTITY_IDENTIFIER");
   IElementType EXIT_CONDITION = EiffelElementTypeFactory.createElement("EXIT_CONDITION");
   IElementType EXPLICIT_VALUE = EiffelElementTypeFactory.createElement("EXPLICIT_VALUE");
   IElementType EXPRESSION = EiffelElementTypeFactory.createElement("EXPRESSION");
@@ -388,6 +389,9 @@ public interface EiffelTypes {
       }
       else if (type == ENTITY_DECLARATION_GROUP) {
         return new EiffelEntityDeclarationGroupImpl(node);
+      }
+      else if (type == ENTITY_IDENTIFIER) {
+        return new EiffelEntityIdentifierImpl(node);
       }
       else if (type == EXIT_CONDITION) {
         return new EiffelExitConditionImpl(node);

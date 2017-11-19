@@ -1,10 +1,7 @@
 package com.eiffel.codeInsight.completion;
 
 import com.eiffel.psi.*;
-import com.intellij.codeInsight.completion.CompletionParameters;
-import com.intellij.codeInsight.completion.CompletionResultSet;
-import com.intellij.codeInsight.completion.InsertHandler;
-import com.intellij.codeInsight.completion.InsertionContext;
+import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.codeInsight.lookup.LookupElementPresentation;
@@ -16,6 +13,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.util.ProcessingContext;
 
 import java.util.List;
+import java.util.Map;
 
 public class EiffelFeatureNameCompletionUtil {
     public static void addCompletions(CompletionParameters parameters, ProcessingContext context, CompletionResultSet result) {
@@ -27,24 +25,28 @@ public class EiffelFeatureNameCompletionUtil {
         EiffelClassDeclaration classDeclaration = EiffelClassUtil.findClassDeclaration(project, className);
         if (classDeclaration == null) return;
         String ctxName = EiffelClassUtil.findClassDeclaration(objectCall.getPsi()).getName();
-        List<EiffelNewFeature> newFeatures = classDeclaration.getAllNewFeaturesInContext(ctxName);
-        for (EiffelNewFeature newFeature : newFeatures) {
+        Map<EiffelNewFeature, Integer> newFeatures = classDeclaration.getAllNewFeaturesInContextWithDepth(ctxName);
+        for (EiffelNewFeature newFeature : newFeatures.keySet()) {
             final String formalArguments = newFeature.getSerializedFormalArguments();
             final String returnType = newFeature.getReturnTypeString();
-            result.addElement(
-                    LookupElementBuilder
-                            .create(newFeature.getName() + (formalArguments == null ? "" : "("))
-                            .withRenderer(new LookupElementRenderer<LookupElement>() {
-                                @Override
-                                public void renderElement(LookupElement element, LookupElementPresentation presentation) {
-                                    presentation.setIcon(AllIcons.Nodes.Function);
-                                    presentation.setItemText(EiffelClassUtil.formalizeName(newFeature.getName()));
-                                    presentation.setItemTextBold(true);
-                                    presentation.setTailText(EiffelClassUtil.formalizeName(formalArguments));
-                                    presentation.setTypeText(returnType);
-                                }
-                            })
-            );
+            final int priority = newFeatures.get(newFeature);
+            LookupElement lookupElement = LookupElementBuilder
+                    .create(newFeature.getName() + (formalArguments == null ? "" : "("))
+                    .withRenderer(new LookupElementRenderer<LookupElement>() {
+                        @Override
+                        public void renderElement(LookupElement element, LookupElementPresentation presentation) {
+                            presentation.setIcon(AllIcons.Nodes.Function);
+                            presentation.setItemText(EiffelClassUtil.formalizeName(newFeature.getName()));
+                            if (priority == 0) {
+                                presentation.setItemTextBold(true);
+                            }
+                            presentation.setTailText(EiffelClassUtil.formalizeName(formalArguments));
+                            presentation.setTypeText(returnType);
+                        }
+                    });
+            result.addElement(PrioritizedLookupElement.withPriority(
+                    lookupElement, EiffelCompletionPriorities.THRESHOLD - priority
+            ));
         }
     }
 

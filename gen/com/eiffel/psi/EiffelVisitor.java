@@ -199,6 +199,10 @@ public class EiffelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitEntityIdentifier(@NotNull EiffelEntityIdentifier o) {
+    visitPsiElement(o);
+  }
+
   public void visitExitCondition(@NotNull EiffelExitCondition o) {
     visitPsiElement(o);
   }

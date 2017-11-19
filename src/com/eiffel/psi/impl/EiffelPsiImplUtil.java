@@ -92,6 +92,21 @@ public class EiffelPsiImplUtil {
     }
 
     @NotNull
+    public static Map<EiffelNewFeature, Integer> getAllNewFeaturesInContextWithDepth(EiffelClassDeclaration classDeclaration, String context) {
+        Map<EiffelNewFeature, Integer> result = new HashMap<>();
+        for (EiffelNewFeature newFeature : classDeclaration.getNewFeatures()) {
+            result.put(newFeature, 0);
+        }
+        Map<EiffelClassDeclaration, Integer> parents = classDeclaration.getParentsWithDepth();
+        for (EiffelClassDeclaration parent : parents.keySet()) {
+            for (EiffelNewFeature newFeature : parent.getNewFeatures()) {
+                result.put(newFeature, parents.get(parent));
+            }
+        }
+        return result;
+    }
+
+    @NotNull
     public static List<String> getFeatureNames(EiffelClassDeclaration classDeclaration) {
         List<String> result = new ArrayList<>();
         for (EiffelFeatureDeclaration declaration : classDeclaration.getFeatureDeclarations()) {
@@ -140,17 +155,38 @@ public class EiffelPsiImplUtil {
     }
 
     @NotNull
+    public static Map<EiffelClassDeclaration, Integer> getParentsWithDepth(EiffelClassDeclaration classDeclaration) {
+        Map<EiffelClassDeclaration, Integer> result = new HashMap<>();
+        Map<String, Integer> parentNames = classDeclaration.getParentNamesWithDepth();
+        for (String s : parentNames.keySet()) {
+            result.put(EiffelClassUtil.findClassDeclaration(classDeclaration.getProject(), s), parentNames.get(s));
+        }
+        return result;
+    }
+
+    @NotNull
     public static Set<String> getParentNames(EiffelClassDeclaration classDeclaration) {
-        Set<String> result = new HashSet<>();
+        return classDeclaration.getParentNamesWithDepth().keySet();
+    }
+
+    @NotNull
+    public static Map<String, Integer> getParentNamesWithDepth(EiffelClassDeclaration classDeclaration) {
+        Map<String, Integer> result = new HashMap<>();
         Queue<EiffelClassDeclaration> processingQueue = new LinkedBlockingQueue<>();
+        Queue<Integer> depths = new LinkedBlockingQueue<>();
         processingQueue.add(classDeclaration);
+        depths.add(0);
         boolean first = true;
         while (!processingQueue.isEmpty()) {
             EiffelClassDeclaration current = processingQueue.remove();
+            int currentDepth = depths.remove();
             if (!first) {
-                result.add(current.getName());
+                result.put(current.getName(), currentDepth);
             }
             processingQueue.addAll(current.getDirectParents());
+            for (int i = 0; i < current.getDirectParents().size(); i++) {
+                depths.add(currentDepth + 1);
+            }
             first = false;
         }
         return result;
@@ -220,5 +256,32 @@ public class EiffelPsiImplUtil {
     public static boolean isAccessibleBy(EiffelNewFeature newFeature, String context) {
         Set<String> clients = newFeature.getClientNames();
         return clients.size() == 0 || clients.contains("ALL") || clients.contains(context);
+    }
+
+    @NotNull
+    public static List<EiffelEntityIdentifier> getLocalEntityIdentifiers(EiffelFeatureDeclaration featureDeclaration) {
+        List<EiffelEntityIdentifier> result = new ArrayList<>();
+        EiffelFeatureValue featureValue = featureDeclaration.getFeatureValue();
+        if (featureValue == null) return result;
+        EiffelLocalDeclarations localDeclarations = featureValue.getLocalDeclarations();
+        if (localDeclarations == null) return result;
+        for (EiffelEntityDeclarationGroup group : localDeclarations.getEntityDeclarationGroupList()) {
+            result.addAll(group.getEntityIdentifierList());
+        }
+        return result;
+    }
+
+    @Nullable
+    public static String getType(EiffelEntityIdentifier identifier) {
+        PsiElement parent = identifier.getParent();
+        if (parent instanceof EiffelEntityDeclarationGroup) {
+            EiffelEntityDeclarationGroup group = (EiffelEntityDeclarationGroup) parent;
+            EiffelType type = group.getType();
+            if (type == null) return null;
+            EiffelClassName className = type.getClassName();
+            if (className == null) return null;
+            return EiffelClassUtil.formalizeName(className.getText());
+        }
+        return null;
     }
 }
