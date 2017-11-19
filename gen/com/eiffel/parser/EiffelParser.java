@@ -113,6 +113,9 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     else if (t == CLASS_NAME) {
       r = class_name(b, 0);
     }
+    else if (t == CLIENT_SPECIFIER) {
+      r = client_specifier(b, 0);
+    }
     else if (t == CLIENTS) {
       r = clients(b, 0);
     }
@@ -418,9 +421,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     }
     else if (t == VARIABLE) {
       r = variable(b, 0);
-    }
-    else if (t == VARIABLE_ATTRIBUTE) {
-      r = variable_attribute(b, 0);
     }
     else if (t == VARIANT) {
       r = variant(b, 0);
@@ -1603,7 +1603,20 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // '{' (class_list | 'none' | 'all') '}'
+  // class_list | 'none' | 'all'
+  public static boolean client_specifier(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "client_specifier")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CLIENT_SPECIFIER, "<client specifier>");
+    r = class_list(b, l + 1);
+    if (!r) r = consumeToken(b, NONE_KEYWORD);
+    if (!r) r = consumeToken(b, ALL_KEYWORD);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // '{' client_specifier '}'
   public static boolean clients(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "clients")) return false;
     if (!nextTokenIs(b, LEFT_CURLY_BRACKET)) return false;
@@ -1611,22 +1624,10 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, CLIENTS, null);
     r = consumeToken(b, LEFT_CURLY_BRACKET);
     p = r; // pin = 1
-    r = r && report_error_(b, clients_1(b, l + 1));
+    r = r && report_error_(b, client_specifier(b, l + 1));
     r = p && consumeToken(b, RIGHT_CURLY_BRACKET) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
-  }
-
-  // class_list | 'none' | 'all'
-  private static boolean clients_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "clients_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = class_list(b, l + 1);
-    if (!r) r = consumeToken(b, NONE_KEYWORD);
-    if (!r) r = consumeToken(b, ALL_KEYWORD);
-    exit_section_(b, m, null, r);
-    return r;
   }
 
   /* ********************************************************** */
@@ -4920,14 +4921,8 @@ public class EiffelParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // feature_name
-  public static boolean variable_attribute(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "variable_attribute")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = feature_name(b, l + 1);
-    exit_section_(b, m, VARIABLE_ATTRIBUTE, r);
-    return r;
+  static boolean variable_attribute(PsiBuilder b, int l) {
+    return feature_name(b, l + 1);
   }
 
   /* ********************************************************** */

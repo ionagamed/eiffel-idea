@@ -10,8 +10,20 @@ import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class EiffelCompletionContributor extends CompletionContributor {
+    private List<IEiffelCompletionUtil> completionUtils;
+
     public EiffelCompletionContributor() {
+        completionUtils = Arrays.asList(
+                new EiffelClassNameCompletionUtil(),
+                new EiffelFeatureNameCompletionUtil(),
+                new EiffelLocalCompletionUtil(),
+                new EiffelVariableCompletionUtil(),
+                new EiffelCreationProcedureCompletionUtil()
+        );
         extend(
                 CompletionType.BASIC,
                 PlatformPatterns.psiElement()
@@ -22,9 +34,9 @@ public class EiffelCompletionContributor extends CompletionContributor {
                 new CompletionProvider<CompletionParameters>() {
                     @Override
                     protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet resultSet) {
-                        EiffelClassNameCompletionUtil.addCompletions(parameters, context, resultSet);
-                        EiffelFeatureNameCompletionUtil.addCompletions(parameters, context, resultSet);
-                        EiffelLocalCompletionUtil.addCompletions(parameters, context, resultSet);
+                        for (IEiffelCompletionUtil util : completionUtils) {
+                            util.addCompletions(parameters, context, resultSet);
+                        }
                     }
                 }
         );

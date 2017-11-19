@@ -133,6 +133,9 @@ class_declaration ::=
             getParentNamesWithDepth
             getParentsWithDepth
             getAllNewFeaturesInContextWithDepth
+            getAllNewFeaturesSubset
+            getCreationProcedures
+            getNewFeature
         ]
         pin = 2
         stubClass="com.eiffel.psi.EiffelClassDeclarationStub"
@@ -210,7 +213,8 @@ private rename ::= 'rename' rename_list
 private rename_list ::= rename_pair (','? rename_pair)*
 rename_pair ::= feature_name 'as' extended_feature_name
 
-clients ::= '{' (class_list | 'none' | 'all') '}' { pin = 1 }
+clients ::= '{' client_specifier '}' { pin = 1 }
+client_specifier ::= class_list | 'none' | 'all'
 private class_list ::= class_name (','? class_name)*
 
 new_exports ::= 'export' new_export_list
@@ -358,7 +362,7 @@ attribute ::= 'attribute' compound
 
 entity ::= variable | read_only
 variable ::= local | variable_attribute
-variable_attribute ::= feature_name
+private variable_attribute ::= feature_name
 local ::= IDENTIFIER | 'result'
 read_only ::= formal | constant_attribute | 'current'
 formal ::= IDENTIFIER

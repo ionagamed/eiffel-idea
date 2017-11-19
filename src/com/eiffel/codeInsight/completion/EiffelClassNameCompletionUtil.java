@@ -15,8 +15,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class EiffelClassNameCompletionUtil {
-    public static void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet resultSet) {
+public class EiffelClassNameCompletionUtil implements IEiffelCompletionUtil {
+    @Override
+    public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet resultSet) {
         if (isClassType(parameters.getPosition())) {
             List<String> classNames = EiffelClassUtil.findClassDeclarationNames(parameters.getEditor().getProject());
             for (String className : classNames) {
@@ -38,7 +39,7 @@ public class EiffelClassNameCompletionUtil {
         }
     }
 
-    private static boolean isClassType(@NotNull PsiElement element) {
+    private boolean isClassType(@NotNull PsiElement element) {
         if (!element.getNode().getElementType().equals(EiffelTypes.IDENTIFIER)) {
             return false;
         }

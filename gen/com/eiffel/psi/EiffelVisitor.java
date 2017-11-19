@@ -127,6 +127,10 @@ public class EiffelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitClientSpecifier(@NotNull EiffelClientSpecifier o) {
+    visitPsiElement(o);
+  }
+
   public void visitClients(@NotNull EiffelClients o) {
     visitPsiElement(o);
   }
@@ -532,10 +536,6 @@ public class EiffelVisitor extends PsiElementVisitor {
   }
 
   public void visitVariable(@NotNull EiffelVariable o) {
-    visitPsiElement(o);
-  }
-
-  public void visitVariableAttribute(@NotNull EiffelVariableAttribute o) {
     visitPsiElement(o);
   }
 

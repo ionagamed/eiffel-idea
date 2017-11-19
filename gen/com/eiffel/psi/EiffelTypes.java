@@ -39,6 +39,7 @@ public interface EiffelTypes {
   IElementType CLASS_HEADER = EiffelElementTypeFactory.createElement("CLASS_HEADER");
   IElementType CLASS_NAME = EiffelElementTypeFactory.createElement("CLASS_NAME");
   IElementType CLIENTS = EiffelElementTypeFactory.createElement("CLIENTS");
+  IElementType CLIENT_SPECIFIER = EiffelElementTypeFactory.createElement("CLIENT_SPECIFIER");
   IElementType COMMENT = EiffelElementTypeFactory.createElement("COMMENT");
   IElementType COMPOUND = EiffelElementTypeFactory.createElement("COMPOUND");
   IElementType CONDITIONAL = EiffelElementTypeFactory.createElement("CONDITIONAL");
@@ -140,7 +141,6 @@ public interface EiffelTypes {
   IElementType UNQUALIFIED_CALL = EiffelElementTypeFactory.createElement("UNQUALIFIED_CALL");
   IElementType UNREGISTERED_LANGUAGE = EiffelElementTypeFactory.createElement("UNREGISTERED_LANGUAGE");
   IElementType VARIABLE = EiffelElementTypeFactory.createElement("VARIABLE");
-  IElementType VARIABLE_ATTRIBUTE = EiffelElementTypeFactory.createElement("VARIABLE_ATTRIBUTE");
   IElementType VARIANT = EiffelElementTypeFactory.createElement("VARIANT");
   IElementType WHEN_PART = EiffelElementTypeFactory.createElement("WHEN_PART");
 
@@ -338,6 +338,9 @@ public interface EiffelTypes {
       }
       else if (type == CLIENTS) {
         return new EiffelClientsImpl(node);
+      }
+      else if (type == CLIENT_SPECIFIER) {
+        return new EiffelClientSpecifierImpl(node);
       }
       else if (type == COMMENT) {
         return new EiffelCommentImpl(node);
@@ -638,9 +641,6 @@ public interface EiffelTypes {
       }
       else if (type == VARIABLE) {
         return new EiffelVariableImpl(node);
-      }
-      else if (type == VARIABLE_ATTRIBUTE) {
-        return new EiffelVariableAttributeImpl(node);
       }
       else if (type == VARIANT) {
         return new EiffelVariantImpl(node);

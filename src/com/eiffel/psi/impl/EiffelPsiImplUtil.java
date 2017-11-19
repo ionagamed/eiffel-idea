@@ -59,6 +59,16 @@ public class EiffelPsiImplUtil {
         return result;
     }
 
+    @Nullable
+    public static EiffelNewFeature getNewFeature(EiffelClassDeclaration classDeclaration, String featureName) {
+        for (EiffelNewFeature newFeature : classDeclaration.getAllNewFeatures()) {
+            if (newFeature.getName().equals(featureName)) {
+                return newFeature;
+            }
+        }
+        return null;
+    }
+
     @NotNull
     public static List<EiffelNewFeature> getNewFeatures(EiffelClassDeclaration classDeclaration) {
         List<EiffelNewFeature> newFeatures = new ArrayList<>();
@@ -79,6 +89,24 @@ public class EiffelPsiImplUtil {
     }
 
     @NotNull
+    public static List<EiffelNewFeature> getAllNewFeaturesSubset(EiffelClassDeclaration classDeclaration, Set<String> names) {
+        List<EiffelNewFeature> result = new ArrayList<>();
+        for (EiffelNewFeature newFeature : classDeclaration.getNewFeatures()) {
+            if (names.contains(newFeature.getName())) {
+                result.add(newFeature);
+            }
+        }
+        for (EiffelClassDeclaration parent : classDeclaration.getParents()) {
+            for (EiffelNewFeature newFeature : parent.getNewFeatures()) {
+                if (names.contains(newFeature.getName())) {
+                    result.add(newFeature);
+                }
+            }
+        }
+        return result;
+    }
+
+    @NotNull
     public static List<EiffelNewFeature> getAllNewFeaturesInContext(EiffelClassDeclaration classDeclaration, String context) {
         return ContainerUtil.mapNotNull(classDeclaration.getAllNewFeatures(),
                 (EiffelNewFeature f) -> {
@@ -94,13 +122,20 @@ public class EiffelPsiImplUtil {
     @NotNull
     public static Map<EiffelNewFeature, Integer> getAllNewFeaturesInContextWithDepth(EiffelClassDeclaration classDeclaration, String context) {
         Map<EiffelNewFeature, Integer> result = new HashMap<>();
+        Set<String> alreadyPut = new HashSet<>(); // used to add nearest feature in inheritance tree
         for (EiffelNewFeature newFeature : classDeclaration.getNewFeatures()) {
-            result.put(newFeature, 0);
+            if (newFeature.isAccessibleBy(context)) {
+                result.put(newFeature, 0);
+                alreadyPut.add(newFeature.getName());
+            }
         }
         Map<EiffelClassDeclaration, Integer> parents = classDeclaration.getParentsWithDepth();
         for (EiffelClassDeclaration parent : parents.keySet()) {
             for (EiffelNewFeature newFeature : parent.getNewFeatures()) {
-                result.put(newFeature, parents.get(parent));
+                if (newFeature.isAccessibleBy(context) && !alreadyPut.contains(newFeature.getName())) {
+                    result.put(newFeature, parents.get(parent));
+                    alreadyPut.add(newFeature.getName());
+                }
             }
         }
         return result;
@@ -247,7 +282,12 @@ public class EiffelPsiImplUtil {
         if (featureClause == null) return result;
         EiffelClients clients = featureClause.getClients();
         if (clients == null) return result;
-        for (EiffelClassName className : clients.getClassNameList()) {
+        EiffelClientSpecifier clientSpecifier = clients.getClientSpecifier();
+        if (clientSpecifier == null) return result;
+        ASTNode firstChildNode = clientSpecifier.getFirstChild().getNode();
+        if (firstChildNode.getElementType().equals(EiffelTypes.NONE_KEYWORD)) result.add("NONE");
+        if (firstChildNode.getElementType().equals(EiffelTypes.ALL_KEYWORD)) result.add("ALL");
+        for (EiffelClassName className : clientSpecifier.getClassNameList()) {
             result.add(className.getText());
         }
         return result;
@@ -255,7 +295,8 @@ public class EiffelPsiImplUtil {
 
     public static boolean isAccessibleBy(EiffelNewFeature newFeature, String context) {
         Set<String> clients = newFeature.getClientNames();
-        return clients.size() == 0 || clients.contains("ALL") || clients.contains(context);
+        return clients.size() == 0 || clients.contains("ALL") || clients.contains(context) ||
+                context.equals(EiffelClassUtil.findClassDeclaration(newFeature).getName());
     }
 
     @NotNull
@@ -283,5 +324,17 @@ public class EiffelPsiImplUtil {
             return EiffelClassUtil.formalizeName(className.getText());
         }
         return null;
+    }
+
+    @NotNull
+    public static List<EiffelNewFeature> getCreationProcedures(EiffelClassDeclaration classDeclaration) {
+        List<EiffelNewFeature> result = new ArrayList<>();
+        EiffelCreators creators = classDeclaration.getCreators();
+        if (creators == null) return result;
+        Set<String> filter = new HashSet<>();
+        for (EiffelFeatureName newFeature : creators.getFeatureNameList()) {
+            filter.add(newFeature.getText());
+        }
+        return classDeclaration.getAllNewFeaturesSubset(filter);
     }
 }

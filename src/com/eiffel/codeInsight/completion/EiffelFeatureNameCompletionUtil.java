@@ -15,8 +15,9 @@ import com.intellij.util.ProcessingContext;
 import java.util.List;
 import java.util.Map;
 
-public class EiffelFeatureNameCompletionUtil {
-    public static void addCompletions(CompletionParameters parameters, ProcessingContext context, CompletionResultSet result) {
+public class EiffelFeatureNameCompletionUtil implements IEiffelCompletionUtil {
+    @Override
+    public void addCompletions(CompletionParameters parameters, ProcessingContext context, CompletionResultSet result) {
         ASTNode objectCall = getObjectCallAncestor(parameters.getPosition());
         if (objectCall == null) return;
         final Project project = parameters.getEditor().getProject();
@@ -30,13 +31,14 @@ public class EiffelFeatureNameCompletionUtil {
             final String formalArguments = newFeature.getSerializedFormalArguments();
             final String returnType = newFeature.getReturnTypeString();
             final int priority = newFeatures.get(newFeature);
+            final String name = newFeature.getName();
             LookupElement lookupElement = LookupElementBuilder
-                    .create(newFeature.getName() + (formalArguments == null ? "" : "("))
+                    .create(name + (formalArguments == null ? "" : "("))
                     .withRenderer(new LookupElementRenderer<LookupElement>() {
                         @Override
                         public void renderElement(LookupElement element, LookupElementPresentation presentation) {
                             presentation.setIcon(AllIcons.Nodes.Function);
-                            presentation.setItemText(EiffelClassUtil.formalizeName(newFeature.getName()));
+                            presentation.setItemText(EiffelClassUtil.formalizeName(name));
                             if (priority == 0) {
                                 presentation.setItemTextBold(true);
                             }
@@ -50,7 +52,7 @@ public class EiffelFeatureNameCompletionUtil {
         }
     }
 
-    private static ASTNode getObjectCallAncestor(PsiElement element) {
+    private ASTNode getObjectCallAncestor(PsiElement element) {
         if (!element.getNode().getElementType().equals(EiffelTypes.IDENTIFIER)) {
             return null;
         }

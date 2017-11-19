@@ -13,10 +13,11 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.ProcessingContext;
 
-public class EiffelLocalCompletionUtil {
-    public static void addCompletions(CompletionParameters parameters, ProcessingContext context, CompletionResultSet result) {
+public class EiffelLocalCompletionUtil implements IEiffelCompletionUtil {
+    @Override
+    public void addCompletions(CompletionParameters parameters, ProcessingContext context, CompletionResultSet result) {
         PsiElement element = parameters.getPosition();
-        if (element.getNode().getElementType().equals(EiffelTypes.IDENTIFIER)) {
+        if (element.getNode().getElementType().equals(EiffelTypes.IDENTIFIER) && isApplicable(element)) {
             ASTNode featureDeclarationNode = EiffelClassUtil.findParentOfType(parameters.getPosition().getNode(), EiffelTypes.FEATURE_DECLARATION);
             if (featureDeclarationNode == null) return;
             EiffelFeatureDeclaration featureDeclaration = featureDeclarationNode.getPsi(EiffelFeatureDeclaration.class);
@@ -37,5 +38,14 @@ public class EiffelLocalCompletionUtil {
                 ));
             }
         }
+    }
+
+    private boolean isApplicable(PsiElement element) {
+        PsiElement current = element;
+        for (int i = 0; i < 4; i++) {
+            current = current.getParent();
+            if (current == null) return false;
+        }
+        return !(current instanceof EiffelObjectCall);
     }
 }
