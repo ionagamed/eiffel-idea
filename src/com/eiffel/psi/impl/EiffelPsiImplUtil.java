@@ -313,6 +313,47 @@ public class EiffelPsiImplUtil {
     }
 
     @Nullable
+    public static EiffelEntityIdentifier getLocalEntityIdentifier(EiffelFeatureDeclaration featureDeclaration, String name) {
+        EiffelFeatureValue featureValue = featureDeclaration.getFeatureValue();
+        if (featureValue == null) return null;
+        EiffelLocalDeclarations localDeclarations = featureValue.getLocalDeclarations();
+        if (localDeclarations == null) return null;
+        for (EiffelEntityDeclarationGroup group : localDeclarations.getEntityDeclarationGroupList()) {
+            for (EiffelEntityIdentifier identifier : group.getEntityIdentifierList()) {
+                if (identifier.getText().equals(name)) {
+                    return identifier;
+                }
+            }
+        }
+        return null;
+    }
+
+    @NotNull
+    public static List<EiffelEntityIdentifier> getFormalArgumentIdentifiers(EiffelFeatureDeclaration featureDeclaration) {
+        List<EiffelEntityIdentifier> result = new ArrayList<>();
+        EiffelFormalArguments formalArguments = featureDeclaration.getFormalArguments();
+        if (formalArguments == null) return result;
+        for (EiffelEntityDeclarationGroup group : formalArguments.getEntityDeclarationGroupList()) {
+            result.addAll(group.getEntityIdentifierList());
+        }
+        return result;
+    }
+
+    @Nullable
+    public static EiffelEntityIdentifier getFormalArgumentIdentifier(EiffelFeatureDeclaration featureDeclaration, String name) {
+        EiffelFormalArguments formalArguments = featureDeclaration.getFormalArguments();
+        if (formalArguments == null) return null;
+        for (EiffelEntityDeclarationGroup group : formalArguments.getEntityDeclarationGroupList()) {
+            for (EiffelEntityIdentifier identifier : group.getEntityIdentifierList()) {
+                if (identifier.getText().equals(name)) {
+                    return identifier;
+                }
+            }
+        }
+        return null;
+    }
+
+    @Nullable
     public static String getType(EiffelEntityIdentifier identifier) {
         PsiElement parent = identifier.getParent();
         if (parent instanceof EiffelEntityDeclarationGroup) {

@@ -53,7 +53,14 @@ public class EiffelTypeResolutionUtil {
             ASTNode currentFeatureName = currentUnqualifiedCall.findChildByType(EiffelTypes.FEATURE_NAME);
             if (currentFeatureName == null) return null;
             currentClass = EiffelClassUtil.findFeatureReturnType(project, currentClass, currentFeatureName.getText());
-            if (currentClass == null) return null;
+            if (currentClass == null) {
+                EiffelFeatureDeclaration featureDeclaration = EiffelClassUtil.findFeatureDeclaration(currentUnqualifiedCall.getPsi());
+                if (featureDeclaration == null) return null;
+                EiffelEntityIdentifier identifier = featureDeclaration.getLocalEntityIdentifier(currentFeatureName.getText());
+                if (identifier == null) return null;
+                currentClass = identifier.getType();
+                if (currentClass == null) return null;
+            }
         }
 
         return currentClass;

@@ -162,6 +162,9 @@ feature_declaration ::= new_feature_list [declaration_body]
     {
         methods=[
             getLocalEntityIdentifiers
+            getLocalEntityIdentifier
+            getFormalArgumentIdentifiers
+            getFormalArgumentIdentifier
         ]
     }
 private declaration_body ::= [formal_arguments] [query_mark] [feature_value]

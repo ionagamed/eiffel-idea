@@ -18,10 +18,16 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class EiffelClassUtil {
-    public static String formalizeName(String name) {
-        if (name == null) return null;
+    private static String bindingMap(String name) {
         if (name.equals("INTEGER")) name = "INTEGER_32";
         if (name.equals("CHARACTER")) name = "CHARACTER_8";
+        if (name.equals("STRING")) name = "STRING_8";
+        return name;
+    }
+
+    public static String formalizeName(String name) {
+        if (name == null) return null;
+        name = bindingMap(name);
         return name
                 .replace("like", "$like$") // HACK well, you see it
                 .replace("detachable", "$det$")
@@ -38,8 +44,7 @@ public class EiffelClassUtil {
 
     public static String ungenerify(String className) {
         if (className == null) return null;
-        if (className.equals("INTEGER")) return "INTEGER_32";
-        if (className.equals("CHARACTER")) return "CHARACTER_8";
+        className = bindingMap(className);
         return className.replaceAll("\\[.*]", "").trim();
     }
 
@@ -77,12 +82,23 @@ public class EiffelClassUtil {
     /**
      * Find class declaration from any child element
      * @param element - child element
-     * @return - ancestor class declaration
+     * @return ancestor class declaration
      */
     public static EiffelClassDeclaration findClassDeclaration(PsiElement element) {
         ASTNode classDeclaration = findParentOfType(element.getNode(), EiffelTypes.CLASS_DECLARATION);
         if (classDeclaration == null) return null;
         return classDeclaration.getPsi(EiffelClassDeclaration.class);
+    }
+
+    /**
+     * Find feature declaration from any element (closest ancestor)
+     * @param element - child element
+     * @return ancestor feature declaration
+     */
+    public static EiffelFeatureDeclaration findFeatureDeclaration(PsiElement element) {
+        ASTNode featureDeclaration = findParentOfType(element.getNode(), EiffelTypes.FEATURE_DECLARATION);
+        if (featureDeclaration == null) return null;
+        return featureDeclaration.getPsi(EiffelFeatureDeclaration.class);
     }
 
     public static EiffelClassDeclaration findClassDeclaration(Project project, String name) {
@@ -132,6 +148,6 @@ public class EiffelClassUtil {
 
     @Nullable
     public static String findParentingClassForFeatureCall(Project project, PsiElement unqualifiedCall) {
-        return EiffelTypeResolutionUtil.getTypeString(project, unqualifiedCall);
+        return EiffelTypeResolutionUtil.getTypeString(project, unqualifiedCall, true);
     }
 }

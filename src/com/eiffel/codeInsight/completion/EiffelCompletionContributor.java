@@ -22,7 +22,8 @@ public class EiffelCompletionContributor extends CompletionContributor {
                 new EiffelFeatureNameCompletionUtil(),
                 new EiffelLocalCompletionUtil(),
                 new EiffelVariableCompletionUtil(),
-                new EiffelCreationProcedureCompletionUtil()
+                new EiffelCreationProcedureCompletionUtil(),
+                new EiffelFormalArgsCompletionContributor()
         );
         extend(
                 CompletionType.BASIC,
