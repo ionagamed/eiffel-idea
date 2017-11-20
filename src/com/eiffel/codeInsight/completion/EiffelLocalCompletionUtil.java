@@ -22,7 +22,8 @@ public class EiffelLocalCompletionUtil implements IEiffelCompletionUtil {
             if (featureDeclarationNode == null) return;
             EiffelFeatureDeclaration featureDeclaration = featureDeclarationNode.getPsi(EiffelFeatureDeclaration.class);
             for (EiffelEntityIdentifier local : featureDeclaration.getLocalEntityIdentifiers()) {
-                final String type = local.getType();
+//                final String type = local.getType();
+                final String type = local.getTypeString();
                 LookupElement lookupElement = LookupElementBuilder.create(local.getText())
                         .withRenderer(new LookupElementRenderer<LookupElement>() {
                             @Override

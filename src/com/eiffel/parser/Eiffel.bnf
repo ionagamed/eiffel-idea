@@ -180,13 +180,14 @@ new_feature ::= ['frozen'] extended_feature_name
 {
     methods = [
         getName
-        getReturnTypeString
+        getTypeString
         getSerializedFormalArguments
         getFeatureDeclaration
         getFeatureClause
         getClientNames
         isAccessibleBy
     ]
+    implements="com.eiffel.psi.EiffelTypedElement"
 }
 
 private attribute_or_routine ::= [precondition] [local_declarations] feature_body [postcondition] [rescue] END_KEYWORD { pin = 3 }
@@ -233,8 +234,9 @@ private entity_identifier_list ::= entity_identifier (',' entity_identifier)*
 entity_identifier ::= IDENTIFIER
     {
         methods=[
-            getType
+            getTypeString
         ]
+        implements="com.eiffel.psi.EiffelTypedElement"
     }
 
 deferred ::= 'deferred'

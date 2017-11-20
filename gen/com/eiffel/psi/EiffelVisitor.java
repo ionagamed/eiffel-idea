@@ -204,7 +204,7 @@ public class EiffelVisitor extends PsiElementVisitor {
   }
 
   public void visitEntityIdentifier(@NotNull EiffelEntityIdentifier o) {
-    visitPsiElement(o);
+    visitTypedElement(o);
   }
 
   public void visitExitCondition(@NotNull EiffelExitCondition o) {
@@ -388,7 +388,7 @@ public class EiffelVisitor extends PsiElementVisitor {
   }
 
   public void visitNewFeature(@NotNull EiffelNewFeature o) {
-    visitPsiElement(o);
+    visitTypedElement(o);
   }
 
   public void visitNonConformance(@NotNull EiffelNonConformance o) {
@@ -544,6 +544,10 @@ public class EiffelVisitor extends PsiElementVisitor {
   }
 
   public void visitWhenPart(@NotNull EiffelWhenPart o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTypedElement(@NotNull EiffelTypedElement o) {
     visitPsiElement(o);
   }
 

@@ -29,7 +29,7 @@ public class EiffelFeatureNameCompletionUtil implements IEiffelCompletionUtil {
         Map<EiffelNewFeature, Integer> newFeatures = classDeclaration.getAllNewFeaturesInContextWithDepth(ctxName);
         for (EiffelNewFeature newFeature : newFeatures.keySet()) {
             final String formalArguments = newFeature.getSerializedFormalArguments();
-            final String returnType = newFeature.getReturnTypeString();
+            final String returnType = newFeature.getTypeString();
             final int priority = newFeatures.get(newFeature);
             final String name = newFeature.getName();
             LookupElement lookupElement = LookupElementBuilder

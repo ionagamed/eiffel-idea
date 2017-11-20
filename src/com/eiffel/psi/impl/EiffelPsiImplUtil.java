@@ -233,7 +233,7 @@ public class EiffelPsiImplUtil {
     }
 
     @Nullable
-    public static String getReturnTypeString(EiffelNewFeature newFeature) {
+    public static String getTypeString(EiffelNewFeature newFeature) {
         if (newFeature.getParent() instanceof EiffelFeatureDeclaration) {
             EiffelFeatureDeclaration featureDeclaration = (EiffelFeatureDeclaration) newFeature.getParent();
             EiffelType type = featureDeclaration.getType();
@@ -354,7 +354,7 @@ public class EiffelPsiImplUtil {
     }
 
     @Nullable
-    public static String getType(EiffelEntityIdentifier identifier) {
+    public static String getTypeString(EiffelEntityIdentifier identifier) {
         PsiElement parent = identifier.getParent();
         if (parent instanceof EiffelEntityDeclarationGroup) {
             EiffelEntityDeclarationGroup group = (EiffelEntityDeclarationGroup) parent;

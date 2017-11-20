@@ -22,9 +22,9 @@ public class EiffelCreationProcedureCompletionUtil implements IEiffelCompletionU
         if (variable == null) return;
         EiffelClassDeclaration declaration = EiffelClassUtil.findClassDeclaration(variable);
         if (declaration == null) return;
-        EiffelNewFeature newFeature = declaration.getNewFeature(variable.getText());
-        if (newFeature == null || newFeature.getReturnTypeString() == null) return;
-        EiffelClassDeclaration contextClass = EiffelClassUtil.findClassDeclaration(parameters.getEditor().getProject(), newFeature.getReturnTypeString());
+        EiffelTypedElement contextElement = EiffelClassUtil.findReferencedElementInContext(variable);
+        if (contextElement == null) return;
+        EiffelClassDeclaration contextClass = EiffelClassUtil.findClassDeclaration(parameters.getEditor().getProject(), contextElement.getTypeString());
         if (contextClass == null) return;
         for (EiffelNewFeature creationFeature : contextClass.getCreationProcedures()) {
             final String name = creationFeature.getName();

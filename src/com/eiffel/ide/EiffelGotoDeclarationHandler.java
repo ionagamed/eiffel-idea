@@ -94,7 +94,7 @@ public class EiffelGotoDeclarationHandler extends GotoDeclarationHandlerBase {
                 if (featureName == null) return null;
                 return EiffelClassUtil.findFeatureDeclaration(
                         editor.getProject(),
-                        target.getReturnTypeString(),
+                        target.getTypeString(),
                         featureName.getText()
                 );
             }

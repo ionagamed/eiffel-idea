@@ -21,7 +21,7 @@ public class EiffelFormalArgsCompletionContributor implements IEiffelCompletionU
             if (featureDeclaration == null) return;
             for (EiffelEntityIdentifier identifier : featureDeclaration.getFormalArgumentIdentifiers()) {
                 final String name = identifier.getText();
-                final String type = identifier.getType();
+                final String type = identifier.getTypeString();
                 LookupElement lookupElement = LookupElementBuilder
                         .create(name)
                         .withRenderer(new LookupElementRenderer<LookupElement>() {

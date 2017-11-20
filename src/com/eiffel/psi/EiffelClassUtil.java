@@ -150,4 +150,22 @@ public class EiffelClassUtil {
     public static String findParentingClassForFeatureCall(Project project, PsiElement unqualifiedCall) {
         return EiffelTypeResolutionUtil.getTypeString(project, unqualifiedCall, true);
     }
+
+    @Nullable
+    public static EiffelTypedElement findReferencedElementInContext(PsiElement reference) {
+        final String name = reference.getText();
+        EiffelFeatureDeclaration featureDeclaration = findFeatureDeclaration(reference);
+        if (featureDeclaration != null) {
+            EiffelEntityIdentifier identifier = featureDeclaration.getLocalEntityIdentifier(name);
+            if (identifier != null) return identifier;
+            identifier = featureDeclaration.getFormalArgumentIdentifier(name);
+            if (identifier != null) return identifier;
+        }
+        EiffelClassDeclaration classDeclaration = findClassDeclaration(reference);
+        if (classDeclaration != null) {
+            EiffelNewFeature feature = classDeclaration.getNewFeature(name);
+            if (feature != null) return feature;
+        }
+        return null;
+    }
 }

@@ -22,7 +22,7 @@ public class EiffelVariableCompletionUtil implements IEiffelCompletionUtil {
         // TODO: create only creatable variables
         for (EiffelNewFeature newFeature : classDeclaration.getNewFeatures()) {
             final String name = newFeature.getName();
-            final String type = newFeature.getReturnTypeString();
+            final String type = newFeature.getTypeString();
             LookupElement lookupElement = LookupElementBuilder.create(name)
                     .withRenderer(new LookupElementRenderer<LookupElement>() {
                         @Override
