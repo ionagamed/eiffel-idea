@@ -29,13 +29,17 @@ public class EiffelCreationProcedureCompletionUtil implements IEiffelCompletionU
         for (EiffelNewFeature creationFeature : contextClass.getCreationProcedures()) {
             final String name = creationFeature.getName();
             final String formals = creationFeature.getSerializedFormalArguments();
+            final String doc = creationFeature.getCommentDoc();
             LookupElement lookupElement = LookupElementBuilder.create(name)
                     .withRenderer(new LookupElementRenderer<LookupElement>() {
                         @Override
                         public void renderElement(LookupElement element, LookupElementPresentation presentation) {
                             presentation.setItemText(name);
                             presentation.setItemTextBold(true);
-                            presentation.setTailText(formals);
+                            presentation.setTailText(
+                                    (formals == null ? "" : formals) +
+                                            (doc == null ? "" : " " + doc)
+                            );
                             presentation.setIcon(AllIcons.Nodes.AbstractClass); // just because it has 'C' in it
                         }
                     });

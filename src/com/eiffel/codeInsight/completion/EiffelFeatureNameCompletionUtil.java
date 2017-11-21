@@ -32,6 +32,7 @@ public class EiffelFeatureNameCompletionUtil implements IEiffelCompletionUtil {
             final String returnType = newFeature.getTypeString();
             final int priority = newFeatures.get(newFeature);
             final String name = newFeature.getName();
+            final String doc = newFeature.getCommentDoc();
             LookupElement lookupElement = LookupElementBuilder
                     .create(name + (formalArguments == null ? "" : "("))
                     .withRenderer(new LookupElementRenderer<LookupElement>() {
@@ -42,7 +43,10 @@ public class EiffelFeatureNameCompletionUtil implements IEiffelCompletionUtil {
                             if (priority == 0) {
                                 presentation.setItemTextBold(true);
                             }
-                            presentation.setTailText(EiffelClassUtil.formalizeName(formalArguments));
+                            presentation.setTailText(
+                                    (formalArguments == null ? "" : EiffelClassUtil.formalizeName(formalArguments)) +
+                                            (doc == null ? "" : " " + doc)
+                            );
                             presentation.setTypeText(returnType);
                         }
                     });
