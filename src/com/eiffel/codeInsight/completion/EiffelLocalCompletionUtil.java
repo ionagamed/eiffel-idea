@@ -11,6 +11,7 @@ import com.intellij.codeInsight.lookup.LookupElementRenderer;
 import com.intellij.icons.AllIcons;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.ProcessingContext;
 
 public class EiffelLocalCompletionUtil implements IEiffelCompletionUtil {
@@ -46,7 +47,15 @@ public class EiffelLocalCompletionUtil implements IEiffelCompletionUtil {
         for (int i = 0; i < 4; i++) {
             current = current.getParent();
             if (current == null) return false;
+            if (discardTokens.contains(current.getNode().getElementType())) return false;
         }
-        return !(current instanceof EiffelObjectCall);
+        return !finalDiscardTokens.contains(current.getNode().getElementType());
     }
+
+    private static TokenSet discardTokens = TokenSet.create(
+            EiffelTypes.CREATION_INSTRUCTION
+    );
+    private static TokenSet finalDiscardTokens = TokenSet.create(
+            EiffelTypes.OBJECT_CALL
+    );
 }

@@ -165,6 +165,7 @@ feature_declaration ::= new_feature_list [declaration_body]
             getLocalEntityIdentifier
             getFormalArgumentIdentifiers
             getFormalArgumentIdentifier
+            getCommentDoc
         ]
     }
 private declaration_body ::= [formal_arguments] [query_mark] [feature_value]

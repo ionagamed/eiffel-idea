@@ -3,6 +3,7 @@ package com.eiffel.psi.impl;
 import com.eiffel.psi.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
@@ -377,5 +378,13 @@ public class EiffelPsiImplUtil {
             filter.add(newFeature.getText());
         }
         return classDeclaration.getAllNewFeaturesSubset(filter);
+    }
+
+    @Nullable
+    public static String getCommentDoc(EiffelFeatureDeclaration featureDeclaration) {
+        for (ASTNode child : featureDeclaration.getNode().getChildren(TokenSet.create(EiffelTypes.COMMENT))) {
+            return child.getText();
+        }
+        return null;
     }
 }
