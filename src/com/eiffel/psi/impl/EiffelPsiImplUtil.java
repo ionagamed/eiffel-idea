@@ -387,4 +387,11 @@ public class EiffelPsiImplUtil {
         }
         return null;
     }
+
+    @Nullable
+    public static String getCommentDoc(EiffelNewFeature newFeature) {
+        EiffelFeatureDeclaration fd = newFeature.getFeatureDeclaration();
+        if (fd == null) return null;
+        return fd.getCommentDoc();
+    }
 }

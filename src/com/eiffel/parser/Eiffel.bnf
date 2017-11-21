@@ -187,6 +187,7 @@ new_feature ::= ['frozen'] extended_feature_name
         getFeatureClause
         getClientNames
         isAccessibleBy
+        getCommentDoc
     ]
     implements="com.eiffel.psi.EiffelTypedElement"
 }

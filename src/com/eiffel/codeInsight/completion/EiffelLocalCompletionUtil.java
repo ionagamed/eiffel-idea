@@ -52,9 +52,10 @@ public class EiffelLocalCompletionUtil implements IEiffelCompletionUtil {
         return !finalDiscardTokens.contains(current.getNode().getElementType());
     }
 
-    private static TokenSet discardTokens = TokenSet.create(
-            EiffelTypes.CREATION_INSTRUCTION
-    );
+//    private static TokenSet discardTokens = TokenSet.create(
+//            EiffelTypes.
+//    );
+    private static TokenSet discardTokens = TokenSet.EMPTY;
     private static TokenSet finalDiscardTokens = TokenSet.create(
             EiffelTypes.OBJECT_CALL
     );
