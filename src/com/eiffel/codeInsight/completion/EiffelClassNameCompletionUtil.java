@@ -1,6 +1,5 @@
 package com.eiffel.codeInsight.completion;
 
-import com.eiffel.psi.EiffelClassDeclaration;
 import com.eiffel.psi.EiffelClassUtil;
 import com.eiffel.psi.EiffelTypes;
 import com.intellij.codeInsight.completion.*;
@@ -15,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class EiffelClassNameCompletionUtil implements IEiffelCompletionUtil {
+public class EiffelClassNameCompletionUtil extends EiffelCompletionUtilBase {
     @Override
     public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet resultSet) {
         if (isClassType(parameters.getPosition())) {

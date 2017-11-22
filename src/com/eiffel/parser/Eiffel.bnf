@@ -140,7 +140,11 @@ class_declaration ::=
         pin = 2
         stubClass="com.eiffel.psi.EiffelClassDeclarationStub"
     }
-class_header ::= [header_mark] 'class' class_name { pin = 2 }
+class_header ::= [header_mark] 'class' class_name {
+    pin = 2
+    recoverWhile = class_header_recovery
+}
+private class_header_recovery ::= !keyword_recovery_
 header_mark ::= ['frozen'] ['expanded'] ['deferred']
 
 notes ::= 'note' note_list
@@ -154,7 +158,11 @@ obsolete ::= 'obsolete' message
 message ::= manifest_string
 
 features ::= feature_clause+
-feature_clause ::= 'feature' [clients] [header_comment] feature_declaration_list { pin = 1 }
+feature_clause ::= 'feature' [clients] [header_comment] feature_declaration_list {
+    pin = 1
+    recoverWhile = feature_clause_recovery
+}
+private feature_clause_recovery ::= !('feature' | 'invariant' | 'end')
 private feature_declaration_list ::= (feature_declaration ';'?)*
 header_comment ::= comment
 
@@ -170,11 +178,19 @@ feature_declaration ::= new_feature_list [declaration_body]
     }
 private declaration_body ::= [formal_arguments] [query_mark] [feature_value]
 private query_mark ::= type_mark [assigner_mark]
-private type_mark ::= ':' type { pin = 1 }
+private type_mark ::= ':' type {
+    pin = 1
+    recoverWhile = type_mark_recovery
+}
+private type_mark_recovery ::= !(keyword_recovery_ | IDENTIFIER)
 feature_value ::=
     (explicit_value [obsolete] [header_comment] [notes]) |
     ([obsolete] [header_comment] [notes] attribute_or_routine)
-explicit_value ::= '=' manifest_constant { pin = 1 }
+explicit_value ::= '=' manifest_constant {
+    pin = 1
+    recoverWhile = explicit_value_recovery
+}
+private explicit_value_recovery ::= !(keyword_recovery_ | IDENTIFIER)
 
 private new_feature_list ::= new_feature (','? new_feature)*
 new_feature ::= ['frozen'] extended_feature_name
@@ -243,7 +259,11 @@ entity_identifier ::= IDENTIFIER
 
 deferred ::= 'deferred'
 private effective_routine ::= internal | ext
-private internal ::= routine_mark compound { pin = 1 }
+private internal ::= routine_mark compound {
+    pin = 1
+    recoverWhile = internal_recovery
+}
+private internal_recovery ::= !keyword_recovery_
 private routine_mark ::= 'do' | once
 once ::= 'once' ['(' key_list ')'] { pin = 1 }
 private key_list ::= manifest_string (','? manifest_string)*
@@ -254,26 +274,36 @@ compound ::= (instruction ';'?)*
 instruction ::=
     conditional |
     creation_instruction |
+    precursor |
+    loop |
     multi_branch |
     assignment |
     assigner_call |
-    loop |
     call |
     debug |
-    precursor |
     check |
     retry
     {
       recoverWhile=instruction_recovery
     }
 private instruction_recovery ::= !(
-    keyword_recovery |
+    keyword_recovery_ |
     instruction
 ) // contains a lot of hax to make conditionals etc. possible
 
-precondition ::= 'require' ['else'] assertion { pin = 1 }
-postcondition ::= 'ensure' ['then'] assertion [only] { pin = 1 }
-invariant ::= 'invariant' assertion { pin = 1 }
+precondition ::= 'require' ['else'] assertion {
+    pin = 1
+    recoverWhile = keyword_or_identifier_recovery
+}
+postcondition ::= 'ensure' ['then'] assertion [only] {
+    pin = 1
+    recoverWhile = keyword_or_identifier_recovery
+}
+invariant ::= 'invariant' assertion
+//{
+//    pin = 1
+//    recoverWhile = keyword_or_identifier_recovery
+//}
 private assertion ::= (assertion_clause ';'?)*
 
     // second one is optional for some unknown reason, but there are examples of this in elks library
@@ -336,7 +366,10 @@ conversion_query ::= feature_name ':' '{' type_list '}'
 
 select ::= 'select' feature_list
 
-conditional ::= 'if' then_part_list [else_part] 'end' { pin = 1 }
+conditional ::= 'if' then_part_list [else_part] 'end' {
+    pin = 1
+    recoverWhile = keyword_or_identifier_recovery
+}
 private then_part_list ::= then_part ('elseif' then_part)*
 private then_part ::= boolean_expression 'then' compound
 private else_part ::= 'else' compound
@@ -352,11 +385,16 @@ type_interval ::= manifest_type '..' manifest_type
 loop ::=
     (initialization [invariant] exit_condition loop_body [variant] 'end') |
     (iteration loop_body 'end')
+//loop ::= 'from' compound 'until' boolean_expression 'do' compound 'end'
 iteration ::= 'across' across_expression 'as' IDENTIFIER { pin = 1 }
 private across_expression ::= expression
-initialization ::= 'from' compound { pin = 1 }
-exit_condition ::= 'until' boolean_expression { pin = 1 }
-loop_body ::= ('loop' compound) | ('all' boolean_expression) | ('some' boolean_expression) { pin = 1 }
+initialization ::= 'from' compound
+exit_condition ::= 'until' boolean_expression
+//{
+//    pin = 1
+//    recoverWhile = keyword_or_identifier_recovery
+//}
+loop_body ::= ('loop' compound) | ('all' boolean_expression) | ('some' boolean_expression)
 
 boolean_loop ::=
     iteration
@@ -380,16 +418,29 @@ private creation_clause ::= 'create' [clients] [header_comment] creation_procedu
 private creation_procedure_list ::= creation_procedure (',' creation_procedure)*
 private creation_procedure ::= feature_name
 
-creation_instruction ::= 'create' [explicit_creation_type] creation_call { pin = 1 }
+creation_instruction ::= 'create' [explicit_creation_type] creation_call {
+    pin = 1
+    recoverWhile = keyword_or_identifier_recovery
+}
 private explicit_creation_type ::= '{' type '}' { pin = 1 }
 private creation_call ::= variable [explicit_creation_call]
-private explicit_creation_call ::= '.' unqualified_call { pin = 1 }
+private explicit_creation_call ::= '.' unqualified_call {
+    pin = 1
+    recoverWhile = explicit_creation_call_recovery
+}
+private explicit_creation_call_recovery ::= !(keyword_recovery_ | IDENTIFIER)
 
 creation_expression ::= 'create' explicit_creation_type [explicit_creation_call] { pin = 1 }
 
-assignment ::= variable ':=' expression { pin = 2 }
+assignment ::= variable ':=' expression
+//assignment ::= variable ':=' call
+//{
+//    pin = 2
+//    recoverWhile = assignment_recovery
+//}
+//private assignment_recovery ::= !(keyword_recovery_ | IDENTIFIER)
 
-assigner_call ::= expression ':=' expression { pin = 2 }
+assigner_call ::= expression ':=' expression
 
 private call ::= object_call | non_object_call | non_object_parenthesized_call | casting_call
 object_call ::= (target_atomic bracketed_actuals) | (target_atomic '.' call) | unqualified_call
@@ -501,7 +552,7 @@ external_system_file ::= LT STRING_ONELINE GT
 
 /* TODO: externals */
 
-private keyword_recovery ::=
+private keyword_recovery_ ::=
     'if' |
     'else' |
     'create' |
@@ -512,4 +563,21 @@ private keyword_recovery ::=
     'elseif' |
     'across' |
     'when' |
-    'do'
+    'do' |
+    'require' |
+    'inherit' |
+    'feature' |
+    'local' |
+    'assign' |
+    '(' | ')' | ';' | '=' | '{' | '}' |
+    'result' |
+    'precursor' |
+    'variant' |
+    'invariant' |
+    'obsolete' |
+    EXTERNAL_KEYWORD |
+    'once' |
+    'deferred'
+
+private keyword_recovery ::= !keyword_recovery_
+private keyword_or_identifier_recovery ::= !(keyword_recovery_ | IDENTIFIER)

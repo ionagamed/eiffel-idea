@@ -13,7 +13,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.Nullable;
 
-public class EiffelCreationProcedureCompletionUtil implements IEiffelCompletionUtil {
+public class EiffelCreationProcedureCompletionUtil extends EiffelCompletionUtilBase {
     @Override
     public void addCompletions(CompletionParameters parameters, ProcessingContext context, CompletionResultSet result) {
         EiffelCreationInstruction instruction = getCreationInstruction(parameters.getPosition());

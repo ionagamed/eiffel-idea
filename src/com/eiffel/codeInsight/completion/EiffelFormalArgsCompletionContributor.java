@@ -10,9 +10,11 @@ import com.intellij.codeInsight.lookup.LookupElementPresentation;
 import com.intellij.codeInsight.lookup.LookupElementRenderer;
 import com.intellij.icons.AllIcons;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.ProcessingContext;
+import org.codehaus.groovy.ast.ASTNode;
 
-public class EiffelFormalArgsCompletionContributor implements IEiffelCompletionUtil {
+public class EiffelFormalArgsCompletionContributor extends EiffelCompletionUtilBase {
     @Override
     public void addCompletions(CompletionParameters parameters, ProcessingContext context, CompletionResultSet result) {
         PsiElement element = parameters.getPosition();
@@ -48,7 +50,13 @@ public class EiffelFormalArgsCompletionContributor implements IEiffelCompletionU
         if (grandparent instanceof EiffelVariable) return true;
         PsiElement ggp = grandparent.getParent();
         if (ggp == null) return false;
-        if (ggp instanceof EiffelObjectCall) return true;
+        if (ggp instanceof EiffelObjectCall) {
+            PsiElement gggp = ggp.getParent();
+            if (gggp != null) {
+                if (gggp.getNode().getChildren(TokenSet.create(EiffelTypes.DOT)).length != 0) return false;
+            }
+            return true;
+        }
         return false;
     }
 }

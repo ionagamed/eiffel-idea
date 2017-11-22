@@ -57,9 +57,15 @@ public class EiffelTypeResolutionUtil {
                 EiffelFeatureDeclaration featureDeclaration = EiffelClassUtil.findFeatureDeclaration(currentUnqualifiedCall.getPsi());
                 if (featureDeclaration == null) return null;
                 EiffelEntityIdentifier identifier = featureDeclaration.getLocalEntityIdentifier(currentFeatureName.getText());
-                if (identifier == null) return null;
-                currentClass = identifier.getTypeString();
-                if (currentClass == null) return null;
+                if (identifier != null) {
+                    currentClass = identifier.getTypeString();
+                    if (currentClass == null) return null;
+                } else {
+                    identifier = featureDeclaration.getFormalArgumentIdentifier(currentFeatureName.getText());
+                    if (identifier == null) return null;
+                    currentClass = identifier.getTypeString();
+                    if (currentClass == null) return null;
+                }
             }
         }
 

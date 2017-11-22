@@ -810,14 +810,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // expression ':=' expression
   public static boolean assigner_call(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assigner_call")) return false;
-    boolean r, p;
+    boolean r;
     Marker m = enter_section_(b, l, _NONE_, ASSIGNER_CALL, "<assigner call>");
     r = expression(b, l + 1);
     r = r && consumeToken(b, ASSIGN);
-    p = r; // pin = 2
     r = r && expression(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */
@@ -838,14 +837,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   public static boolean assignment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assignment")) return false;
     if (!nextTokenIs(b, "<assignment>", RESULT_KEYWORD, IDENTIFIER)) return false;
-    boolean r, p;
+    boolean r;
     Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT, "<assignment>");
     r = variable(b, l + 1);
     r = r && consumeToken(b, ASSIGN);
-    p = r; // pin = 2
     r = r && expression(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */
@@ -1469,7 +1467,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, CLASS_KEYWORD);
     p = r; // pin = 2
     r = r && class_name(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
+    exit_section_(b, l, m, r, p, class_header_recovery_parser_);
     return r || p;
   }
 
@@ -1478,6 +1476,17 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "class_header_0")) return false;
     header_mark(b, l + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // !keyword_recovery_
+  static boolean class_header_recovery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "class_header_recovery")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !keyword_recovery_(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */
@@ -1679,15 +1688,14 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // 'if' then_part_list [else_part] 'end'
   public static boolean conditional(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "conditional")) return false;
-    if (!nextTokenIs(b, IF_KEYWORD)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, CONDITIONAL, null);
+    Marker m = enter_section_(b, l, _NONE_, CONDITIONAL, "<conditional>");
     r = consumeToken(b, IF_KEYWORD);
     p = r; // pin = 1
     r = r && report_error_(b, then_part_list(b, l + 1));
     r = p && report_error_(b, conditional_2(b, l + 1)) && r;
     r = p && consumeToken(b, END_KEYWORD) && r;
-    exit_section_(b, l, m, r, p, null);
+    exit_section_(b, l, m, r, p, keyword_or_identifier_recovery_parser_);
     return r || p;
   }
 
@@ -1985,14 +1993,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // 'create' [explicit_creation_type] creation_call
   public static boolean creation_instruction(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "creation_instruction")) return false;
-    if (!nextTokenIs(b, CREATE_KEYWORD)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, CREATION_INSTRUCTION, null);
+    Marker m = enter_section_(b, l, _NONE_, CREATION_INSTRUCTION, "<creation instruction>");
     r = consumeToken(b, CREATE_KEYWORD);
     p = r; // pin = 1
     r = r && report_error_(b, creation_instruction_1(b, l + 1));
     r = p && creation_call(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
+    exit_section_(b, l, m, r, p, keyword_or_identifier_recovery_parser_);
     return r || p;
   }
 
@@ -2310,27 +2317,47 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   public static boolean exit_condition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "exit_condition")) return false;
     if (!nextTokenIs(b, UNTIL_KEYWORD)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, EXIT_CONDITION, null);
+    boolean r;
+    Marker m = enter_section_(b);
     r = consumeToken(b, UNTIL_KEYWORD);
-    p = r; // pin = 1
     r = r && boolean_expression(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+    exit_section_(b, m, EXIT_CONDITION, r);
+    return r;
   }
 
   /* ********************************************************** */
   // '.' unqualified_call
   static boolean explicit_creation_call(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "explicit_creation_call")) return false;
-    if (!nextTokenIs(b, DOT)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
     r = consumeToken(b, DOT);
     p = r; // pin = 1
     r = r && unqualified_call(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
+    exit_section_(b, l, m, r, p, explicit_creation_call_recovery_parser_);
     return r || p;
+  }
+
+  /* ********************************************************** */
+  // !(keyword_recovery_ | IDENTIFIER)
+  static boolean explicit_creation_call_recovery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "explicit_creation_call_recovery")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !explicit_creation_call_recovery_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // keyword_recovery_ | IDENTIFIER
+  private static boolean explicit_creation_call_recovery_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "explicit_creation_call_recovery_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = keyword_recovery_(b, l + 1);
+    if (!r) r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -2352,14 +2379,35 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // '=' manifest_constant
   public static boolean explicit_value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "explicit_value")) return false;
-    if (!nextTokenIs(b, EQ)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, EXPLICIT_VALUE, null);
+    Marker m = enter_section_(b, l, _NONE_, EXPLICIT_VALUE, "<explicit value>");
     r = consumeToken(b, EQ);
     p = r; // pin = 1
     r = r && manifest_constant(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
+    exit_section_(b, l, m, r, p, explicit_value_recovery_parser_);
     return r || p;
+  }
+
+  /* ********************************************************** */
+  // !(keyword_recovery_ | IDENTIFIER)
+  static boolean explicit_value_recovery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "explicit_value_recovery")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !explicit_value_recovery_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // keyword_recovery_ | IDENTIFIER
+  private static boolean explicit_value_recovery_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "explicit_value_recovery_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = keyword_recovery_(b, l + 1);
+    if (!r) r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -2734,15 +2782,14 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // 'feature' [clients] [header_comment] feature_declaration_list
   public static boolean feature_clause(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "feature_clause")) return false;
-    if (!nextTokenIs(b, FEATURE_KEYWORD)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, FEATURE_CLAUSE, null);
+    Marker m = enter_section_(b, l, _NONE_, FEATURE_CLAUSE, "<feature clause>");
     r = consumeToken(b, FEATURE_KEYWORD);
     p = r; // pin = 1
     r = r && report_error_(b, feature_clause_1(b, l + 1));
     r = p && report_error_(b, feature_clause_2(b, l + 1)) && r;
     r = p && feature_declaration_list(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
+    exit_section_(b, l, m, r, p, feature_clause_recovery_parser_);
     return r || p;
   }
 
@@ -2758,6 +2805,29 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "feature_clause_2")) return false;
     header_comment(b, l + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // !('feature' | 'invariant' | 'end')
+  static boolean feature_clause_recovery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_clause_recovery")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !feature_clause_recovery_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // 'feature' | 'invariant' | 'end'
+  private static boolean feature_clause_recovery_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_clause_recovery_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, FEATURE_KEYWORD);
+    if (!r) r = consumeToken(b, INVARIANT_KEYWORD);
+    if (!r) r = consumeToken(b, END_KEYWORD);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -3184,13 +3254,12 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   public static boolean initialization(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "initialization")) return false;
     if (!nextTokenIs(b, FROM_KEYWORD)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, INITIALIZATION, null);
+    boolean r;
+    Marker m = enter_section_(b);
     r = consumeToken(b, FROM_KEYWORD);
-    p = r; // pin = 1
     r = r && compound(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+    exit_section_(b, m, INITIALIZATION, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -3240,13 +3309,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // conditional |
   //     creation_instruction |
+  //     precursor |
+  //     loop |
   //     multi_branch |
   //     assignment |
   //     assigner_call |
-  //     loop |
   //     call |
   //     debug |
-  //     precursor |
   //     check |
   //     retry
   public static boolean instruction(PsiBuilder b, int l) {
@@ -3255,13 +3324,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, INSTRUCTION, "<instruction>");
     r = conditional(b, l + 1);
     if (!r) r = creation_instruction(b, l + 1);
+    if (!r) r = precursor(b, l + 1);
+    if (!r) r = loop(b, l + 1);
     if (!r) r = multi_branch(b, l + 1);
     if (!r) r = assignment(b, l + 1);
     if (!r) r = assigner_call(b, l + 1);
-    if (!r) r = loop(b, l + 1);
     if (!r) r = call(b, l + 1);
     if (!r) r = debug(b, l + 1);
-    if (!r) r = precursor(b, l + 1);
     if (!r) r = check(b, l + 1);
     if (!r) r = retry(b, l + 1);
     exit_section_(b, l, m, r, false, instruction_recovery_parser_);
@@ -3270,7 +3339,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // !(
-  //     keyword_recovery |
+  //     keyword_recovery_ |
   //     instruction
   // )
   static boolean instruction_recovery(PsiBuilder b, int l) {
@@ -3282,13 +3351,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // keyword_recovery |
+  // keyword_recovery_ |
   //     instruction
   private static boolean instruction_recovery_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "instruction_recovery_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = keyword_recovery(b, l + 1);
+    r = keyword_recovery_(b, l + 1);
     if (!r) r = instruction(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -3304,14 +3373,24 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // routine_mark compound
   static boolean internal(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "internal")) return false;
-    if (!nextTokenIs(b, "", DO_KEYWORD, ONCE_KEYWORD)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
     r = routine_mark(b, l + 1);
     p = r; // pin = 1
     r = r && compound(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
+    exit_section_(b, l, m, r, p, internal_recovery_parser_);
     return r || p;
+  }
+
+  /* ********************************************************** */
+  // !keyword_recovery_
+  static boolean internal_recovery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "internal_recovery")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !keyword_recovery_(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */
@@ -3319,13 +3398,12 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   public static boolean invariant(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "invariant")) return false;
     if (!nextTokenIs(b, INVARIANT_KEYWORD)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, INVARIANT, null);
+    boolean r;
+    Marker m = enter_section_(b);
     r = consumeToken(b, INVARIANT_KEYWORD);
-    p = r; // pin = 1
     r = r && assertion(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+    exit_section_(b, m, INVARIANT, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -3387,6 +3465,39 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // !(keyword_recovery_ | IDENTIFIER)
+  static boolean keyword_or_identifier_recovery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "keyword_or_identifier_recovery")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !keyword_or_identifier_recovery_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // keyword_recovery_ | IDENTIFIER
+  private static boolean keyword_or_identifier_recovery_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "keyword_or_identifier_recovery_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = keyword_recovery_(b, l + 1);
+    if (!r) r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // !keyword_recovery_
+  static boolean keyword_recovery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "keyword_recovery")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !keyword_recovery_(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
   // 'if' |
   //     'else' |
   //     'create' |
@@ -3397,9 +3508,23 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     'elseif' |
   //     'across' |
   //     'when' |
-  //     'do'
-  static boolean keyword_recovery(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "keyword_recovery")) return false;
+  //     'do' |
+  //     'require' |
+  //     'inherit' |
+  //     'feature' |
+  //     'local' |
+  //     'assign' |
+  //     '(' | ')' | ';' | '=' | '{' | '}' |
+  //     'result' |
+  //     'precursor' |
+  //     'variant' |
+  //     'invariant' |
+  //     'obsolete' |
+  //     EXTERNAL_KEYWORD |
+  //     'once' |
+  //     'deferred'
+  static boolean keyword_recovery_(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "keyword_recovery_")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, IF_KEYWORD);
@@ -3413,6 +3538,25 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, ACROSS_KEYWORD);
     if (!r) r = consumeToken(b, WHEN_KEYWORD);
     if (!r) r = consumeToken(b, DO_KEYWORD);
+    if (!r) r = consumeToken(b, REQUIRE_KEYWORD);
+    if (!r) r = consumeToken(b, INHERIT_KEYWORD);
+    if (!r) r = consumeToken(b, FEATURE_KEYWORD);
+    if (!r) r = consumeToken(b, LOCAL_KEYWORD);
+    if (!r) r = consumeToken(b, ASSIGN_KEYWORD);
+    if (!r) r = consumeToken(b, LEFT_PAREN);
+    if (!r) r = consumeToken(b, RIGHT_PAREN);
+    if (!r) r = consumeToken(b, SEMICOLON);
+    if (!r) r = consumeToken(b, EQ);
+    if (!r) r = consumeToken(b, LEFT_CURLY_BRACKET);
+    if (!r) r = consumeToken(b, RIGHT_CURLY_BRACKET);
+    if (!r) r = consumeToken(b, RESULT_KEYWORD);
+    if (!r) r = consumeToken(b, PRECURSOR_KEYWORD);
+    if (!r) r = consumeToken(b, VARIANT_KEYWORD);
+    if (!r) r = consumeToken(b, INVARIANT_KEYWORD);
+    if (!r) r = consumeToken(b, OBSOLETE_KEYWORD);
+    if (!r) r = consumeToken(b, EXTERNAL_KEYWORD);
+    if (!r) r = consumeToken(b, ONCE_KEYWORD);
+    if (!r) r = consumeToken(b, DEFERRED_KEYWORD);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -4263,15 +4407,14 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // 'ensure' ['then'] assertion [only]
   public static boolean postcondition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "postcondition")) return false;
-    if (!nextTokenIs(b, ENSURE_KEYWORD)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, POSTCONDITION, null);
+    Marker m = enter_section_(b, l, _NONE_, POSTCONDITION, "<postcondition>");
     r = consumeToken(b, ENSURE_KEYWORD);
     p = r; // pin = 1
     r = r && report_error_(b, postcondition_1(b, l + 1));
     r = p && report_error_(b, assertion(b, l + 1)) && r;
     r = p && postcondition_3(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
+    exit_section_(b, l, m, r, p, keyword_or_identifier_recovery_parser_);
     return r || p;
   }
 
@@ -4293,14 +4436,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // 'require' ['else'] assertion
   public static boolean precondition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "precondition")) return false;
-    if (!nextTokenIs(b, REQUIRE_KEYWORD)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, PRECONDITION, null);
+    Marker m = enter_section_(b, l, _NONE_, PRECONDITION, "<precondition>");
     r = consumeToken(b, REQUIRE_KEYWORD);
     p = r; // pin = 1
     r = r && report_error_(b, precondition_1(b, l + 1));
     r = p && assertion(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
+    exit_section_(b, l, m, r, p, keyword_or_identifier_recovery_parser_);
     return r || p;
   }
 
@@ -4810,14 +4952,35 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // ':' type
   static boolean type_mark(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_mark")) return false;
-    if (!nextTokenIs(b, COLON)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
     r = consumeToken(b, COLON);
     p = r; // pin = 1
     r = r && type(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
+    exit_section_(b, l, m, r, p, type_mark_recovery_parser_);
     return r || p;
+  }
+
+  /* ********************************************************** */
+  // !(keyword_recovery_ | IDENTIFIER)
+  static boolean type_mark_recovery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_mark_recovery")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !type_mark_recovery_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // keyword_recovery_ | IDENTIFIER
+  private static boolean type_mark_recovery_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_mark_recovery_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = keyword_recovery_(b, l + 1);
+    if (!r) r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -4979,9 +5142,44 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
+  final static Parser class_header_recovery_parser_ = new Parser() {
+    public boolean parse(PsiBuilder b, int l) {
+      return class_header_recovery(b, l + 1);
+    }
+  };
+  final static Parser explicit_creation_call_recovery_parser_ = new Parser() {
+    public boolean parse(PsiBuilder b, int l) {
+      return explicit_creation_call_recovery(b, l + 1);
+    }
+  };
+  final static Parser explicit_value_recovery_parser_ = new Parser() {
+    public boolean parse(PsiBuilder b, int l) {
+      return explicit_value_recovery(b, l + 1);
+    }
+  };
+  final static Parser feature_clause_recovery_parser_ = new Parser() {
+    public boolean parse(PsiBuilder b, int l) {
+      return feature_clause_recovery(b, l + 1);
+    }
+  };
   final static Parser instruction_recovery_parser_ = new Parser() {
     public boolean parse(PsiBuilder b, int l) {
       return instruction_recovery(b, l + 1);
+    }
+  };
+  final static Parser internal_recovery_parser_ = new Parser() {
+    public boolean parse(PsiBuilder b, int l) {
+      return internal_recovery(b, l + 1);
+    }
+  };
+  final static Parser keyword_or_identifier_recovery_parser_ = new Parser() {
+    public boolean parse(PsiBuilder b, int l) {
+      return keyword_or_identifier_recovery(b, l + 1);
+    }
+  };
+  final static Parser type_mark_recovery_parser_ = new Parser() {
+    public boolean parse(PsiBuilder b, int l) {
+      return type_mark_recovery(b, l + 1);
     }
   };
 }

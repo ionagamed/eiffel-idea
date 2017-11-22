@@ -12,7 +12,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.Nullable;
 
-public class EiffelVariableCompletionUtil implements IEiffelCompletionUtil {
+public class EiffelVariableCompletionUtil extends EiffelCompletionUtilBase {
     @Override
     public void addCompletions(CompletionParameters parameters, ProcessingContext context, CompletionResultSet result) {
         EiffelVariable variable = getVariableAncestor(parameters.getPosition());

@@ -14,7 +14,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.ProcessingContext;
 
-public class EiffelLocalCompletionUtil implements IEiffelCompletionUtil {
+public class EiffelLocalCompletionUtil extends EiffelCompletionUtilBase {
     @Override
     public void addCompletions(CompletionParameters parameters, ProcessingContext context, CompletionResultSet result) {
         PsiElement element = parameters.getPosition();
@@ -49,7 +49,11 @@ public class EiffelLocalCompletionUtil implements IEiffelCompletionUtil {
             if (current == null) return false;
             if (discardTokens.contains(current.getNode().getElementType())) return false;
         }
-        return !finalDiscardTokens.contains(current.getNode().getElementType());
+        if (finalDiscardTokens.contains(current.getNode().getElementType())) return false;
+        for (PsiElement child : current.getChildren()) {
+            if (child.getNode().getElementType().equals(EiffelTypes.DOT)) return false;
+        }
+        return true;
     }
 
 //    private static TokenSet discardTokens = TokenSet.create(
