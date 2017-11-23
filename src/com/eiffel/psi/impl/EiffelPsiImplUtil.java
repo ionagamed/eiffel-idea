@@ -72,6 +72,7 @@ public class EiffelPsiImplUtil {
 
     @NotNull
     public static List<EiffelNewFeature> getNewFeatures(EiffelClassDeclaration classDeclaration) {
+        if (classDeclaration.getStub() != null) return classDeclaration.getStub().getNewFeatures();
         List<EiffelNewFeature> newFeatures = new ArrayList<>();
         for (EiffelFeatureDeclaration featureDeclaration : classDeclaration.getFeatureDeclarations()) {
             newFeatures.addAll(featureDeclaration.getNewFeatureList());
@@ -155,22 +156,16 @@ public class EiffelPsiImplUtil {
 
     @NotNull
     public static List<EiffelClassDeclaration> getDirectParents(EiffelClassDeclaration classDeclaration) {
-        // TODO: refactor to use getDirectParentNames
         List<EiffelClassDeclaration> result = new ArrayList<>();
-        if (classDeclaration.getName() != null && !classDeclaration.getName().equals("ANY"))
-            result.add(EiffelClassUtil.findClassDeclaration(classDeclaration.getProject(), "ANY"));
-
-        EiffelInheritance inheritance = classDeclaration.getInheritance();
-        if (inheritance == null) return result;
-        for (EiffelParent parent : inheritance.getParentList()) {
-            result.add(EiffelClassUtil.findClassDeclaration(classDeclaration.getProject(), parent.getClassName().getText()));
+        for (String parentName : classDeclaration.getDirectParentNames()) {
+            result.add(EiffelClassUtil.findClassDeclaration(classDeclaration.getProject(), parentName));
         }
-
         return result;
     }
 
     @NotNull
     public static Set<String> getDirectParentNames(EiffelClassDeclaration classDeclaration) {
+        if (classDeclaration.getStub() != null) return classDeclaration.getStub().getDirectParentNames();
         Set<String> result = new HashSet<>();
         if (classDeclaration.getName() != null && !classDeclaration.getName().equals("ANY")) result.add("ANY");
 
@@ -230,11 +225,13 @@ public class EiffelPsiImplUtil {
 
     @NotNull
     public static String getName(EiffelNewFeature newFeature) {
+        if (newFeature.getStub() != null) return newFeature.getStub().getName();
         return newFeature.getFeatureName().getText();
     }
 
     @Nullable
     public static String getTypeString(EiffelNewFeature newFeature) {
+        if (newFeature.getStub() != null) return newFeature.getStub().getTypeString();
         if (newFeature.getParent() instanceof EiffelFeatureDeclaration) {
             EiffelFeatureDeclaration featureDeclaration = (EiffelFeatureDeclaration) newFeature.getParent();
             EiffelType type = featureDeclaration.getType();
@@ -249,6 +246,7 @@ public class EiffelPsiImplUtil {
 
     @Nullable
     public static String getSerializedFormalArguments(EiffelNewFeature newFeature) {
+        if (newFeature.getStub() != null) return newFeature.getStub().getSerializedFormalArguments();
         EiffelFeatureDeclaration featureDeclaration = newFeature.getFeatureDeclaration();
         if (featureDeclaration == null) return null;
         EiffelFormalArguments arguments = featureDeclaration.getFormalArguments();
@@ -278,6 +276,7 @@ public class EiffelPsiImplUtil {
 
     @NotNull
     public static Set<String> getClientNames(EiffelNewFeature newFeature) {
+        if (newFeature.getStub() != null) return newFeature.getStub().getClientNames();
         Set<String> result = new HashSet<>();
         EiffelFeatureClause featureClause = newFeature.getFeatureClause();
         if (featureClause == null) return result;

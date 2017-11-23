@@ -1,23 +1,15 @@
-package com.eiffel.psi.impl;
+package com.eiffel.psi.stubs.impl;
 
 import com.eiffel.EiffelLanguage;
 import com.eiffel.psi.EiffelClassDeclaration;
-import com.eiffel.psi.EiffelClassDeclarationStub;
-import com.eiffel.psi.EiffelStubIndexKeys;
-import com.intellij.lang.Language;
-import com.intellij.lang.LighterAST;
-import com.intellij.lang.LighterASTNode;
-import com.intellij.psi.PsiElement;
+import com.eiffel.psi.impl.EiffelClassDeclarationImpl;
+import com.eiffel.psi.stubs.EiffelClassDeclarationStub;
+import com.eiffel.psi.stubs.EiffelStubIndexKeys;
 import com.intellij.psi.stubs.*;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
-import com.intellij.util.ArrayFactory;
 import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
-import java.util.List;
 
 public class EiffelClassDeclarationStubElementType extends IStubElementType<EiffelClassDeclarationStub, EiffelClassDeclaration> {
     public EiffelClassDeclarationStubElementType() {
@@ -55,6 +47,6 @@ public class EiffelClassDeclarationStubElementType extends IStubElementType<Eiff
 
     @Override
     public void indexStub(@NotNull EiffelClassDeclarationStub stub, @NotNull IndexSink sink) {
-        sink.occurrence(EiffelStubIndexKeys.CLASS_DECLARATION_KEY, stub.getName());
+        sink.occurrence(EiffelStubIndexKeys.SYMBOLS_KEY, stub.getName());
     }
 }

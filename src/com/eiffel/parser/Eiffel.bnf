@@ -138,7 +138,7 @@ class_declaration ::=
             getNewFeature
         ]
         pin = 2
-        stubClass="com.eiffel.psi.EiffelClassDeclarationStub"
+        stubClass="com.eiffel.psi.stubs.EiffelClassDeclarationStub"
     }
 class_header ::= [header_mark] 'class' class_name {
     pin = 2
@@ -161,8 +161,9 @@ features ::= feature_clause+
 feature_clause ::= 'feature' [clients] [header_comment] feature_declaration_list {
     pin = 1
     recoverWhile = feature_clause_recovery
+    stubClass = "com.eiffel.psi.stubs.EiffelFeatureClauseStub"
 }
-private feature_clause_recovery ::= !('feature' | 'invariant' | 'end')
+private feature_clause_recovery ::= !('feature' | 'invariant' | 'note' | 'end')
 private feature_declaration_list ::= (feature_declaration ';'?)*
 header_comment ::= comment
 
@@ -175,6 +176,7 @@ feature_declaration ::= new_feature_list [declaration_body]
             getFormalArgumentIdentifier
             getCommentDoc
         ]
+        stubClass = "com.eiffel.psi.stubs.EiffelFeatureDeclarationStub"
     }
 private declaration_body ::= [formal_arguments] [query_mark] [feature_value]
 private query_mark ::= type_mark [assigner_mark]
@@ -206,6 +208,7 @@ new_feature ::= ['frozen'] extended_feature_name
         getCommentDoc
     ]
     implements="com.eiffel.psi.EiffelTypedElement"
+    stubClass="com.eiffel.psi.stubs.EiffelNewFeatureStub"
 }
 
 private attribute_or_routine ::= [precondition] [local_declarations] feature_body [postcondition] [rescue] END_KEYWORD { pin = 3 }
@@ -228,7 +231,9 @@ inheritance ::= inherit_clause+
 private inherit_clause ::= 'inherit' [non_conformance] parent_list { pin = 1 }
 non_conformance ::= '{' 'none' '}' { pin = 1 }
 private parent_list ::= parent (';'? parent)*
-parent ::= class_type [feature_adaption]
+parent ::= class_type [feature_adaption] {
+    stubClass="com.eiffel.psi.stubs.EiffelParentStub"
+}
 feature_adaption ::= [rename] [new_exports] [undefine] [redefine] [select] 'end'
 
 private rename ::= 'rename' rename_list
@@ -236,7 +241,9 @@ private rename_list ::= rename_pair (','? rename_pair)*
 rename_pair ::= feature_name 'as' extended_feature_name
 
 clients ::= '{' client_specifier '}' { pin = 1 }
-client_specifier ::= class_list | 'none' | 'all'
+client_specifier ::= class_list | 'none' | 'all' {
+    stubClass = "com.eiffel.psi.stubs.EiffelClientSpecifierStub"
+}
 private class_list ::= class_name (','? class_name)*
 
 new_exports ::= 'export' new_export_list
@@ -245,9 +252,13 @@ private new_export_item ::= clients [header_comment] feature_set
 private feature_set ::= feature_list | 'all'
 feature_list ::= feature_name (','? feature_name)*
 
-formal_arguments ::= '(' entity_declaration_list ')'
+formal_arguments ::= '(' entity_declaration_list ')' {
+    stubClass = "com.eiffel.psi.stubs.EiffelFormalArgumentsStub"
+}
 private entity_declaration_list ::= entity_declaration_group (';'? entity_declaration_group)*
-entity_declaration_group ::= entity_identifier_list type_mark
+entity_declaration_group ::= entity_identifier_list type_mark {
+    stubClass = "com.eiffel.psi.stubs.EiffelEntityDeclarationGroupStub"
+}
 private entity_identifier_list ::= entity_identifier (',' entity_identifier)*
 entity_identifier ::= IDENTIFIER
     {
@@ -255,6 +266,7 @@ entity_identifier ::= IDENTIFIER
             getTypeString
         ]
         implements="com.eiffel.psi.EiffelTypedElement"
+        stubClass = "com.eiffel.psi.stubs.EiffelEntityIdentifierStub"
     }
 
 deferred ::= 'deferred'
@@ -328,7 +340,9 @@ parent_qualification ::= '{' class_name '}'
 redefine ::= 'redefine' feature_list
 undefine ::= 'undefine' feature_list
 
-type ::= class_or_tuple_type | formal_generic_name | anchored
+type ::= class_or_tuple_type | formal_generic_name | anchored {
+    stubClass = "com.eiffel.psi.stubs.EiffelTypeStub"
+}
 private class_or_tuple_type ::= tuple_type | class_type
 private class_type ::= ['detachable' | 'attached'] ['separate'] [attachment_mark] class_name [actual_generics]
 attachment_mark ::= '?' | '!'
@@ -577,7 +591,8 @@ private keyword_recovery_ ::=
     'obsolete' |
     EXTERNAL_KEYWORD |
     'once' |
-    'deferred'
+    'deferred' |
+    'note'
 
 private keyword_recovery ::= !keyword_recovery_
 private keyword_or_identifier_recovery ::= !(keyword_recovery_ | IDENTIFIER)

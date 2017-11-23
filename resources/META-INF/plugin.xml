@@ -79,7 +79,7 @@
     <gotoDeclarationHandler implementation="com.eiffel.ide.EiffelGotoDeclarationHandler"/>
 
     <stubElementTypeHolder class="com.eiffel.psi.EiffelTypes"/>
-    <stubIndex implementation="com.eiffel.psi.EiffelClassDeclarationStubIndex"/>
+    <stubIndex implementation="com.eiffel.psi.stubs.impl.EiffelClassDeclarationStubIndex"/>
     <!--<moduleType id="EIFFEL_MODULE" implementationClass="com.eiffel.sdk.EiffelModuleType"/>-->
     <!--<moduleBuilder builderClass="com.eiffel.sdk.EiffelModuleBuilder"/>-->
 

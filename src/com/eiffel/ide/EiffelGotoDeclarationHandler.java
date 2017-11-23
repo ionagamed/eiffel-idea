@@ -57,11 +57,17 @@ public class EiffelGotoDeclarationHandler extends GotoDeclarationHandlerBase {
     private PsiElement getFeatureDeclarationByUnqualifiedCallElement(PsiElement unqualifiedCall, Editor editor) {
         String currentClass = EiffelClassUtil.findParentingClassForFeatureCall(editor.getProject(), unqualifiedCall);
         if (currentClass == null) return null;
+//        String currentClass = "STD_FILES";
 
         ASTNode featureName = unqualifiedCall.getNode().findChildByType(EiffelTypes.FEATURE_NAME);
         if (featureName == null) return null;
 
-        return EiffelClassUtil.findFeatureDeclaration(editor.getProject(), currentClass, featureName.getText());
+        EiffelClassDeclaration currentClassDeclaration = EiffelClassUtil.findClassDeclaration(editor.getProject(), currentClass);
+        if (currentClassDeclaration == null) return null;
+
+        return currentClassDeclaration.getNewFeature(featureName.getText());
+
+//        return EiffelClassUtil.findFeatureDeclaration(editor.getProject(), currentClass, featureName.getText());
     }
 
     private PsiElement getLocalDeclarationByGrandparent(PsiElement grandparent, Editor editor) {

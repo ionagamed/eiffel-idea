@@ -1,5 +1,6 @@
-package com.eiffel.psi;
+package com.eiffel.psi.stubs.impl;
 
+import com.eiffel.psi.stubs.EiffelStubIndexKeys;
 import com.intellij.psi.stubs.StringStubIndexExtension;
 import com.intellij.psi.stubs.StubIndexKey;
 import org.jetbrains.annotations.NotNull;
@@ -7,12 +8,12 @@ import org.jetbrains.annotations.NotNull;
 public class EiffelClassDeclarationStubIndex extends StringStubIndexExtension {
     @Override
     public int getVersion() {
-        return 8;
+        return 18;
     }
 
     @NotNull
     @Override
     public StubIndexKey getKey() {
-        return EiffelStubIndexKeys.CLASS_DECLARATION_KEY;
+        return EiffelStubIndexKeys.SYMBOLS_KEY;
     }
 }

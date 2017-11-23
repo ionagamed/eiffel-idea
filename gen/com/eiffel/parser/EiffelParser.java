@@ -2808,7 +2808,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !('feature' | 'invariant' | 'end')
+  // !('feature' | 'invariant' | 'note' | 'end')
   static boolean feature_clause_recovery(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "feature_clause_recovery")) return false;
     boolean r;
@@ -2818,13 +2818,14 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // 'feature' | 'invariant' | 'end'
+  // 'feature' | 'invariant' | 'note' | 'end'
   private static boolean feature_clause_recovery_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "feature_clause_recovery_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, FEATURE_KEYWORD);
     if (!r) r = consumeToken(b, INVARIANT_KEYWORD);
+    if (!r) r = consumeToken(b, NOTE_KEYWORD);
     if (!r) r = consumeToken(b, END_KEYWORD);
     exit_section_(b, m, null, r);
     return r;
@@ -3522,7 +3523,8 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     'obsolete' |
   //     EXTERNAL_KEYWORD |
   //     'once' |
-  //     'deferred'
+  //     'deferred' |
+  //     'note'
   static boolean keyword_recovery_(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "keyword_recovery_")) return false;
     boolean r;
@@ -3557,6 +3559,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, EXTERNAL_KEYWORD);
     if (!r) r = consumeToken(b, ONCE_KEYWORD);
     if (!r) r = consumeToken(b, DEFERRED_KEYWORD);
+    if (!r) r = consumeToken(b, NOTE_KEYWORD);
     exit_section_(b, m, null, r);
     return r;
   }

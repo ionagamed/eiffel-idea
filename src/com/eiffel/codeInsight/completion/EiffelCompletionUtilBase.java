@@ -26,10 +26,13 @@ public abstract class EiffelCompletionUtilBase {
         Map<EiffelNewFeature, Integer> newFeatures = classDeclaration.getAllNewFeaturesInContextWithDepth(context);
         for (EiffelNewFeature newFeature : newFeatures.keySet()) {
             final String formalArguments = newFeature.getSerializedFormalArguments();
+//            final String formalArguments = null;
+            final String doc = null;
+//            final String returnType = null;
             final String returnType = newFeature.getTypeString();
             final int priority = newFeatures.get(newFeature);
             final String name = newFeature.getName();
-            final String doc = newFeature.getCommentDoc();
+//            final String doc = newFeature.getCommentDoc();
             LookupElement lookupElement = LookupElementBuilder
                     .create(name + (formalArguments == null ? "" : "("))
                     .withRenderer(new LookupElementRenderer<LookupElement>() {

@@ -1,6 +1,7 @@
 package com.eiffel.psi;
 
 import com.eiffel.EiffelSourceFileType;
+import com.eiffel.psi.stubs.EiffelStubIndexKeys;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -10,7 +11,6 @@ import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.stubs.StubIndex;
 import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -76,7 +76,7 @@ public class EiffelClassUtil {
 
     public static List<String> findClassDeclarationNames(Project project) {
         return (List<String>)
-                StubIndex.getInstance().getAllKeys(EiffelStubIndexKeys.CLASS_DECLARATION_KEY, project).stream().collect(Collectors.toList());
+                StubIndex.getInstance().getAllKeys(EiffelStubIndexKeys.SYMBOLS_KEY, project).stream().collect(Collectors.toList());
     }
 
     /**
@@ -103,7 +103,7 @@ public class EiffelClassUtil {
 
     public static EiffelClassDeclaration findClassDeclaration(Project project, String name) {
         Collection<EiffelClassDeclaration> declarations = StubIndex.getElements(
-                EiffelStubIndexKeys.CLASS_DECLARATION_KEY,
+                EiffelStubIndexKeys.SYMBOLS_KEY,
                 ungenerify(name),
                 project,
                 GlobalSearchScope.allScope(project),
@@ -126,13 +126,15 @@ public class EiffelClassUtil {
 
     @Nullable
     public static String findFeatureReturnType(Project project, String className, String feature) {
-        EiffelFeatureDeclaration featureDeclaration = findFeatureDeclaration(project, className, feature);
-        if (featureDeclaration == null) return null;
-        EiffelType typeList = featureDeclaration.getType();
-        if (typeList != null) {
-            return typeList.getText();
-        }
-        return null;
+        EiffelClassDeclaration classDeclaration = findClassDeclaration(project, className);
+        if (classDeclaration == null) return null;
+        EiffelNewFeature newFeature = classDeclaration.getNewFeature(feature);
+        if (newFeature == null) return null;
+        return newFeature.getTypeString();
+//        if (className.equals("APPLICATION")) {
+//            return "STD_FILES";
+//        }
+//        return null;
     }
 
     @Nullable
@@ -149,6 +151,8 @@ public class EiffelClassUtil {
     @Nullable
     public static String findParentingClassForFeatureCall(Project project, PsiElement unqualifiedCall) {
         return EiffelTypeResolutionUtil.getTypeString(project, unqualifiedCall, true);
+        // TODO: -
+//        return "STD_FILES";
     }
 
     @Nullable
