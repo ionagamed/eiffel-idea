@@ -20,29 +20,19 @@ import java.util.HashSet;
  * Creation features must be with NONE visibility
  * For it not to be called explicitly without object creation
  */
-public class EiffelCreationFeatureNotNoneAnnotator implements Annotator {
+public class EiffelCreationFeatureNotNoneAnnotator extends EiffelNewFeatureAnnotatorBase {
     @Override
-    public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
-        if (isApplicable(element)) {
-            final String featureName = element.getText();
-            EiffelClassDeclaration currentClass = EiffelClassUtil.findClassDeclaration(element);
-            if (currentClass == null) return;
-            EiffelNewFeature creationFeature = currentClass.getNewFeature(featureName);
-            if (creationFeature == null) return;
-            if (!currentClass.getCreationProcedures().contains(creationFeature)) return;
+    public void annotate_impl(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
+        final String featureName = element.getText();
+        EiffelClassDeclaration currentClass = EiffelClassUtil.findClassDeclaration(element);
+        if (currentClass == null) return;
+        EiffelNewFeature creationFeature = currentClass.getNewFeature(featureName);
+        if (creationFeature == null) return;
+        if (!currentClass.getCreationProcedures().contains(creationFeature)) return;
 
-            if (!creationFeature.getClientNames().equals(new HashSet<>(Collections.singletonList("NONE")))) {
-                holder.createWarningAnnotation(element.getTextRange(), "Creation feature with non-NONE visibility")
-                        .registerFix(new EiffelSetFeatureClientsQuickFix("NONE", creationFeature.getFeatureDeclaration()));
-            }
+        if (!creationFeature.getClientNames().equals(new HashSet<>(Collections.singletonList("NONE")))) {
+            holder.createWarningAnnotation(element.getTextRange(), "Creation feature with non-NONE visibility")
+                    .registerFix(new EiffelSetFeatureClientsQuickFix("NONE", creationFeature.getFeatureDeclaration()));
         }
-    }
-
-    private boolean isApplicable(PsiElement element) {
-        PsiElement p = element.getParent();
-        if (p == null) return false;
-        PsiElement gp = p.getParent();
-        if (gp == null) return false;
-        return gp instanceof EiffelNewFeature;
     }
 }
