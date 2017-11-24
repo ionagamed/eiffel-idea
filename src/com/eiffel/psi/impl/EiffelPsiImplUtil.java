@@ -146,10 +146,8 @@ public class EiffelPsiImplUtil {
     @NotNull
     public static List<String> getFeatureNames(EiffelClassDeclaration classDeclaration) {
         List<String> result = new ArrayList<>();
-        for (EiffelFeatureDeclaration declaration : classDeclaration.getFeatureDeclarations()) {
-            for (EiffelNewFeature newFeature : declaration.getNewFeatureList()) {
-                result.add(newFeature.getFeatureName().getText());
-            }
+        for (EiffelNewFeature newFeature : classDeclaration.getNewFeatures()) {
+            result.add(newFeature.getName());
         }
         return result;
     }
@@ -167,7 +165,11 @@ public class EiffelPsiImplUtil {
 
     @NotNull
     public static Set<String> getDirectParentNames(EiffelClassDeclaration classDeclaration) {
-        if (classDeclaration.getStub() != null) return classDeclaration.getStub().getDirectParentNames();
+        if (classDeclaration.getStub() != null) {
+            Set<String> tmp = classDeclaration.getStub().getDirectParentNames();
+            if (classDeclaration.getName() != null && !classDeclaration.getName().equals("ANY")) tmp.add("ANY");
+            return tmp;
+        }
         Set<String> result = new HashSet<>();
         if (classDeclaration.getName() != null && !classDeclaration.getName().equals("ANY")) result.add("ANY");
 

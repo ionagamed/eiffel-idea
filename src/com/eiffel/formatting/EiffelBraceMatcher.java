@@ -19,7 +19,7 @@ public class EiffelBraceMatcher implements PairedBraceMatcher {
     @NotNull
     @Override
     public BracePair[] getPairs() {
-        return new BracePair[0];
+        return pairs;
     }
 
     @Override

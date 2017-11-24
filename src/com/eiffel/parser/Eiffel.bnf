@@ -436,7 +436,10 @@ creation_instruction ::= 'create' [explicit_creation_type] creation_call {
     pin = 1
     recoverWhile = keyword_or_identifier_recovery
 }
-private explicit_creation_type ::= '{' type '}' { pin = 1 }
+private explicit_creation_type ::= '{' type '}' {
+    pin = 1
+    recoverWhile = keyword_or_identifier_recovery
+}
 private creation_call ::= variable [explicit_creation_call]
 private explicit_creation_call ::= '.' unqualified_call {
     pin = 1
@@ -444,7 +447,7 @@ private explicit_creation_call ::= '.' unqualified_call {
 }
 private explicit_creation_call_recovery ::= !(keyword_recovery_ | IDENTIFIER)
 
-creation_expression ::= 'create' explicit_creation_type [explicit_creation_call] { pin = 1 }
+creation_expression ::= 'create' explicit_creation_type [explicit_creation_call]
 
 assignment ::= variable ':=' expression
 //assignment ::= variable ':=' call
@@ -473,7 +476,10 @@ actual_list ::= expression (',' expression)*
 
 object_test ::= attached_object_test | deprecated_object_test
 private deprecated_object_test ::= '{' IDENTIFIER ':' type '}' expression // not really sure if it's deprecated
-private attached_object_test ::= 'attached' attached_object_test_type? (call | 'current') attached_object_test_redefinition? { pin = 1 }
+private attached_object_test ::= 'attached' attached_object_test_type? (call | 'current') attached_object_test_redefinition? {
+    pin = 1
+    recoverWhile = keyword_or_identifier_recovery
+}
 private attached_object_test_type ::= '{' type '}'
 private attached_object_test_redefinition ::= 'as' IDENTIFIER
 
@@ -497,6 +503,8 @@ expression ::= basic_expression | special_expression
 private basic_expression_term ::=
     array_literal |
     object_test |
+    parenthesized |
+    creation_expression |
     call |
     local |
     read_only |
@@ -504,11 +512,9 @@ private basic_expression_term ::=
     precursor |
     manifest_tuple |
     //equality |
-    parenthesized |
     old |
     //operator_expression |
     bracket_expression |
-    creation_expression |
     manifest_constant
 basic_expression ::= (basic_expression_term operator expression) | (basic_expression_term '=' expression) | (operator expression) | basic_expression_term { extends = expression }
 special_expression ::=
@@ -519,7 +525,7 @@ special_expression ::=
     once_string |
     address
     { extends = expression }
-parenthesized ::= '(' expression ')' { pin = 1 }
+parenthesized ::= '(' expression ')'
 address ::= '$' variable { pin = 1 }
 once_string ::= 'once' manifest_string { pin = 1 }
 private boolean_expression ::= basic_expression | boolean_constant | object_test

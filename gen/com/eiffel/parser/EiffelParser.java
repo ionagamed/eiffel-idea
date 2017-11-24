@@ -850,7 +850,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // 'attached' attached_object_test_type? (call | 'current') attached_object_test_redefinition?
   static boolean attached_object_test(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attached_object_test")) return false;
-    if (!nextTokenIs(b, ATTACHED_KEYWORD)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
     r = consumeToken(b, ATTACHED_KEYWORD);
@@ -858,7 +857,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     r = r && report_error_(b, attached_object_test_1(b, l + 1));
     r = p && report_error_(b, attached_object_test_2(b, l + 1)) && r;
     r = p && attached_object_test_3(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
+    exit_section_(b, l, m, r, p, keyword_or_identifier_recovery_parser_);
     return r || p;
   }
 
@@ -1036,6 +1035,8 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // array_literal |
   //     object_test |
+  //     parenthesized |
+  //     creation_expression |
   //     call |
   //     local |
   //     read_only |
@@ -1043,11 +1044,9 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     precursor |
   //     manifest_tuple |
   //     //equality |
-  //     parenthesized |
   //     old |
   //     //operator_expression |
   //     bracket_expression |
-  //     creation_expression |
   //     manifest_constant
   static boolean basic_expression_term(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "basic_expression_term")) return false;
@@ -1055,16 +1054,16 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = array_literal(b, l + 1);
     if (!r) r = object_test(b, l + 1);
+    if (!r) r = parenthesized(b, l + 1);
+    if (!r) r = creation_expression(b, l + 1);
     if (!r) r = call(b, l + 1);
     if (!r) r = local(b, l + 1);
     if (!r) r = read_only(b, l + 1);
     if (!r) r = boolean_loop(b, l + 1);
     if (!r) r = precursor(b, l + 1);
     if (!r) r = manifest_tuple(b, l + 1);
-    if (!r) r = parenthesized(b, l + 1);
     if (!r) r = old(b, l + 1);
     if (!r) r = bracket_expression(b, l + 1);
-    if (!r) r = creation_expression(b, l + 1);
     if (!r) r = manifest_constant(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -1972,14 +1971,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   public static boolean creation_expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "creation_expression")) return false;
     if (!nextTokenIs(b, CREATE_KEYWORD)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, CREATION_EXPRESSION, null);
+    boolean r;
+    Marker m = enter_section_(b);
     r = consumeToken(b, CREATE_KEYWORD);
-    p = r; // pin = 1
-    r = r && report_error_(b, explicit_creation_type(b, l + 1));
-    r = p && creation_expression_2(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+    r = r && explicit_creation_type(b, l + 1);
+    r = r && creation_expression_2(b, l + 1);
+    exit_section_(b, m, CREATION_EXPRESSION, r);
+    return r;
   }
 
   // [explicit_creation_call]
@@ -2364,14 +2362,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // '{' type '}'
   static boolean explicit_creation_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "explicit_creation_type")) return false;
-    if (!nextTokenIs(b, LEFT_CURLY_BRACKET)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
     r = consumeToken(b, LEFT_CURLY_BRACKET);
     p = r; // pin = 1
     r = r && report_error_(b, type(b, l + 1));
     r = p && consumeToken(b, RIGHT_CURLY_BRACKET) && r;
-    exit_section_(b, l, m, r, p, null);
+    exit_section_(b, l, m, r, p, keyword_or_identifier_recovery_parser_);
     return r || p;
   }
 
@@ -4362,14 +4359,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   public static boolean parenthesized(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "parenthesized")) return false;
     if (!nextTokenIs(b, LEFT_PAREN)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, PARENTHESIZED, null);
+    boolean r;
+    Marker m = enter_section_(b);
     r = consumeToken(b, LEFT_PAREN);
-    p = r; // pin = 1
-    r = r && report_error_(b, expression(b, l + 1));
-    r = p && consumeToken(b, RIGHT_PAREN) && r;
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+    r = r && expression(b, l + 1);
+    r = r && consumeToken(b, RIGHT_PAREN);
+    exit_section_(b, m, PARENTHESIZED, r);
+    return r;
   }
 
   /* ********************************************************** */
