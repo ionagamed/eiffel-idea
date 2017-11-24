@@ -76,7 +76,10 @@ public class EiffelClassUtil {
 
     public static List<String> findClassDeclarationNames(Project project) {
         return (List<String>)
-                StubIndex.getInstance().getAllKeys(EiffelStubIndexKeys.SYMBOLS_KEY, project).stream().collect(Collectors.toList());
+                StubIndex.getInstance().getAllKeys(EiffelStubIndexKeys.SYMBOLS_KEY, project)
+                        .stream()
+                        .filter((Object s) -> !((String)s).contains("."))
+                        .collect(Collectors.toList());
     }
 
     /**

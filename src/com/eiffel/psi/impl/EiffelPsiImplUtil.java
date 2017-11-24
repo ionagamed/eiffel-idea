@@ -158,7 +158,9 @@ public class EiffelPsiImplUtil {
     public static List<EiffelClassDeclaration> getDirectParents(EiffelClassDeclaration classDeclaration) {
         List<EiffelClassDeclaration> result = new ArrayList<>();
         for (String parentName : classDeclaration.getDirectParentNames()) {
-            result.add(EiffelClassUtil.findClassDeclaration(classDeclaration.getProject(), parentName));
+            EiffelClassDeclaration cd = EiffelClassUtil.findClassDeclaration(classDeclaration.getProject(), parentName);
+            if (cd != null)
+                result.add(cd);
         }
         return result;
     }

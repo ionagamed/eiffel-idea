@@ -64,11 +64,9 @@ public class EiffelNewFeatureStubImpl extends StubBase<EiffelNewFeature> impleme
 
     @Override
     public String getClassName() {
-        StubElement candidate = getParentStub().getParentStub();
-        if (candidate instanceof EiffelClassDeclarationStub) {
-            return ((EiffelClassDeclarationStub) candidate).getName();
-        }
-        return null;
+        StubElement current = this;
+        while (current != null && !(current instanceof EiffelClassDeclarationStub)) current = current.getParentStub();
+        return current != null ? ((EiffelClassDeclarationStub) current).getName() : null;
     }
 
     public EiffelFeatureDeclarationStub getFeatureDeclarationStub() {
