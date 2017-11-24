@@ -55,6 +55,7 @@
     <!-- <annotator language="Eiffel" implementationClass="com.eiffel.annotators.EiffelClassNameAnnotator"/> -->
     <annotator language="Eiffel" implementationClass="com.eiffel.annotators.EiffelFeatureDeclarationAnnotator"/>
     <annotator language="Eiffel" implementationClass="com.eiffel.annotators.EiffelCurrentFeatureReferenceAnnotator"/>
+    <annotator language="Eiffel" implementationClass="com.eiffel.annotators.EiffelCreationFeatureNotNoneAnnotator"/>
     <lang.formatter language="Eiffel" implementationClass="com.eiffel.formatting.EiffelFormattingModelBuilder"/>
 
     <toolWindow id="GOBO run window" icon="/com/eiffel/icons/ecf/e.png" anchor="bottom" factoryClass="com.eiffel.windows.run.RunToolWindowFactory"/>
