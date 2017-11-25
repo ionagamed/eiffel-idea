@@ -589,7 +589,7 @@ private keyword_recovery_ ::=
     'feature' |
     'local' |
     'assign' |
-    '(' | ')' | ';' | '=' | '{' | '}' |
+    '(' | ')' | ';' | '=' | '{' | '}' | '[' | ']' |
     'result' |
     'precursor' |
     'variant' |

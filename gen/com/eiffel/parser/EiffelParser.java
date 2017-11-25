@@ -3512,7 +3512,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     'feature' |
   //     'local' |
   //     'assign' |
-  //     '(' | ')' | ';' | '=' | '{' | '}' |
+  //     '(' | ')' | ';' | '=' | '{' | '}' | '[' | ']' |
   //     'result' |
   //     'precursor' |
   //     'variant' |
@@ -3548,6 +3548,8 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, EQ);
     if (!r) r = consumeToken(b, LEFT_CURLY_BRACKET);
     if (!r) r = consumeToken(b, RIGHT_CURLY_BRACKET);
+    if (!r) r = consumeToken(b, LEFT_SQUARE_BRACKET);
+    if (!r) r = consumeToken(b, RIGHT_SQUARE_BRACKET);
     if (!r) r = consumeToken(b, RESULT_KEYWORD);
     if (!r) r = consumeToken(b, PRECURSOR_KEYWORD);
     if (!r) r = consumeToken(b, VARIANT_KEYWORD);

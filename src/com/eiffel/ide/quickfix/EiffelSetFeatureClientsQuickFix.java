@@ -9,6 +9,7 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -55,6 +56,14 @@ public class EiffelSetFeatureClientsQuickFix extends BaseIntentionAction {
                     }
                     EiffelClients newClients = EiffelElementFactory.createClients(project, clients);
                     clause.addAfter(newClients, clause.getFirstChild());
+                    clause.addBefore(new PsiWhiteSpaceImpl(" "), newClients);
+                } else {
+                    EiffelFeatureClause newClause = EiffelElementFactory.createFeatureClauseWithClient(project, "NONE");
+                    newClause.addAfter(target, newClause.getLastChild());
+                    newClause.addAfter(new PsiWhiteSpaceImpl("\n"), newClause.getLastChild());
+                    EiffelFeatures features = (EiffelFeatures) clause.getParent();
+                    features.addBefore(newClause, features.getLastChild());
+                    target.delete();
                 }
             }
         }.execute();

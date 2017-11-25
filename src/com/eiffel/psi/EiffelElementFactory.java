@@ -47,7 +47,6 @@ public class EiffelElementFactory {
         EiffelFile file = createFile(project,
                 "class TMP\n" +
                         "feature {" + clients.stream().collect(Collectors.joining(",")) + "}\n" +
-                        "abc\n" +
                         "end"
         );
         EiffelClassDeclaration classDeclaration = (EiffelClassDeclaration) file.getFirstChild();
