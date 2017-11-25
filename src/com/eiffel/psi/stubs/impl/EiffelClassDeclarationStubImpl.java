@@ -26,17 +26,9 @@ public class EiffelClassDeclarationStubImpl extends StubBase<EiffelClassDeclarat
     @Override
     public List<EiffelNewFeature> getNewFeatures() {
         List<EiffelNewFeature> result = new LinkedList<>();
-        for (StubElement fcl : getChildrenStubs()) {
-            if (fcl instanceof EiffelFeatureClauseStub) {
-                for (StubElement fd : ((EiffelFeatureClauseStub) fcl).getChildrenStubs()) {
-                    if (fd instanceof EiffelFeatureDeclarationStub) {
-                        for (StubElement nf : ((EiffelFeatureDeclarationStub) fd).getChildrenStubs()) {
-                            if (nf instanceof EiffelNewFeatureStub) {
-                                result.add(((EiffelNewFeatureStub) nf).getPsi());
-                            }
-                        }
-                    }
-                }
+        for (StubElement candidate : getChildrenStubs()) {
+            if (candidate instanceof EiffelNewFeatureStub) {
+                result.add(((EiffelNewFeatureStub) candidate).getPsi());
             }
         }
         return result;

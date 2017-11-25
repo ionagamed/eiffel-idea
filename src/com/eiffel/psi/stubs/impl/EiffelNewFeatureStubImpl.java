@@ -14,10 +14,18 @@ import java.util.Set;
 
 public class EiffelNewFeatureStubImpl extends StubBase<EiffelNewFeature> implements EiffelNewFeatureStub {
     private String name;
+    private String type;
+    private String formals;
+    private Set<String> clients;
+    private String comment;
 
-    protected EiffelNewFeatureStubImpl(StubElement parent, final String name) {
+    protected EiffelNewFeatureStubImpl(StubElement parent, final String name, final String type, final String formals, final Set<String> clients, final String comment) {
         super(parent, (IStubElementType) EiffelTypes.NEW_FEATURE);
         this.name = name;
+        this.type = type;
+        this.formals = formals;
+        this.clients = clients;
+        this.comment = comment;
     }
 
     @Override
@@ -27,39 +35,22 @@ public class EiffelNewFeatureStubImpl extends StubBase<EiffelNewFeature> impleme
 
     @Override
     public String getSerializedFormalArguments() {
-        EiffelFeatureDeclarationStub fd = getFeatureDeclarationStub();
-        if (fd == null) return null;
-        for (StubElement el : fd.getChildrenStubs()) {
-            if (el instanceof EiffelFormalArgumentsStub) {
-                return ((EiffelFormalArgumentsStub) el).getText();
-            }
-        }
-        return null;
+        return formals;
     }
 
     @Override
     public String getTypeString() {
-        EiffelFeatureDeclarationStub fd = getFeatureDeclarationStub();
-        if (fd == null) return null;
-        for (StubElement el : fd.getChildrenStubs()) {
-            if (el instanceof EiffelTypeStub) {
-                return ((EiffelTypeStub) el).getName();
-            }
-        }
-        return null;
+        return type;
     }
 
     @Override
     public Set<String> getClientNames() {
-        EiffelFeatureDeclarationStub fd = getFeatureDeclarationStub();
-        if (fd == null) return null;
-        Set<String> result = new HashSet<>();
-        for (StubElement el : fd.getChildrenStubs()) {
-            if (el instanceof EiffelClientSpecifierStub) {
-                result.add(((EiffelClientSpecifierStub) el).getName());
-            }
-        }
-        return result;
+        return clients;
+    }
+
+    @Override
+    public String getCommentDoc() {
+        return comment;
     }
 
     @Override
@@ -67,13 +58,5 @@ public class EiffelNewFeatureStubImpl extends StubBase<EiffelNewFeature> impleme
         StubElement current = this;
         while (current != null && !(current instanceof EiffelClassDeclarationStub)) current = current.getParentStub();
         return current != null ? ((EiffelClassDeclarationStub) current).getName() : null;
-    }
-
-    public EiffelFeatureDeclarationStub getFeatureDeclarationStub() {
-        StubElement candidate = getParentStub();
-        if (candidate instanceof EiffelFeatureDeclarationStub) {
-            return (EiffelFeatureDeclarationStub) candidate;
-        }
-        return null;
     }
 }

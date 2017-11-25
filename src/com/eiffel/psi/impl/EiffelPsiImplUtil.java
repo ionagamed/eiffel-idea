@@ -262,6 +262,7 @@ public class EiffelPsiImplUtil {
 
     @Nullable
     public static EiffelFeatureDeclaration getFeatureDeclaration(EiffelNewFeature newFeature) {
+//        if (newFeature.getStub() != null) return newFeature.getStub().getFeatureDeclarationStub().getPsi();
         if (newFeature.getParent() instanceof EiffelFeatureDeclaration) {
             return (EiffelFeatureDeclaration) newFeature.getParent();
         }
@@ -393,6 +394,7 @@ public class EiffelPsiImplUtil {
 
     @Nullable
     public static String getCommentDoc(EiffelNewFeature newFeature) {
+        if (newFeature.getStub() != null) return newFeature.getStub().getCommentDoc();
         EiffelFeatureDeclaration fd = newFeature.getFeatureDeclaration();
         if (fd == null) return null;
         return fd.getCommentDoc();

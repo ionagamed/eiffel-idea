@@ -11,7 +11,7 @@ public interface EiffelNewFeatureStub extends StubElement<EiffelNewFeature> {
     String getSerializedFormalArguments();
     String getTypeString();
     Set<String> getClientNames();
-    EiffelFeatureDeclarationStub getFeatureDeclarationStub();
+    String getCommentDoc();
 
     String getClassName();
 }

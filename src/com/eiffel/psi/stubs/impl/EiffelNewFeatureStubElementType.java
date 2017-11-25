@@ -10,6 +10,9 @@ import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,7 +31,11 @@ public class EiffelNewFeatureStubElementType extends IStubElementType<EiffelNewF
     public EiffelNewFeatureStub createStub(@NotNull EiffelNewFeature psi, StubElement parentStub) {
         return new EiffelNewFeatureStubImpl(
                 parentStub,
-                psi.getName()
+                psi.getName(),
+                psi.getTypeString(),
+                psi.getSerializedFormalArguments(),
+                psi.getClientNames(),
+                psi.getCommentDoc()
         );
     }
 
@@ -41,13 +48,30 @@ public class EiffelNewFeatureStubElementType extends IStubElementType<EiffelNewF
     @Override
     public void serialize(@NotNull EiffelNewFeatureStub stub, @NotNull StubOutputStream dataStream) throws IOException {
         dataStream.writeName(stub.getName());
+        dataStream.writeName(stub.getTypeString() == null ? "#" : stub.getTypeString());
+        dataStream.writeName(stub.getSerializedFormalArguments() == null ? "#" : stub.getSerializedFormalArguments());
+        dataStream.writeName(stub.getClientNames().size() == 0 ? "#" :
+            stub.getClientNames().stream().collect(Collectors.joining("|"))
+        );
+        dataStream.writeName(stub.getCommentDoc() == null ? "#" : stub.getCommentDoc());
     }
 
     @NotNull
     @Override
     public EiffelNewFeatureStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
-        final StringRef ref = dataStream.readName();
-        return new EiffelNewFeatureStubImpl(parentStub, ref.getString());
+        final StringRef nameRef = dataStream.readName();
+        final StringRef typeRef = dataStream.readName();
+        final StringRef formalsRef = dataStream.readName();
+        final StringRef clientsRef = dataStream.readName();
+        final StringRef docRef = dataStream.readName();
+        return new EiffelNewFeatureStubImpl(
+                parentStub,
+                nameRef.getString(),
+                typeRef.getString().equals("#") ? null : typeRef.getString(),
+                formalsRef.getString().equals("#") ? null : formalsRef.getString(),
+                clientsRef.getString().equals("#") ? Collections.emptySet() : new HashSet<>(Arrays.asList(clientsRef.getString().split("\\|"))),
+                docRef.getString().equals("#") ? null : docRef.getString()
+        );
     }
 
     @Override

@@ -161,7 +161,6 @@ features ::= feature_clause+
 feature_clause ::= 'feature' [clients] [header_comment] feature_declaration_list {
     pin = 1
     recoverWhile = feature_clause_recovery
-    stubClass = "com.eiffel.psi.stubs.EiffelFeatureClauseStub"
 }
 private feature_clause_recovery ::= !('feature' | 'invariant' | 'note' | 'end')
 private feature_declaration_list ::= (feature_declaration ';'?)*
@@ -176,7 +175,6 @@ feature_declaration ::= new_feature_list [declaration_body]
             getFormalArgumentIdentifier
             getCommentDoc
         ]
-        stubClass = "com.eiffel.psi.stubs.EiffelFeatureDeclarationStub"
     }
 private declaration_body ::= [formal_arguments] [query_mark] [feature_value]
 private query_mark ::= type_mark [assigner_mark]
@@ -241,9 +239,7 @@ private rename_list ::= rename_pair (','? rename_pair)*
 rename_pair ::= feature_name 'as' extended_feature_name
 
 clients ::= '{' client_specifier '}' { pin = 1 }
-client_specifier ::= class_list | 'none' | 'all' {
-    stubClass = "com.eiffel.psi.stubs.EiffelClientSpecifierStub"
-}
+client_specifier ::= class_list | 'none' | 'all'
 private class_list ::= class_name (','? class_name)*
 
 new_exports ::= 'export' new_export_list
@@ -252,13 +248,9 @@ private new_export_item ::= clients [header_comment] feature_set
 private feature_set ::= feature_list | 'all'
 feature_list ::= feature_name (','? feature_name)*
 
-formal_arguments ::= '(' entity_declaration_list ')' {
-    stubClass = "com.eiffel.psi.stubs.EiffelFormalArgumentsStub"
-}
+formal_arguments ::= '(' entity_declaration_list ')'
 private entity_declaration_list ::= entity_declaration_group (';'? entity_declaration_group)*
-entity_declaration_group ::= entity_identifier_list type_mark {
-    stubClass = "com.eiffel.psi.stubs.EiffelEntityDeclarationGroupStub"
-}
+entity_declaration_group ::= entity_identifier_list type_mark
 private entity_identifier_list ::= entity_identifier (',' entity_identifier)*
 entity_identifier ::= IDENTIFIER
     {
@@ -266,7 +258,6 @@ entity_identifier ::= IDENTIFIER
             getTypeString
         ]
         implements="com.eiffel.psi.EiffelTypedElement"
-        stubClass = "com.eiffel.psi.stubs.EiffelEntityIdentifierStub"
     }
 
 deferred ::= 'deferred'
@@ -340,9 +331,7 @@ parent_qualification ::= '{' class_name '}'
 redefine ::= 'redefine' feature_list
 undefine ::= 'undefine' feature_list
 
-type ::= class_or_tuple_type | formal_generic_name | anchored {
-    stubClass = "com.eiffel.psi.stubs.EiffelTypeStub"
-}
+type ::= class_or_tuple_type | formal_generic_name | anchored
 private class_or_tuple_type ::= tuple_type | class_type
 private class_type ::= ['detachable' | 'attached'] ['separate'] [attachment_mark] class_name [actual_generics]
 attachment_mark ::= '?' | '!'
@@ -380,10 +369,11 @@ conversion_query ::= feature_name ':' '{' type_list '}'
 
 select ::= 'select' feature_list
 
-conditional ::= 'if' then_part_list [else_part] 'end' {
-    pin = 1
-    recoverWhile = keyword_or_identifier_recovery
-}
+conditional ::= 'if' then_part_list [else_part] 'end'
+//{
+//    pin = 1
+//    recoverWhile = keyword_or_identifier_recovery
+//}
 private then_part_list ::= then_part ('elseif' then_part)*
 private then_part ::= boolean_expression 'then' compound
 private else_part ::= 'else' compound
@@ -476,7 +466,7 @@ actual_list ::= expression (',' expression)*
 
 object_test ::= attached_object_test | deprecated_object_test
 private deprecated_object_test ::= '{' IDENTIFIER ':' type '}' expression // not really sure if it's deprecated
-private attached_object_test ::= 'attached' attached_object_test_type? (call | 'current') attached_object_test_redefinition? {
+private attached_object_test ::= 'attached' attached_object_test_type? ('current' | call) attached_object_test_redefinition? {
     pin = 1
     recoverWhile = keyword_or_identifier_recovery
 }
@@ -526,9 +516,9 @@ special_expression ::=
     address
     { extends = expression }
 parenthesized ::= '(' expression ')'
-address ::= '$' variable { pin = 1 }
-once_string ::= 'once' manifest_string { pin = 1 }
-private boolean_expression ::= basic_expression | boolean_constant | object_test
+address ::= '$' variable
+once_string ::= 'once' manifest_string
+private boolean_expression ::= object_test | basic_expression | boolean_constant
 
 bracket_expression ::= bracket_target '[' actuals ']'
 bracket_target ::= target | once_string | manifest_constant | manifest_tuple
@@ -574,6 +564,7 @@ external_system_file ::= LT STRING_ONELINE GT
 
 private keyword_recovery_ ::=
     'if' |
+    'then' |
     'else' |
     'create' |
     'from' |
@@ -598,7 +589,8 @@ private keyword_recovery_ ::=
     EXTERNAL_KEYWORD |
     'once' |
     'deferred' |
-    'note'
+    'note' |
+    'attached'
 
 private keyword_recovery ::= !keyword_recovery_
 private keyword_or_identifier_recovery ::= !(keyword_recovery_ | IDENTIFIER)

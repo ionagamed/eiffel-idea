@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class EiffelClassDeclarationStubIndex extends StringStubIndexExtension {
     @Override
     public int getVersion() {
-        return 22;
+        return 28;
     }
 
     @NotNull

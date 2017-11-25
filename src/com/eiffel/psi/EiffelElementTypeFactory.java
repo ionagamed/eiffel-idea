@@ -11,20 +11,6 @@ public class EiffelElementTypeFactory {
             return new EiffelNewFeatureStubElementType();
         } else if (tokenType.equals("PARENT")) {
             return new EiffelParentStubElementType();
-        } else if (tokenType.equals("FEATURE_CLAUSE")) {
-            return new EiffelFeatureClauseElementType();
-        } else if (tokenType.equals("FEATURE_DECLARATION")) {
-            return new EiffelFeatureDeclarationStubElementType();
-        } else if (tokenType.equals("CLIENT_SPECIFIER")) {
-            return new EiffelClientSpecifierStubElementType();
-        } else if (tokenType.equals("FORMAL_ARGUMENTS")) {
-            return new EiffelFormalArgumentsStubElementType();
-        } else if (tokenType.equals("TYPE")) {
-            return new EiffelTypeStubElementType();
-        } else if (tokenType.equals("ENTITY_DECLARATION_GROUP")) {
-            return new EiffelEntityDeclarationGroupStubElementType();
-        } else if (tokenType.equals("ENTITY_IDENTIFIER")) {
-            return new EiffelEntityIdentifierStubElementType();
         } else {
             return new EiffelTokenType(tokenType);
         }
