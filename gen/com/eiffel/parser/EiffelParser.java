@@ -1281,7 +1281,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'check' assertion [notes] 'end'
+  // 'check' assertion [notes] ['then' compound] 'end'
   public static boolean check(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "check")) return false;
     if (!nextTokenIs(b, CHECK_KEYWORD)) return false;
@@ -1290,6 +1290,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, CHECK_KEYWORD);
     r = r && assertion(b, l + 1);
     r = r && check_2(b, l + 1);
+    r = r && check_3(b, l + 1);
     r = r && consumeToken(b, END_KEYWORD);
     exit_section_(b, m, CHECK, r);
     return r;
@@ -1300,6 +1301,24 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "check_2")) return false;
     notes(b, l + 1);
     return true;
+  }
+
+  // ['then' compound]
+  private static boolean check_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "check_3")) return false;
+    check_3_0(b, l + 1);
+    return true;
+  }
+
+  // 'then' compound
+  private static boolean check_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "check_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, THEN_KEYWORD);
+    r = r && compound(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */

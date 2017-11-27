@@ -321,7 +321,7 @@ old ::= 'old' expression
 
 only ::= 'only' [feature_list]
 
-check ::= 'check' assertion [notes] 'end'
+check ::= 'check' assertion [notes] ['then' compound] 'end'
 
 variant ::= 'variant' [tag_mark] expression
 
