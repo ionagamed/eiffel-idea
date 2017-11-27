@@ -3541,7 +3541,10 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     'once' |
   //     'deferred' |
   //     'note' |
-  //     'attached'
+  //     'attached' |
+  //     'check' |
+  //     'and' |
+  //     'or'
   static boolean keyword_recovery_(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "keyword_recovery_")) return false;
     boolean r;
@@ -3581,6 +3584,9 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, DEFERRED_KEYWORD);
     if (!r) r = consumeToken(b, NOTE_KEYWORD);
     if (!r) r = consumeToken(b, ATTACHED_KEYWORD);
+    if (!r) r = consumeToken(b, CHECK_KEYWORD);
+    if (!r) r = consumeToken(b, AND_KEYWORD);
+    if (!r) r = consumeToken(b, OR_KEYWORD);
     exit_section_(b, m, null, r);
     return r;
   }

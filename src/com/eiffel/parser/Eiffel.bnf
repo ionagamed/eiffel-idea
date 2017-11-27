@@ -590,7 +590,10 @@ private keyword_recovery_ ::=
     'once' |
     'deferred' |
     'note' |
-    'attached'
+    'attached' |
+    'check' |
+    'and' |
+    'or'
 
 private keyword_recovery ::= !keyword_recovery_
 private keyword_or_identifier_recovery ::= !(keyword_recovery_ | IDENTIFIER)
