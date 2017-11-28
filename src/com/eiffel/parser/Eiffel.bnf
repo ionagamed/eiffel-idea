@@ -178,18 +178,11 @@ feature_declaration ::= new_feature_list [declaration_body]
     }
 private declaration_body ::= [formal_arguments] [query_mark] [feature_value]
 private query_mark ::= type_mark [assigner_mark]
-private type_mark ::= ':' type {
-    pin = 1
-    recoverWhile = type_mark_recovery
-}
-private type_mark_recovery ::= !(keyword_recovery_ | IDENTIFIER)
+private type_mark ::= ':' type
 feature_value ::=
     (explicit_value [obsolete] [header_comment] [notes]) |
     ([obsolete] [header_comment] [notes] attribute_or_routine)
-explicit_value ::= '=' manifest_constant {
-    pin = 1
-    recoverWhile = explicit_value_recovery
-}
+explicit_value ::= '=' manifest_constant
 private explicit_value_recovery ::= !(keyword_recovery_ | IDENTIFIER)
 
 private new_feature_list ::= new_feature (','? new_feature)*
@@ -209,7 +202,7 @@ new_feature ::= ['frozen'] extended_feature_name
     stubClass="com.eiffel.psi.stubs.EiffelNewFeatureStub"
 }
 
-private attribute_or_routine ::= [precondition] [local_declarations] feature_body [postcondition] [rescue] END_KEYWORD { pin = 3 }
+private attribute_or_routine ::= [precondition] [local_declarations] feature_body [postcondition] [rescue] END_KEYWORD
 private feature_body ::= deferred | effective_routine | attribute
 
 private extended_feature_name ::= feature_name [alias]
@@ -226,8 +219,8 @@ private unary_operator ::= 'not'
 private assigner_mark ::= 'assign' feature_name
 
 inheritance ::= inherit_clause+
-private inherit_clause ::= 'inherit' [non_conformance] parent_list { pin = 1 }
-non_conformance ::= '{' 'none' '}' { pin = 1 }
+private inherit_clause ::= 'inherit' [non_conformance] parent_list
+non_conformance ::= '{' 'none' '}'
 private parent_list ::= parent (';'? parent)*
 parent ::= class_type [feature_adaption] {
     stubClass="com.eiffel.psi.stubs.EiffelParentStub"
@@ -238,7 +231,7 @@ private rename ::= 'rename' rename_list
 private rename_list ::= rename_pair (','? rename_pair)*
 rename_pair ::= feature_name 'as' extended_feature_name
 
-clients ::= '{' client_specifier '}' { pin = 1 }
+clients ::= '{' client_specifier '}'
 client_specifier ::= class_list | 'none' | 'all'
 private class_list ::= class_name (','? class_name)*
 
@@ -262,13 +255,10 @@ entity_identifier ::= IDENTIFIER
 
 deferred ::= 'deferred'
 private effective_routine ::= internal | ext
-private internal ::= routine_mark compound {
-    pin = 1
-    recoverWhile = internal_recovery
-}
+private internal ::= routine_mark compound
 private internal_recovery ::= !keyword_recovery_
 private routine_mark ::= 'do' | once
-once ::= 'once' ['(' key_list ')'] { pin = 1 }
+once ::= 'once' ['(' key_list ')']
 private key_list ::= manifest_string (','? manifest_string)*
 
 local_declarations ::= 'local' [entity_declaration_list]
@@ -294,14 +284,8 @@ private instruction_recovery ::= !(
     instruction
 ) // contains a lot of hax to make conditionals etc. possible
 
-precondition ::= 'require' ['else'] assertion {
-    pin = 1
-    recoverWhile = keyword_or_identifier_recovery
-}
-postcondition ::= 'ensure' ['then'] assertion [only] {
-    pin = 1
-    recoverWhile = keyword_or_identifier_recovery
-}
+precondition ::= 'require' ['else'] assertion
+postcondition ::= 'ensure' ['then'] assertion [only]
 invariant ::= 'invariant' assertion
 //{
 //    pin = 1
@@ -370,10 +354,6 @@ conversion_query ::= feature_name ':' '{' type_list '}'
 select ::= 'select' feature_list
 
 conditional ::= 'if' then_part_list [else_part] 'end'
-//{
-//    pin = 1
-//    recoverWhile = keyword_or_identifier_recovery
-//}
 private then_part_list ::= then_part ('elseif' then_part)*
 private then_part ::= boolean_expression 'then' compound
 private else_part ::= 'else' compound
@@ -390,7 +370,7 @@ loop ::=
     (initialization [invariant] exit_condition loop_body [variant] 'end') |
     (iteration loop_body 'end')
 //loop ::= 'from' compound 'until' boolean_expression 'do' compound 'end'
-iteration ::= 'across' across_expression 'as' IDENTIFIER { pin = 1 }
+iteration ::= 'across' across_expression 'as' IDENTIFIER
 private across_expression ::= expression
 initialization ::= 'from' compound
 exit_condition ::= 'until' boolean_expression
@@ -418,7 +398,7 @@ formal ::= IDENTIFIER
 constant_attribute ::= feature_name
 
 creators ::= creation_clause+
-private creation_clause ::= 'create' [clients] [header_comment] creation_procedure_list { pin = 1 }
+private creation_clause ::= 'create' [clients] [header_comment] creation_procedure_list
 private creation_procedure_list ::= creation_procedure (',' creation_procedure)*
 private creation_procedure ::= feature_name
 
@@ -426,15 +406,9 @@ creation_instruction ::= 'create' [explicit_creation_type] creation_call {
     pin = 1
     recoverWhile = keyword_or_identifier_recovery
 }
-private explicit_creation_type ::= '{' type '}' {
-    pin = 1
-    recoverWhile = keyword_or_identifier_recovery
-}
+private explicit_creation_type ::= '{' type '}'
 private creation_call ::= variable [explicit_creation_call]
-private explicit_creation_call ::= '.' unqualified_call {
-    pin = 1
-    recoverWhile = explicit_creation_call_recovery
-}
+private explicit_creation_call ::= '.' unqualified_call
 private explicit_creation_call_recovery ::= !(keyword_recovery_ | IDENTIFIER)
 
 creation_expression ::= 'create' explicit_creation_type [explicit_creation_call]
@@ -466,10 +440,7 @@ actual_list ::= expression (',' expression)*
 
 object_test ::= attached_object_test | deprecated_object_test
 private deprecated_object_test ::= '{' IDENTIFIER ':' type '}' expression // not really sure if it's deprecated
-private attached_object_test ::= 'attached' attached_object_test_type? ('current' | call) attached_object_test_redefinition? {
-    pin = 1
-    recoverWhile = keyword_or_identifier_recovery
-}
+private attached_object_test ::= 'attached' attached_object_test_type? ('current' | call) attached_object_test_redefinition?
 private attached_object_test_type ::= '{' type '}'
 private attached_object_test_redefinition ::= 'as' IDENTIFIER
 
@@ -493,9 +464,9 @@ expression ::= basic_expression | special_expression
 private basic_expression_term ::=
     array_literal |
     object_test |
-    parenthesized |
     creation_expression |
     call |
+    parenthesized |
     local |
     read_only |
     boolean_loop |
@@ -580,7 +551,7 @@ private keyword_recovery_ ::=
     'feature' |
     'local' |
     'assign' |
-    '(' | ')' | ';' | '=' | '{' | '}' | '[' | ']' |
+    '(' | ')' | ';' | '=' | '{' | '}' | '[' | ']' | '.' |
     'result' |
     'precursor' |
     'variant' |
