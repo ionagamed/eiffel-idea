@@ -137,13 +137,9 @@ class_declaration ::=
             getCreationProcedures
             getNewFeature
         ]
-        pin = 2
         stubClass="com.eiffel.psi.stubs.EiffelClassDeclarationStub"
     }
-class_header ::= [header_mark] 'class' class_name {
-    pin = 2
-    recoverWhile = class_header_recovery
-}
+class_header ::= [header_mark] 'class' class_name
 private class_header_recovery ::= !keyword_recovery_
 header_mark ::= ['frozen'] ['expanded'] ['deferred']
 
@@ -402,10 +398,7 @@ private creation_clause ::= 'create' [clients] [header_comment] creation_procedu
 private creation_procedure_list ::= creation_procedure (',' creation_procedure)*
 private creation_procedure ::= feature_name
 
-creation_instruction ::= 'create' [explicit_creation_type] creation_call {
-    pin = 1
-    recoverWhile = keyword_or_identifier_recovery
-}
+creation_instruction ::= 'create' [explicit_creation_type] creation_call
 private explicit_creation_type ::= '{' type '}'
 private creation_call ::= variable [explicit_creation_call]
 private explicit_creation_call ::= '.' unqualified_call
@@ -489,7 +482,7 @@ special_expression ::=
 parenthesized ::= '(' expression ')'
 address ::= '$' variable
 once_string ::= 'once' manifest_string
-private boolean_expression ::= object_test | basic_expression | boolean_constant
+private boolean_expression ::= basic_expression | boolean_constant
 
 bracket_expression ::= bracket_target '[' actuals ']'
 bracket_target ::= target | once_string | manifest_constant | manifest_tuple
