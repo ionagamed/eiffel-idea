@@ -1,4 +1,4 @@
-package com.eiffel.tests;
+package com.eiffel.tests.parser;
 
 import com.eiffel.parser.EiffelParserDefinition;
 import com.intellij.psi.PsiElement;
@@ -13,23 +13,26 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ParsingTestForBase2 extends ParsingTestCase {
-    public ParsingTestForBase2() {
-        super("tests", "e", new EiffelParserDefinition());
+public abstract class DirectoryParsingTestBase extends ParsingTestCase {
+    private final String myPath;
+
+    protected DirectoryParsingTestBase(String path) {
+        super("", "e", new EiffelParserDefinition());
+        myPath = path;
     }
 
-    public void testParsingBase2Succeeds() {
-        doTest(false);
+    @Override
+    protected String getTestDataPath() {
+        return myPath;
     }
 
     /**
      * Overridden doTest to ensure only that it parses without errors
      */
-    @Override
-    protected void doTest(boolean checkResult) {
+    void doTest() {
         String name = getTestName();
         try {
-            Files.find(Paths.get("tests/com/eiffel/tests/base2"), 3, (p, bfa) -> bfa.isRegularFile()).forEach(path -> {
+            Files.find(Paths.get(myPath), 3, (p, bfa) -> bfa.isRegularFile()).forEach(path -> {
                 try {
                     String filename = path.toString();
                     String text = new Scanner(new File(filename)).useDelimiter("\\Z").next();
@@ -60,10 +63,5 @@ public class ParsingTestForBase2 extends ParsingTestCase {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    protected String getTestDataPath() {
-        return "tests/com/eiffel/tests/base2";
     }
 }
