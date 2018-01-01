@@ -37,7 +37,7 @@ public class EiffelClassUtil {
                 .replace(",", ", ")
                 .replace(":", ": ")
                 .replace(";", "; ")
-                .replace("$like$", " like ")
+                .replace("$like$", "like ")
                 .replace("$det$", " detachable ")
                 .replace("$sep$", " separate ");
     }
