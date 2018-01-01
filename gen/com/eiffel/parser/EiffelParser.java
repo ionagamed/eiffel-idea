@@ -1068,7 +1068,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ('and' 'then') | ('or' 'else') | 'and' | 'or' | 'implies'
+  // ('and' 'then') | ('or' 'else') | 'and' | 'or' | 'implies' | 'xor'
   static boolean binary_operator(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "binary_operator")) return false;
     boolean r;
@@ -1078,6 +1078,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, AND_KEYWORD);
     if (!r) r = consumeToken(b, OR_KEYWORD);
     if (!r) r = consumeToken(b, IMPLIES_KEYWORD);
+    if (!r) r = consumeToken(b, XOR_KEYWORD);
     exit_section_(b, m, null, r);
     return r;
   }

@@ -213,7 +213,7 @@ alias_name ::= STRING_LITERAL // later checked for consistency by annotations
 //bracket ::= ALIAS_BRACKETS
 
 private operator ::= binary_operator | unary_operator | FREE_OPERATOR
-private binary_operator ::= ('and' 'then') | ('or' 'else') | 'and' | 'or' | 'implies'
+private binary_operator ::= ('and' 'then') | ('or' 'else') | 'and' | 'or' | 'implies' | 'xor'
 private unary_operator ::= 'not'
 
 private assigner_mark ::= 'assign' feature_name
