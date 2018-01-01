@@ -151,6 +151,10 @@ public class EiffelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitConstantExpression(@NotNull EiffelConstantExpression o) {
+    visitPsiElement(o);
+  }
+
   public void visitConstantInterval(@NotNull EiffelConstantInterval o) {
     visitPsiElement(o);
   }

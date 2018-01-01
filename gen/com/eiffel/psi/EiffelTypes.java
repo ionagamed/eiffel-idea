@@ -44,6 +44,7 @@ public interface EiffelTypes {
   IElementType COMPOUND = EiffelElementTypeFactory.createElement("COMPOUND");
   IElementType CONDITIONAL = EiffelElementTypeFactory.createElement("CONDITIONAL");
   IElementType CONSTANT_ATTRIBUTE = EiffelElementTypeFactory.createElement("CONSTANT_ATTRIBUTE");
+  IElementType CONSTANT_EXPRESSION = EiffelElementTypeFactory.createElement("CONSTANT_EXPRESSION");
   IElementType CONSTANT_INTERVAL = EiffelElementTypeFactory.createElement("CONSTANT_INTERVAL");
   IElementType CONSTRAINING_TYPES = EiffelElementTypeFactory.createElement("CONSTRAINING_TYPES");
   IElementType CONSTRAINT_CREATORS = EiffelElementTypeFactory.createElement("CONSTRAINT_CREATORS");
@@ -353,6 +354,9 @@ public interface EiffelTypes {
       }
       else if (type == CONSTANT_ATTRIBUTE) {
         return new EiffelConstantAttributeImpl(node);
+      }
+      else if (type == CONSTANT_EXPRESSION) {
+        return new EiffelConstantExpressionImpl(node);
       }
       else if (type == CONSTANT_INTERVAL) {
         return new EiffelConstantIntervalImpl(node);

@@ -131,6 +131,9 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     else if (t == CONSTANT_ATTRIBUTE) {
       r = constant_attribute(b, 0);
     }
+    else if (t == CONSTANT_EXPRESSION) {
+      r = constant_expression(b, 0);
+    }
     else if (t == CONSTANT_INTERVAL) {
       r = constant_interval(b, 0);
     }
@@ -1744,6 +1747,42 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // (manifest_constant operator manifest_constant) | (operator manifest_constant) | manifest_constant
+  public static boolean constant_expression(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "constant_expression")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CONSTANT_EXPRESSION, "<constant expression>");
+    r = constant_expression_0(b, l + 1);
+    if (!r) r = constant_expression_1(b, l + 1);
+    if (!r) r = manifest_constant(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // manifest_constant operator manifest_constant
+  private static boolean constant_expression_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "constant_expression_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = manifest_constant(b, l + 1);
+    r = r && operator(b, l + 1);
+    r = r && manifest_constant(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // operator manifest_constant
+  private static boolean constant_expression_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "constant_expression_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = operator(b, l + 1);
+    r = r && manifest_constant(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // constant '..' constant
   public static boolean constant_interval(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "constant_interval")) return false;
@@ -2386,14 +2425,14 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // '=' manifest_constant
+  // '=' constant_expression
   public static boolean explicit_value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "explicit_value")) return false;
     if (!nextTokenIs(b, EQ)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, EQ);
-    r = r && manifest_constant(b, l + 1);
+    r = r && constant_expression(b, l + 1);
     exit_section_(b, m, EXPLICIT_VALUE, r);
     return r;
   }

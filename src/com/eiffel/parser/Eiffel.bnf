@@ -178,7 +178,8 @@ private type_mark ::= ':' type
 feature_value ::=
     (explicit_value [obsolete] [header_comment] [notes]) |
     ([obsolete] [header_comment] [notes] attribute_or_routine)
-explicit_value ::= '=' manifest_constant
+explicit_value ::= '=' constant_expression
+constant_expression ::= (manifest_constant operator manifest_constant) | (operator manifest_constant) | manifest_constant
 private explicit_value_recovery ::= !(keyword_recovery_ | IDENTIFIER)
 
 private new_feature_list ::= new_feature (','? new_feature)*
