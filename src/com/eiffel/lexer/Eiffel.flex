@@ -22,9 +22,12 @@ import com.eiffel.psi.EiffelTypes;
 %type IElementType
 %unicode
 
+%state MULTILINE_STRING
+%state STRING
+
 %ignorecase
 
-EOL=\R
+EOL=(\n|\r|\r\n)
 WHITE_SPACE=\s+
 
 SIGN=[+-]
@@ -37,6 +40,8 @@ REAL=(\.{INTEGER}|{INTEGER}\.|{INTEGER}\.{INTEGER})([eE]{SIGN}?{INTEGER})?
 REAL_LITERAL={SIGN}?{REAL}
 STRING_ONELINE=(%.|[^%\"]+)*
 STRING={STRING_ONELINE}(%{WHITE_SPACE}*{EOL}{WHITE_SPACE}*%{STRING_ONELINE})*
+STRING_MULTILINE_BRACKETS=\"\[{WHITE_SPACE}?{EOL}({WHITE_SPACE}*{STRING_MULTILINE_CONTENT}{WHITE_SPACE}?{EOL})*{WHITE_SPACE}?\]\"
+STRING_MULTILINE_CONTENT=(\][^\"\n]|[^\]\n])*
 STRING_LITERAL=\"{STRING}\"
 PARTIAL_STRING_LITERAL=\"{STRING}
 COMMENT_ONELINE=--[^\n\r]*
@@ -146,12 +151,10 @@ FREE_OPERATOR=({OPERATOR_SYMBOL}{OPERATOR_SYMBOL}+)|{OPERATOR_SINGLE_SYMBOL}
   "=" { return EiffelTypes.EQ; }
 
 
-
-
-
   {REAL_LITERAL} { return EiffelTypes.REAL_LITERAL; }
   {INTEGER_LITERAL} { return EiffelTypes.INTEGER_LITERAL; }
   {STRING_LITERAL} { return EiffelTypes.STRING_LITERAL; }
+  {STRING_MULTILINE_BRACKETS} { return EiffelTypes.STRING_LITERAL; }
   {PARTIAL_STRING_LITERAL} { return EiffelTypes.STRING_LITERAL; } // TODO: somehow deal with incomplete string poisoning
   {CHARACTER_LITERAL} { return EiffelTypes.CHARACTER_LITERAL; }
 

@@ -99,6 +99,7 @@ public interface EiffelTypes {
   IElementType LOOP = EiffelElementTypeFactory.createElement("LOOP");
   IElementType LOOP_BODY = EiffelElementTypeFactory.createElement("LOOP_BODY");
   IElementType MANIFEST_CONSTANT = EiffelElementTypeFactory.createElement("MANIFEST_CONSTANT");
+  IElementType MANIFEST_STRING = EiffelElementTypeFactory.createElement("MANIFEST_STRING");
   IElementType MANIFEST_TUPLE = EiffelElementTypeFactory.createElement("MANIFEST_TUPLE");
   IElementType MESSAGE = EiffelElementTypeFactory.createElement("MESSAGE");
   IElementType MULTIPLE_CONSTRAINT = EiffelElementTypeFactory.createElement("MULTIPLE_CONSTRAINT");
@@ -516,6 +517,9 @@ public interface EiffelTypes {
       }
       else if (type == MANIFEST_CONSTANT) {
         return new EiffelManifestConstantImpl(node);
+      }
+      else if (type == MANIFEST_STRING) {
+        return new EiffelManifestStringImpl(node);
       }
       else if (type == MANIFEST_TUPLE) {
         return new EiffelManifestTupleImpl(node);

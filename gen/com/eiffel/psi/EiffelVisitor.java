@@ -371,6 +371,10 @@ public class EiffelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitManifestString(@NotNull EiffelManifestString o) {
+    visitPsiElement(o);
+  }
+
   public void visitManifestTuple(@NotNull EiffelManifestTuple o) {
     visitPsiElement(o);
   }

@@ -296,6 +296,9 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     else if (t == MANIFEST_CONSTANT) {
       r = manifest_constant(b, 0);
     }
+    else if (t == MANIFEST_STRING) {
+      r = manifest_string(b, 0);
+    }
     else if (t == MANIFEST_TUPLE) {
       r = manifest_tuple(b, 0);
     }
@@ -3779,8 +3782,14 @@ public class EiffelParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // STRING_LITERAL
-  static boolean manifest_string(PsiBuilder b, int l) {
-    return consumeToken(b, STRING_LITERAL);
+  public static boolean manifest_string(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "manifest_string")) return false;
+    if (!nextTokenIs(b, STRING_LITERAL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, STRING_LITERAL);
+    exit_section_(b, m, MANIFEST_STRING, r);
+    return r;
   }
 
   /* ********************************************************** */
