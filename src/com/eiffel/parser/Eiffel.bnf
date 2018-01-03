@@ -95,12 +95,13 @@
     RIGHT_TRIANGLE_DBRACKET='>>'
     DETACHABLE_KEYWORD='detachable'
     SEPARATE_KEYWORD='separate'
+    VOID_KEYWORD='void'
   ]
 }
 
 eiffelFile ::= class_declaration
 
-class_name ::= IDENTIFIER | 'tuple'
+class_name ::= IDENTIFIER | 'tuple' | 'none'
 comment ::= COMMENT_ONELINE
 
 class_declaration ::=
@@ -222,7 +223,13 @@ private parent_list ::= parent (';'? parent)*
 parent ::= class_type [feature_adaption] {
     stubClass="com.eiffel.psi.stubs.EiffelParentStub"
 }
-feature_adaption ::= [rename] [new_exports] [undefine] [redefine] [select] 'end'
+feature_adaption ::=
+    (rename [new_exports] [undefine] [redefine] [select] 'end') |
+    ([rename] new_exports [undefine] [redefine] [select] 'end') |
+    ([rename] [new_exports] undefine [redefine] [select] 'end') |
+    ([rename] [new_exports] [undefine] redefine [select] 'end') |
+    ([rename] [new_exports] [undefine] [redefine] select 'end') |
+
 
 private rename ::= 'rename' rename_list
 private rename_list ::= rename_pair (','? rename_pair)*
@@ -312,12 +319,12 @@ parent_qualification ::= '{' class_name '}'
 redefine ::= 'redefine' feature_list
 undefine ::= 'undefine' feature_list
 
-type ::= class_or_tuple_type | formal_generic_name | anchored
+type ::= 'none' | class_or_tuple_type | formal_generic_name | anchored
 private class_or_tuple_type ::= tuple_type | class_type
 private class_type ::= ['detachable' | 'attached'] ['separate'] [attachment_mark] class_name [actual_generics]
 attachment_mark ::= '?' | '!'
 private anchored ::= ['detachable' | 'attached'] ['separate'] [attachment_mark] 'like' anchor
-private anchor ::= feature_name | 'current'
+private anchor ::= expression | 'current'
 
 actual_generics ::= '[' type_list ']'
 private type_list ::= type (',' type)*
@@ -335,7 +342,7 @@ multiple_constraint ::= '{' constraint_list '}'
 private constraint_list ::= single_constraint (',' single_constraint)*
 constraint_creators ::= 'create' feature_list 'end'
 
-tuple_type ::= 'tuple' [tuple_parameter_list]
+tuple_type ::= ['detachable' | 'attached'] ['separate'] 'tuple' [tuple_parameter_list]
 private tuple_parameter_list ::= '[' tuple_parameters ']'
 private tuple_parameters ::= entity_declaration_list | type_list
 
@@ -359,13 +366,13 @@ multi_branch ::= 'inspect' expression [when_part_list] [else_part] END_KEYWORD
 private when_part_list ::= when_part+
 when_part ::= 'when' choices 'then' compound
 private choices ::= choice (',' choice)*
-choice ::= constant_interval | type_interval | constant | manifest_type
+choice ::= constant_interval | type_interval | expression
 constant_interval ::= constant '..' constant
 type_interval ::= manifest_type '..' manifest_type
 
 loop ::=
     (initialization [invariant] exit_condition loop_body [variant] 'end') |
-    (iteration loop_body 'end')
+    (iteration [exit_condition] loop_body 'end')
 //loop ::= 'from' compound 'until' boolean_expression 'do' compound 'end'
 iteration ::= 'across' across_expression 'as' IDENTIFIER
 private across_expression ::= expression
@@ -387,7 +394,7 @@ debug ::= 'debug' ['(' key_list ')'] compound 'end'
 attribute ::= 'attribute' compound
 
 entity ::= variable | read_only
-variable ::= local | variable_attribute
+variable ::= local | variable_attribute | 'current'
 private variable_attribute ::= feature_name
 local ::= IDENTIFIER | 'result'
 read_only ::= formal | constant_attribute | 'current'
@@ -395,7 +402,7 @@ formal ::= IDENTIFIER
 constant_attribute ::= feature_name
 
 creators ::= creation_clause+
-private creation_clause ::= 'create' [clients] [header_comment] creation_procedure_list
+private creation_clause ::= 'create' [clients] [header_comment] [creation_procedure_list] // see free_elks/kernel/type.e
 private creation_procedure_list ::= creation_procedure (',' creation_procedure)*
 private creation_procedure ::= feature_name
 
@@ -418,7 +425,7 @@ assignment ::= variable ':=' expression
 assigner_call ::= expression ':=' expression
 
 private call ::= object_call | non_object_call | non_object_parenthesized_call | casting_call
-object_call ::= (target_atomic bracketed_actuals) | (target_atomic '.' call) | unqualified_call
+object_call ::= (target_atomic '.' call) | (target_atomic bracketed_actuals '.' call) | (target_atomic bracketed_actuals) | unqualified_call
 unqualified_call ::= (feature_name [actuals]) | ('current' bracketed_actuals)
 private target_atomic ::= casting_call | unqualified_call | local | read_only | non_object_call | parenthesized
 private target ::= target_atomic ['.' call]
@@ -434,7 +441,7 @@ actual_list ::= expression (',' expression)*
 
 object_test ::= attached_object_test | deprecated_object_test
 private deprecated_object_test ::= '{' IDENTIFIER ':' type '}' expression // not really sure if it's deprecated
-private attached_object_test ::= 'attached' attached_object_test_type? ('current' | call) attached_object_test_redefinition?
+private attached_object_test ::= 'attached' attached_object_test_type? expression attached_object_test_redefinition?
 private attached_object_test_type ::= '{' type '}'
 private attached_object_test_redefinition ::= 'as' IDENTIFIER
 
@@ -455,11 +462,13 @@ agent_actual ::= expression | placeholder
 placeholder ::= [manifest_type] '?'
 
 expression ::= basic_expression | special_expression
+//expression ::= manifest_value
 private basic_expression_term ::=
     array_literal |
     object_test |
     creation_expression |
     call |
+    manifest_constant |
     parenthesized |
     local |
     read_only |
@@ -469,8 +478,7 @@ private basic_expression_term ::=
     //equality |
     old |
     //operator_expression |
-    bracket_expression |
-    manifest_constant
+    bracket_expression
 basic_expression ::= (basic_expression_term operator expression) | (basic_expression_term '=' expression) | (operator expression) | basic_expression_term { extends = expression }
 special_expression ::=
     manifest_constant |
@@ -490,7 +498,7 @@ bracket_target ::= target | once_string | manifest_constant | manifest_tuple
 
 private constant ::= manifest_constant | constant_attribute
 
-manifest_constant ::= [manifest_type] manifest_value
+manifest_constant ::= (manifest_type manifest_value) | manifest_type | manifest_value
 private manifest_type ::= '{' type '}'
 private manifest_value ::=
     boolean_constant |
@@ -498,13 +506,13 @@ private manifest_value ::=
     integer_constant |
     real_constant |
     manifest_string |
-    manifest_type
+    'void'
 private integer_constant ::= INTEGER_LITERAL
 private character_constant ::= CHARACTER_LITERAL
 private boolean_constant ::= TRUE_KEYWORD | FALSE_KEYWORD
 private real_constant ::= REAL_LITERAL
 
- manifest_string ::= STRING_LITERAL
+manifest_string ::= STRING_LITERAL
 array_literal ::= '<<' expression_list '>>'
 
 ext ::= EXTERNAL_KEYWORD external_language [external_name]
@@ -543,6 +551,7 @@ private keyword_recovery_ ::=
     'require' |
     'inherit' |
     'feature' |
+    'rescue' |
     'local' |
     'assign' |
     '(' | ')' | ';' | '=' | '{' | '}' | '[' | ']' | '.' |

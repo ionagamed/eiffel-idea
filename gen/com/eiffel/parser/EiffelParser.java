@@ -683,13 +683,12 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // feature_name | 'current'
+  // expression | 'current'
   static boolean anchor(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "anchor")) return false;
-    if (!nextTokenIs(b, "", CURRENT_KEYWORD, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = feature_name(b, l + 1);
+    r = expression(b, l + 1);
     if (!r) r = consumeToken(b, CURRENT_KEYWORD);
     exit_section_(b, m, null, r);
     return r;
@@ -841,7 +840,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // variable ':=' expression
   public static boolean assignment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assignment")) return false;
-    if (!nextTokenIs(b, "<assignment>", RESULT_KEYWORD, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT, "<assignment>");
     r = variable(b, l + 1);
@@ -852,7 +850,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'attached' attached_object_test_type? ('current' | call) attached_object_test_redefinition?
+  // 'attached' attached_object_test_type? expression attached_object_test_redefinition?
   static boolean attached_object_test(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attached_object_test")) return false;
     if (!nextTokenIs(b, ATTACHED_KEYWORD)) return false;
@@ -860,7 +858,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, ATTACHED_KEYWORD);
     r = r && attached_object_test_1(b, l + 1);
-    r = r && attached_object_test_2(b, l + 1);
+    r = r && expression(b, l + 1);
     r = r && attached_object_test_3(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -871,17 +869,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "attached_object_test_1")) return false;
     attached_object_test_type(b, l + 1);
     return true;
-  }
-
-  // 'current' | call
-  private static boolean attached_object_test_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "attached_object_test_2")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, CURRENT_KEYWORD);
-    if (!r) r = call(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
   }
 
   // attached_object_test_redefinition?
@@ -1041,6 +1028,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     object_test |
   //     creation_expression |
   //     call |
+  //     manifest_constant |
   //     parenthesized |
   //     local |
   //     read_only |
@@ -1050,8 +1038,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     //equality |
   //     old |
   //     //operator_expression |
-  //     bracket_expression |
-  //     manifest_constant
+  //     bracket_expression
   static boolean basic_expression_term(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "basic_expression_term")) return false;
     boolean r;
@@ -1060,6 +1047,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = object_test(b, l + 1);
     if (!r) r = creation_expression(b, l + 1);
     if (!r) r = call(b, l + 1);
+    if (!r) r = manifest_constant(b, l + 1);
     if (!r) r = parenthesized(b, l + 1);
     if (!r) r = local(b, l + 1);
     if (!r) r = read_only(b, l + 1);
@@ -1068,7 +1056,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = manifest_tuple(b, l + 1);
     if (!r) r = old(b, l + 1);
     if (!r) r = bracket_expression(b, l + 1);
-    if (!r) r = manifest_constant(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1327,15 +1314,14 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // constant_interval | type_interval | constant | manifest_type
+  // constant_interval | type_interval | expression
   public static boolean choice(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "choice")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CHOICE, "<choice>");
     r = constant_interval(b, l + 1);
     if (!r) r = type_interval(b, l + 1);
-    if (!r) r = constant(b, l + 1);
-    if (!r) r = manifest_type(b, l + 1);
+    if (!r) r = expression(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -1513,7 +1499,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // class_name (','? class_name)*
   static boolean class_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "class_list")) return false;
-    if (!nextTokenIs(b, "", TUPLE_KEYWORD, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = class_name(b, l + 1);
@@ -1553,14 +1538,14 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER | 'tuple'
+  // IDENTIFIER | 'tuple' | 'none'
   public static boolean class_name(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "class_name")) return false;
-    if (!nextTokenIs(b, "<class name>", TUPLE_KEYWORD, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CLASS_NAME, "<class name>");
     r = consumeToken(b, IDENTIFIER);
     if (!r) r = consumeToken(b, TUPLE_KEYWORD);
+    if (!r) r = consumeToken(b, NONE_KEYWORD);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -1976,7 +1961,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   // variable [explicit_creation_call]
   static boolean creation_call(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "creation_call")) return false;
-    if (!nextTokenIs(b, "", RESULT_KEYWORD, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = variable(b, l + 1);
@@ -1993,7 +1977,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'create' [clients] [header_comment] creation_procedure_list
+  // 'create' [clients] [header_comment] [creation_procedure_list]
   static boolean creation_clause(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "creation_clause")) return false;
     if (!nextTokenIs(b, CREATE_KEYWORD)) return false;
@@ -2002,7 +1986,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, CREATE_KEYWORD);
     r = r && creation_clause_1(b, l + 1);
     r = r && creation_clause_2(b, l + 1);
-    r = r && creation_procedure_list(b, l + 1);
+    r = r && creation_clause_3(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -2018,6 +2002,13 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   private static boolean creation_clause_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "creation_clause_2")) return false;
     header_comment(b, l + 1);
+    return true;
+  }
+
+  // [creation_procedure_list]
+  private static boolean creation_clause_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "creation_clause_3")) return false;
+    creation_procedure_list(b, l + 1);
     return true;
   }
 
@@ -2767,53 +2758,237 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [rename] [new_exports] [undefine] [redefine] [select] 'end'
+  // (rename [new_exports] [undefine] [redefine] [select] 'end') |
+  //     ([rename] new_exports [undefine] [redefine] [select] 'end') |
+  //     ([rename] [new_exports] undefine [redefine] [select] 'end') |
+  //     ([rename] [new_exports] [undefine] redefine [select] 'end') |
+  //     ([rename] [new_exports] [undefine] [redefine] select 'end') |
   public static boolean feature_adaption(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "feature_adaption")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FEATURE_ADAPTION, "<feature adaption>");
     r = feature_adaption_0(b, l + 1);
-    r = r && feature_adaption_1(b, l + 1);
-    r = r && feature_adaption_2(b, l + 1);
-    r = r && feature_adaption_3(b, l + 1);
-    r = r && feature_adaption_4(b, l + 1);
-    r = r && consumeToken(b, END_KEYWORD);
+    if (!r) r = feature_adaption_1(b, l + 1);
+    if (!r) r = feature_adaption_2(b, l + 1);
+    if (!r) r = feature_adaption_3(b, l + 1);
+    if (!r) r = feature_adaption_4(b, l + 1);
+    if (!r) r = consumeToken(b, FEATURE_ADAPTION_5_0);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // [rename]
+  // rename [new_exports] [undefine] [redefine] [select] 'end'
   private static boolean feature_adaption_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "feature_adaption_0")) return false;
-    rename(b, l + 1);
-    return true;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = rename(b, l + 1);
+    r = r && feature_adaption_0_1(b, l + 1);
+    r = r && feature_adaption_0_2(b, l + 1);
+    r = r && feature_adaption_0_3(b, l + 1);
+    r = r && feature_adaption_0_4(b, l + 1);
+    r = r && consumeToken(b, END_KEYWORD);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   // [new_exports]
-  private static boolean feature_adaption_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "feature_adaption_1")) return false;
+  private static boolean feature_adaption_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_0_1")) return false;
     new_exports(b, l + 1);
     return true;
   }
 
   // [undefine]
-  private static boolean feature_adaption_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "feature_adaption_2")) return false;
+  private static boolean feature_adaption_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_0_2")) return false;
     undefine(b, l + 1);
     return true;
   }
 
   // [redefine]
-  private static boolean feature_adaption_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "feature_adaption_3")) return false;
+  private static boolean feature_adaption_0_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_0_3")) return false;
     redefine(b, l + 1);
     return true;
   }
 
   // [select]
+  private static boolean feature_adaption_0_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_0_4")) return false;
+    select(b, l + 1);
+    return true;
+  }
+
+  // [rename] new_exports [undefine] [redefine] [select] 'end'
+  private static boolean feature_adaption_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = feature_adaption_1_0(b, l + 1);
+    r = r && new_exports(b, l + 1);
+    r = r && feature_adaption_1_2(b, l + 1);
+    r = r && feature_adaption_1_3(b, l + 1);
+    r = r && feature_adaption_1_4(b, l + 1);
+    r = r && consumeToken(b, END_KEYWORD);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [rename]
+  private static boolean feature_adaption_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_1_0")) return false;
+    rename(b, l + 1);
+    return true;
+  }
+
+  // [undefine]
+  private static boolean feature_adaption_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_1_2")) return false;
+    undefine(b, l + 1);
+    return true;
+  }
+
+  // [redefine]
+  private static boolean feature_adaption_1_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_1_3")) return false;
+    redefine(b, l + 1);
+    return true;
+  }
+
+  // [select]
+  private static boolean feature_adaption_1_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_1_4")) return false;
+    select(b, l + 1);
+    return true;
+  }
+
+  // [rename] [new_exports] undefine [redefine] [select] 'end'
+  private static boolean feature_adaption_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = feature_adaption_2_0(b, l + 1);
+    r = r && feature_adaption_2_1(b, l + 1);
+    r = r && undefine(b, l + 1);
+    r = r && feature_adaption_2_3(b, l + 1);
+    r = r && feature_adaption_2_4(b, l + 1);
+    r = r && consumeToken(b, END_KEYWORD);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [rename]
+  private static boolean feature_adaption_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_2_0")) return false;
+    rename(b, l + 1);
+    return true;
+  }
+
+  // [new_exports]
+  private static boolean feature_adaption_2_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_2_1")) return false;
+    new_exports(b, l + 1);
+    return true;
+  }
+
+  // [redefine]
+  private static boolean feature_adaption_2_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_2_3")) return false;
+    redefine(b, l + 1);
+    return true;
+  }
+
+  // [select]
+  private static boolean feature_adaption_2_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_2_4")) return false;
+    select(b, l + 1);
+    return true;
+  }
+
+  // [rename] [new_exports] [undefine] redefine [select] 'end'
+  private static boolean feature_adaption_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_3")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = feature_adaption_3_0(b, l + 1);
+    r = r && feature_adaption_3_1(b, l + 1);
+    r = r && feature_adaption_3_2(b, l + 1);
+    r = r && redefine(b, l + 1);
+    r = r && feature_adaption_3_4(b, l + 1);
+    r = r && consumeToken(b, END_KEYWORD);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [rename]
+  private static boolean feature_adaption_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_3_0")) return false;
+    rename(b, l + 1);
+    return true;
+  }
+
+  // [new_exports]
+  private static boolean feature_adaption_3_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_3_1")) return false;
+    new_exports(b, l + 1);
+    return true;
+  }
+
+  // [undefine]
+  private static boolean feature_adaption_3_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_3_2")) return false;
+    undefine(b, l + 1);
+    return true;
+  }
+
+  // [select]
+  private static boolean feature_adaption_3_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_3_4")) return false;
+    select(b, l + 1);
+    return true;
+  }
+
+  // [rename] [new_exports] [undefine] [redefine] select 'end'
   private static boolean feature_adaption_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "feature_adaption_4")) return false;
-    select(b, l + 1);
+    boolean r;
+    Marker m = enter_section_(b);
+    r = feature_adaption_4_0(b, l + 1);
+    r = r && feature_adaption_4_1(b, l + 1);
+    r = r && feature_adaption_4_2(b, l + 1);
+    r = r && feature_adaption_4_3(b, l + 1);
+    r = r && select(b, l + 1);
+    r = r && consumeToken(b, END_KEYWORD);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [rename]
+  private static boolean feature_adaption_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_4_0")) return false;
+    rename(b, l + 1);
+    return true;
+  }
+
+  // [new_exports]
+  private static boolean feature_adaption_4_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_4_1")) return false;
+    new_exports(b, l + 1);
+    return true;
+  }
+
+  // [undefine]
+  private static boolean feature_adaption_4_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_4_2")) return false;
+    undefine(b, l + 1);
+    return true;
+  }
+
+  // [redefine]
+  private static boolean feature_adaption_4_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "feature_adaption_4_3")) return false;
+    redefine(b, l + 1);
     return true;
   }
 
@@ -3564,6 +3739,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     'require' |
   //     'inherit' |
   //     'feature' |
+  //     'rescue' |
   //     'local' |
   //     'assign' |
   //     '(' | ')' | ';' | '=' | '{' | '}' | '[' | ']' | '.' |
@@ -3599,6 +3775,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, REQUIRE_KEYWORD);
     if (!r) r = consumeToken(b, INHERIT_KEYWORD);
     if (!r) r = consumeToken(b, FEATURE_KEYWORD);
+    if (!r) r = consumeToken(b, RESCUE_KEYWORD);
     if (!r) r = consumeToken(b, LOCAL_KEYWORD);
     if (!r) r = consumeToken(b, ASSIGN_KEYWORD);
     if (!r) r = consumeToken(b, LEFT_PAREN);
@@ -3662,7 +3839,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // (initialization [invariant] exit_condition loop_body [variant] 'end') |
-  //     (iteration loop_body 'end')
+  //     (iteration [exit_condition] loop_body 'end')
   public static boolean loop(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "loop")) return false;
     if (!nextTokenIs(b, "<loop>", ACROSS_KEYWORD, FROM_KEYWORD)) return false;
@@ -3703,16 +3880,24 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // iteration loop_body 'end'
+  // iteration [exit_condition] loop_body 'end'
   private static boolean loop_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "loop_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = iteration(b, l + 1);
+    r = r && loop_1_1(b, l + 1);
     r = r && loop_body(b, l + 1);
     r = r && consumeToken(b, END_KEYWORD);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // [exit_condition]
+  private static boolean loop_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "loop_1_1")) return false;
+    exit_condition(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -3762,22 +3947,27 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [manifest_type] manifest_value
+  // (manifest_type manifest_value) | manifest_type | manifest_value
   public static boolean manifest_constant(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "manifest_constant")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, MANIFEST_CONSTANT, "<manifest constant>");
     r = manifest_constant_0(b, l + 1);
-    r = r && manifest_value(b, l + 1);
+    if (!r) r = manifest_type(b, l + 1);
+    if (!r) r = manifest_value(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // [manifest_type]
+  // manifest_type manifest_value
   private static boolean manifest_constant_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "manifest_constant_0")) return false;
-    manifest_type(b, l + 1);
-    return true;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = manifest_type(b, l + 1);
+    r = r && manifest_value(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -3826,7 +4016,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   //     integer_constant |
   //     real_constant |
   //     manifest_string |
-  //     manifest_type
+  //     'void'
   static boolean manifest_value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "manifest_value")) return false;
     boolean r;
@@ -3836,7 +4026,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     if (!r) r = integer_constant(b, l + 1);
     if (!r) r = real_constant(b, l + 1);
     if (!r) r = manifest_string(b, l + 1);
-    if (!r) r = manifest_type(b, l + 1);
+    if (!r) r = consumeToken(b, VOID_KEYWORD);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -4196,37 +4386,51 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (target_atomic bracketed_actuals) | (target_atomic '.' call) | unqualified_call
+  // (target_atomic '.' call) | (target_atomic bracketed_actuals '.' call) | (target_atomic bracketed_actuals) | unqualified_call
   public static boolean object_call(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "object_call")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, OBJECT_CALL, "<object call>");
     r = object_call_0(b, l + 1);
     if (!r) r = object_call_1(b, l + 1);
+    if (!r) r = object_call_2(b, l + 1);
     if (!r) r = unqualified_call(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // target_atomic bracketed_actuals
+  // target_atomic '.' call
   private static boolean object_call_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "object_call_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = target_atomic(b, l + 1);
-    r = r && bracketed_actuals(b, l + 1);
+    r = r && consumeToken(b, DOT);
+    r = r && call(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // target_atomic '.' call
+  // target_atomic bracketed_actuals '.' call
   private static boolean object_call_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "object_call_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = target_atomic(b, l + 1);
+    r = r && bracketed_actuals(b, l + 1);
     r = r && consumeToken(b, DOT);
     r = r && call(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // target_atomic bracketed_actuals
+  private static boolean object_call_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "object_call_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = target_atomic(b, l + 1);
+    r = r && bracketed_actuals(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -4935,32 +5139,59 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'tuple' [tuple_parameter_list]
+  // ['detachable' | 'attached'] ['separate'] 'tuple' [tuple_parameter_list]
   public static boolean tuple_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tuple_type")) return false;
-    if (!nextTokenIs(b, TUPLE_KEYWORD)) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, TUPLE_KEYWORD);
+    Marker m = enter_section_(b, l, _NONE_, TUPLE_TYPE, "<tuple type>");
+    r = tuple_type_0(b, l + 1);
     r = r && tuple_type_1(b, l + 1);
-    exit_section_(b, m, TUPLE_TYPE, r);
+    r = r && consumeToken(b, TUPLE_KEYWORD);
+    r = r && tuple_type_3(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // [tuple_parameter_list]
+  // ['detachable' | 'attached']
+  private static boolean tuple_type_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "tuple_type_0")) return false;
+    tuple_type_0_0(b, l + 1);
+    return true;
+  }
+
+  // 'detachable' | 'attached'
+  private static boolean tuple_type_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "tuple_type_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DETACHABLE_KEYWORD);
+    if (!r) r = consumeToken(b, ATTACHED_KEYWORD);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ['separate']
   private static boolean tuple_type_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tuple_type_1")) return false;
+    consumeToken(b, SEPARATE_KEYWORD);
+    return true;
+  }
+
+  // [tuple_parameter_list]
+  private static boolean tuple_type_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "tuple_type_3")) return false;
     tuple_parameter_list(b, l + 1);
     return true;
   }
 
   /* ********************************************************** */
-  // class_or_tuple_type | formal_generic_name | anchored
+  // 'none' | class_or_tuple_type | formal_generic_name | anchored
   public static boolean type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TYPE, "<type>");
-    r = class_or_tuple_type(b, l + 1);
+    r = consumeToken(b, NONE_KEYWORD);
+    if (!r) r = class_or_tuple_type(b, l + 1);
     if (!r) r = formal_generic_name(b, l + 1);
     if (!r) r = anchored(b, l + 1);
     exit_section_(b, l, m, r, false, null);
@@ -5116,14 +5347,14 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // local | variable_attribute
+  // local | variable_attribute | 'current'
   public static boolean variable(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "variable")) return false;
-    if (!nextTokenIs(b, "<variable>", RESULT_KEYWORD, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, VARIABLE, "<variable>");
     r = local(b, l + 1);
     if (!r) r = variable_attribute(b, l + 1);
+    if (!r) r = consumeToken(b, CURRENT_KEYWORD);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

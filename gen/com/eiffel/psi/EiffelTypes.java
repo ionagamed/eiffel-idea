@@ -187,6 +187,7 @@ public interface EiffelTypes {
   IElementType EXPORT_KEYWORD = new EiffelTokenType("export");
   IElementType EXTERNAL_KEYWORD = new EiffelTokenType("EXTERNAL_KEYWORD");
   IElementType FALSE_KEYWORD = new EiffelTokenType("FALSE_KEYWORD");
+  IElementType FEATURE_ADAPTION_5_0 = new EiffelTokenType("feature_adaption_5_0");
   IElementType FEATURE_KEYWORD = new EiffelTokenType("feature");
   IElementType FREE_OPERATOR = new EiffelTokenType("FREE_OPERATOR");
   IElementType FROM_KEYWORD = new EiffelTokenType("from");
@@ -242,6 +243,7 @@ public interface EiffelTypes {
   IElementType UNTIL_KEYWORD = new EiffelTokenType("until");
   IElementType USE_KEYWORD = new EiffelTokenType("USE_KEYWORD");
   IElementType VARIANT_KEYWORD = new EiffelTokenType("variant");
+  IElementType VOID_KEYWORD = new EiffelTokenType("void");
   IElementType WHEN_KEYWORD = new EiffelTokenType("when");
   IElementType XOR_KEYWORD = new EiffelTokenType("xor");
 

@@ -115,7 +115,8 @@ public class EiffelSyntaxHighlighter extends SyntaxHighlighterBase {
             SEPARATE_KEYWORD,
             TRUE_KEYWORD,
             FALSE_KEYWORD,
-            ASSIGN_KEYWORD
+            ASSIGN_KEYWORD,
+            VOID_KEYWORD
     ));
 
     private static final ArrayList<IElementType> operators = new ArrayList<>(Arrays.asList(
