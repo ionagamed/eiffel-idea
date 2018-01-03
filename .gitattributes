@@ -1,2 +1,3 @@
 tests/com/eiffel/tests/parser/base2/** linguist-vendored
 tests/com/eiffel/tests/parser/free_elks/** linguist-vendored
+gen/** linguist-generated
