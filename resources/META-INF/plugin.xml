@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>com.eiffel</id>
   <name>Eiffel</name>
-  <version>0.0.4a</version>
+  <version>0.0.5a</version>
   <vendor email="ionagamed@gmail.com" url="https://github.com/ionagamed/eiffel-idea">ionagamed</vendor>
 
   <description><![CDATA[
@@ -10,6 +10,10 @@
 
   <change-notes><![CDATA[
       <ul>
+        <li>
+          <b>0.0.4</b>: <br>
+          Fixes in parser. Now allows for full parsing of base2 and free_elks libraries
+        </li>
         <li>
           <b>0.0.3</b>: <br>
           Small release to show off production capabilities and ease of installation
