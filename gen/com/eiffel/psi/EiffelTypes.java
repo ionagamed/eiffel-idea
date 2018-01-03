@@ -136,7 +136,6 @@ public interface EiffelTypes {
   IElementType SELECT = EiffelElementTypeFactory.createElement("SELECT");
   IElementType SPECIAL_EXPRESSION = EiffelElementTypeFactory.createElement("SPECIAL_EXPRESSION");
   IElementType TAG = EiffelElementTypeFactory.createElement("TAG");
-  IElementType TUPLE_TYPE = EiffelElementTypeFactory.createElement("TUPLE_TYPE");
   IElementType TYPE = EiffelElementTypeFactory.createElement("TYPE");
   IElementType TYPE_INTERVAL = EiffelElementTypeFactory.createElement("TYPE_INTERVAL");
   IElementType UNDEFINE = EiffelElementTypeFactory.createElement("UNDEFINE");
@@ -630,9 +629,6 @@ public interface EiffelTypes {
       }
       else if (type == TAG) {
         return new EiffelTagImpl(node);
-      }
-      else if (type == TUPLE_TYPE) {
-        return new EiffelTupleTypeImpl(node);
       }
       else if (type == TYPE) {
         return new EiffelTypeImpl(node);

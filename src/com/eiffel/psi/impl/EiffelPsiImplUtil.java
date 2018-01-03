@@ -249,6 +249,11 @@ public class EiffelPsiImplUtil {
     }
 
     @Nullable
+    public static EiffelType getType(EiffelNewFeature newFeature) {
+        return null;
+    }
+
+    @Nullable
     public static String getSerializedFormalArguments(EiffelNewFeature newFeature) {
         if (newFeature.getStub() != null) return newFeature.getStub().getSerializedFormalArguments();
         EiffelFeatureDeclaration featureDeclaration = newFeature.getFeatureDeclaration();
@@ -360,17 +365,20 @@ public class EiffelPsiImplUtil {
 
     @Nullable
     public static String getTypeString(EiffelEntityIdentifier identifier) {
+        EiffelType type = identifier.getType();
+        return type == null ? null : type.getUngenerified();
+    }
+
+    @Nullable
+    public static EiffelType getType(EiffelEntityIdentifier identifier) {
         PsiElement parent = identifier.getParent();
         if (parent instanceof EiffelEntityDeclarationGroup) {
             EiffelEntityDeclarationGroup group = (EiffelEntityDeclarationGroup) parent;
-            EiffelType type = group.getType();
-            if (type == null) return null;
-            EiffelClassName className = type.getClassName();
-            if (className == null) return null;
-            return EiffelClassUtil.formalizeName(className.getText());
+            return group.getType();
         }
         return null;
     }
+
 
     @NotNull
     public static List<EiffelNewFeature> getCreationProcedures(EiffelClassDeclaration classDeclaration) {
@@ -398,5 +406,21 @@ public class EiffelPsiImplUtil {
         EiffelFeatureDeclaration fd = newFeature.getFeatureDeclaration();
         if (fd == null) return null;
         return fd.getCommentDoc();
+    }
+
+    @Nullable
+    public static String getString(EiffelType type) {
+        return type.getText();
+    }
+
+    public static boolean conformsTo(EiffelType source, EiffelType destination) {
+        return true;
+    }
+
+    @Nullable
+    public static String getUngenerified(EiffelType type) {
+        EiffelClassName className = type.getClassName();
+        if (className == null) return null;
+        return EiffelClassUtil.formalizeName(className.getText());
     }
 }

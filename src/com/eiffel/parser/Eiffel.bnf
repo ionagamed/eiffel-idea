@@ -189,6 +189,7 @@ new_feature ::= ['frozen'] extended_feature_name
     methods = [
         getName
         getTypeString
+        getType
         getSerializedFormalArguments
         getFeatureDeclaration
         getFeatureClause
@@ -253,6 +254,7 @@ entity_identifier ::= IDENTIFIER
     {
         methods=[
             getTypeString
+            getType
         ]
         implements="com.eiffel.psi.EiffelTypedElement"
     }
@@ -319,9 +321,15 @@ parent_qualification ::= '{' class_name '}'
 redefine ::= 'redefine' feature_list
 undefine ::= 'undefine' feature_list
 
-type ::= 'none' | class_or_tuple_type | formal_generic_name | anchored
+type ::= 'none' | class_or_tuple_type | formal_generic_name | anchored {
+    methods=[
+        conformsTo
+        getString
+        getUngenerified
+    ]
+}
 private class_or_tuple_type ::= tuple_type | class_type
-private class_type ::= ['detachable' | 'attached'] ['separate'] [attachment_mark] class_name [actual_generics]
+private class_type ::= ['detachable' | 'attached'] ['separate'] [attachment_mark] class_name [actual_generics] { extends=type }
 attachment_mark ::= '?' | '!'
 private anchored ::= ['detachable' | 'attached'] ['separate'] [attachment_mark] 'like' anchor
 private anchor ::= expression | 'current'
@@ -342,7 +350,7 @@ multiple_constraint ::= '{' constraint_list '}'
 private constraint_list ::= single_constraint (',' single_constraint)*
 constraint_creators ::= 'create' feature_list 'end'
 
-tuple_type ::= ['detachable' | 'attached'] ['separate'] 'tuple' [tuple_parameter_list]
+private tuple_type ::= ['detachable' | 'attached'] ['separate'] 'tuple' [tuple_parameter_list] { extends=type }
 private tuple_parameter_list ::= '[' tuple_parameters ']'
 private tuple_parameters ::= entity_declaration_list | type_list
 

@@ -407,9 +407,6 @@ public class EiffelParser implements PsiParser, LightPsiParser {
     else if (t == TAG) {
       r = tag(b, 0);
     }
-    else if (t == TUPLE_TYPE) {
-      r = tuple_type(b, 0);
-    }
     else if (t == TYPE) {
       r = type(b, 0);
     }
@@ -5140,15 +5137,15 @@ public class EiffelParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // ['detachable' | 'attached'] ['separate'] 'tuple' [tuple_parameter_list]
-  public static boolean tuple_type(PsiBuilder b, int l) {
+  static boolean tuple_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tuple_type")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, TUPLE_TYPE, "<tuple type>");
+    Marker m = enter_section_(b);
     r = tuple_type_0(b, l + 1);
     r = r && tuple_type_1(b, l + 1);
     r = r && consumeToken(b, TUPLE_KEYWORD);
     r = r && tuple_type_3(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -5189,7 +5186,7 @@ public class EiffelParser implements PsiParser, LightPsiParser {
   public static boolean type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, TYPE, "<type>");
+    Marker m = enter_section_(b, l, _COLLAPSE_, TYPE, "<type>");
     r = consumeToken(b, NONE_KEYWORD);
     if (!r) r = class_or_tuple_type(b, l + 1);
     if (!r) r = formal_generic_name(b, l + 1);

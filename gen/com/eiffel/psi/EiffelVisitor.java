@@ -519,10 +519,6 @@ public class EiffelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitTupleType(@NotNull EiffelTupleType o) {
-    visitPsiElement(o);
-  }
-
   public void visitType(@NotNull EiffelType o) {
     visitPsiElement(o);
   }
