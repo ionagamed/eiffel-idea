@@ -35,10 +35,6 @@ public class EiffelFormattingModelBuilder implements FormattingModelBuilder {
     @Override
     public TextRange getRangeAffectingIndent(PsiFile file, int offset, ASTNode elementAtOffset) {
         return elementAtOffset.getTextRange();
-//        int dt = 20;
-//        int a = elementAtOffset.getStartOffset();
-//        int b = a + elementAtOffset.getTextLength();
-//        return new TextRange(a - dt, b + dt);
     }
 
     private static SpacingBuilder createSpaceBuilder(CodeStyleSettings settings) {

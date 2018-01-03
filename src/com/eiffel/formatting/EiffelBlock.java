@@ -24,7 +24,6 @@ public class EiffelBlock extends AbstractBlock {
     private static TokenSet indentedTokens = TokenSet.create(
             ERROR_ELEMENT, // newline blocks hack
             FEATURE_LIST,
-//            INSTRUCTION,
             COMPOUND,
             PARENT,
             FEATURE_ADAPTION,
@@ -32,7 +31,6 @@ public class EiffelBlock extends AbstractBlock {
             FEATURE_VALUE,
             ENTITY_DECLARATION_GROUP,
             EXPRESSION,
-//            BOOLEAN_EXPRESSION, // used in loops
             ASSERTION_CLAUSE,
             COMMENT,
             CONVERSION_PROCEDURE,
@@ -67,8 +65,6 @@ public class EiffelBlock extends AbstractBlock {
         this.spacingBuilder = spacingBuilder;
 
         myIndent = indent;
-
-//        System.out.println("new block: of type '" + node.getElementType().toString() + "' with text range " + node.getTextRange().toString());
     }
 
     @Override
@@ -88,12 +84,10 @@ public class EiffelBlock extends AbstractBlock {
 
         if (indentedTokens.contains(node.getElementType())) {
             indent = Indent.getSmartIndent(Indent.Type.NORMAL);
-//            indent = Indent.getSmartIndent(false);
         }
         if (indentedNestedTokens.containsKey(myNode.getElementType())) {
             if (indentedNestedTokens.get(myNode.getElementType()).contains(node.getElementType())) {
                 indent = Indent.getSmartIndent(Indent.Type.NORMAL);
-//                indent = Indent.getNormalIndent(false);
             }
         }
         if (myNode.getElementType().equals(FEATURE_DECLARATION) && node.getElementType() == COMMENT) {

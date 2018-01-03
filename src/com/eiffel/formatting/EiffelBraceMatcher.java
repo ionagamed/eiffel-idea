@@ -13,7 +13,6 @@ public class EiffelBraceMatcher implements PairedBraceMatcher {
             new BracePair(EiffelTypes.LEFT_PAREN, EiffelTypes.RIGHT_PAREN, true),
             new BracePair(EiffelTypes.LEFT_CURLY_BRACKET, EiffelTypes.RIGHT_CURLY_BRACKET, true),
             new BracePair(EiffelTypes.LEFT_SQUARE_BRACKET, EiffelTypes.RIGHT_SQUARE_BRACKET, true),
-//            new BracePair(EiffelTypes.DO_KEYWORD, EiffelTypes.END_KEYWORD, true)
     };
 
     @NotNull
