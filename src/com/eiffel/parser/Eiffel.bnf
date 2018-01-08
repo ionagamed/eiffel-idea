@@ -141,7 +141,6 @@ class_declaration ::=
         stubClass="com.eiffel.psi.stubs.EiffelClassDeclarationStub"
     }
 class_header ::= [header_mark] 'class' class_name
-private class_header_recovery ::= !keyword_recovery_
 header_mark ::= ['frozen'] ['expanded'] ['deferred']
 
 notes ::= 'note' note_list
@@ -180,8 +179,7 @@ feature_value ::=
     (explicit_value [obsolete] [header_comment] [notes]) |
     ([obsolete] [header_comment] [notes] attribute_or_routine)
 explicit_value ::= '=' constant_expression
-constant_expression ::= (manifest_constant operator manifest_constant) | (operator manifest_constant) | manifest_constant
-private explicit_value_recovery ::= !(keyword_recovery_ | IDENTIFIER)
+private constant_expression ::= (manifest_constant operator manifest_constant) | (operator manifest_constant) | manifest_constant
 
 private new_feature_list ::= new_feature (','? new_feature)*
 new_feature ::= ['frozen'] extended_feature_name
@@ -324,7 +322,7 @@ private class_or_tuple_type ::= tuple_type | class_type
 private class_type ::= ['detachable' | 'attached'] ['separate'] [attachment_mark] class_name [actual_generics]
 attachment_mark ::= '?' | '!'
 private anchored ::= ['detachable' | 'attached'] ['separate'] [attachment_mark] 'like' anchor
-private anchor ::= expression | 'current'
+private anchor ::= expression
 
 actual_generics ::= '[' type_list ']'
 private type_list ::= type (',' type)*

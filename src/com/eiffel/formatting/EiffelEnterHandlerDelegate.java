@@ -1,6 +1,5 @@
 package com.eiffel.formatting;
 
-import com.eiffel.psi.EiffelLocal;
 import com.eiffel.psi.EiffelTypes;
 import com.intellij.codeInsight.CodeInsightSettings;
 import com.intellij.codeInsight.editorActions.enter.EnterHandlerDelegate;
