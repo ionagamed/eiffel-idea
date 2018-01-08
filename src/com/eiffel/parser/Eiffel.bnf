@@ -137,6 +137,9 @@ class_declaration ::=
             getAllNewFeaturesSubset
             getCreationProcedures
             getNewFeature
+
+            hasAncestor
+            isAncestorOf
         ]
         stubClass="com.eiffel.psi.stubs.EiffelClassDeclarationStub"
     }

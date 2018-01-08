@@ -189,6 +189,20 @@ public class EiffelPsiImplUtil {
         );
     }
 
+    public static boolean hasAncestor(EiffelClassDeclaration child, EiffelClassDeclaration candidate) {
+//        for (EiffelClassDeclaration declaration : child.getParents()) {
+//            if (declaration.getName().equals(candidate.getName())) {
+//                return true;
+//            }
+//        }
+//        return false;
+        return child.getParents().contains(candidate);
+    }
+
+    public static boolean isAncestorOf(EiffelClassDeclaration ancestor, EiffelClassDeclaration candidiate) {
+        return candidiate.getParents().contains(ancestor);
+    }
+
     @NotNull
     public static Map<EiffelClassDeclaration, Integer> getParentsWithDepth(EiffelClassDeclaration classDeclaration) {
         Map<EiffelClassDeclaration, Integer> result = new HashMap<>();
@@ -414,6 +428,11 @@ public class EiffelPsiImplUtil {
     }
 
     public static boolean conformsTo(EiffelType source, EiffelType destination) {
+        EiffelActualGenerics destinationGenerics = destination.getActualGenerics();
+        EiffelActualGenerics sourceGenerics = source.getActualGenerics();
+        if (destinationGenerics == null && sourceGenerics == null) {
+
+        }
         return true;
     }
 
