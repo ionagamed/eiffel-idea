@@ -435,15 +435,15 @@ assignment ::= variable ':=' expression
 
 assigner_call ::= expression ':=' expression
 
-private call ::= object_call | non_object_call | non_object_parenthesized_call | casting_call
-object_call ::= (target_atomic '.' call) | (target_atomic bracketed_actuals '.' call) | (target_atomic bracketed_actuals) | unqualified_call
+call ::= object_call | non_object_call | non_object_parenthesized_call | casting_call
+object_call ::= (target_atomic '.' call) | (target_atomic bracketed_actuals '.' call) | (target_atomic bracketed_actuals) | unqualified_call { extends=call }
 unqualified_call ::= (feature_name [actuals]) | ('current' bracketed_actuals)
 private target_atomic ::= casting_call | unqualified_call | local | read_only | non_object_call | parenthesized
 private target ::= target_atomic ['.' call]
-non_object_call ::= '{' type '}' '.' unqualified_call
-non_object_parenthesized_call ::= '(' '{' type '}' ')' DOT unqualified_call
+non_object_call ::= '{' type '}' '.' unqualified_call { extends=call }
+non_object_parenthesized_call ::= '(' '{' type '}' ')' DOT unqualified_call { extends=call }
 
-casting_call ::= '{' type '}' actuals
+casting_call ::= '{' type '}' actuals { extends=call }
 
 actuals ::= parenthesized_actuals | bracketed_actuals
 private parenthesized_actuals ::= '(' actual_list ')'
