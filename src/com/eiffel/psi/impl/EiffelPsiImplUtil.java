@@ -1,16 +1,19 @@
 package com.eiffel.psi.impl;
 
 import com.eiffel.psi.*;
+import com.eiffel.util.StreamUtil;
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.containers.ContainerUtil;
+import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.stream.Stream;
 
 public class EiffelPsiImplUtil {
     @Nullable
@@ -190,12 +193,6 @@ public class EiffelPsiImplUtil {
     }
 
     public static boolean hasAncestor(EiffelClassDeclaration child, EiffelClassDeclaration candidate) {
-//        for (EiffelClassDeclaration declaration : child.getParents()) {
-//            if (declaration.getName().equals(candidate.getName())) {
-//                return true;
-//            }
-//        }
-//        return false;
         return child.getParents().contains(candidate);
     }
 
@@ -428,12 +425,32 @@ public class EiffelPsiImplUtil {
     }
 
     public static boolean conformsTo(EiffelType source, EiffelType destination) {
+        final Project project = source.getProject();
+
         EiffelActualGenerics destinationGenerics = destination.getActualGenerics();
         EiffelActualGenerics sourceGenerics = source.getActualGenerics();
-        if (destinationGenerics == null && sourceGenerics == null) {
 
+        if (source.getClassName() == null || destination.getClassName() == null) {
+            return true; // TODO: implement non-class types, e.g. tuples
         }
-        return true;
+        EiffelClassDeclaration sourceDeclaration = EiffelClassUtil.findClassDeclaration(project, source.getClassName().getText());
+        EiffelClassDeclaration destinationDeclaration =
+                EiffelClassUtil.findClassDeclaration(project, destination.getClassName().getText());
+
+        if (destinationGenerics == null && sourceGenerics == null) {
+            if (sourceDeclaration == null || destinationDeclaration == null) return true;
+            return sourceDeclaration.hasAncestor(destinationDeclaration);
+        } else if (destinationGenerics == null || sourceGenerics == null) {
+            return false;
+        } else {
+            List<EiffelType> dstTypeList = destinationGenerics.getTypeList();
+            List<EiffelType> srcTypeList = sourceGenerics.getTypeList();
+            if (dstTypeList.size() != srcTypeList.size()) return false;
+
+            return StreamUtil.zipIntoPairs(srcTypeList.stream(), dstTypeList.stream()).allMatch(
+                    p -> p.getKey().conformsTo(p.getValue())
+            );
+        }
     }
 
     @Nullable
