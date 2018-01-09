@@ -1,16 +1,19 @@
 package com.eiffel.psi.impl;
 
 import com.eiffel.psi.*;
+import com.eiffel.util.StreamUtil;
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.containers.ContainerUtil;
+import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.stream.Stream;
 
 public class EiffelPsiImplUtil {
     @Nullable
@@ -189,6 +192,14 @@ public class EiffelPsiImplUtil {
         );
     }
 
+    public static boolean hasAncestor(EiffelClassDeclaration child, EiffelClassDeclaration candidate) {
+        return child.getParents().contains(candidate);
+    }
+
+    public static boolean isAncestorOf(EiffelClassDeclaration ancestor, EiffelClassDeclaration candidiate) {
+        return candidiate.getParents().contains(ancestor);
+    }
+
     @NotNull
     public static Map<EiffelClassDeclaration, Integer> getParentsWithDepth(EiffelClassDeclaration classDeclaration) {
         Map<EiffelClassDeclaration, Integer> result = new HashMap<>();
@@ -245,6 +256,11 @@ public class EiffelPsiImplUtil {
                 return EiffelClassUtil.formalizeName(className.getText());
             }
         }
+        return null;
+    }
+
+    @Nullable
+    public static EiffelType getType(EiffelNewFeature newFeature) {
         return null;
     }
 
@@ -360,17 +376,20 @@ public class EiffelPsiImplUtil {
 
     @Nullable
     public static String getTypeString(EiffelEntityIdentifier identifier) {
+        EiffelType type = identifier.getType();
+        return type == null ? null : type.getUngenerified();
+    }
+
+    @Nullable
+    public static EiffelType getType(EiffelEntityIdentifier identifier) {
         PsiElement parent = identifier.getParent();
         if (parent instanceof EiffelEntityDeclarationGroup) {
             EiffelEntityDeclarationGroup group = (EiffelEntityDeclarationGroup) parent;
-            EiffelType type = group.getType();
-            if (type == null) return null;
-            EiffelClassName className = type.getClassName();
-            if (className == null) return null;
-            return EiffelClassUtil.formalizeName(className.getText());
+            return group.getType();
         }
         return null;
     }
+
 
     @NotNull
     public static List<EiffelNewFeature> getCreationProcedures(EiffelClassDeclaration classDeclaration) {
@@ -398,5 +417,46 @@ public class EiffelPsiImplUtil {
         EiffelFeatureDeclaration fd = newFeature.getFeatureDeclaration();
         if (fd == null) return null;
         return fd.getCommentDoc();
+    }
+
+    @Nullable
+    public static String getString(EiffelType type) {
+        return type.getText();
+    }
+
+    public static boolean conformsTo(EiffelType source, EiffelType destination) {
+        final Project project = source.getProject();
+
+        EiffelActualGenerics destinationGenerics = destination.getActualGenerics();
+        EiffelActualGenerics sourceGenerics = source.getActualGenerics();
+
+        if (source.getClassName() == null || destination.getClassName() == null) {
+            return true; // TODO: implement non-class types, e.g. tuples
+        }
+        EiffelClassDeclaration sourceDeclaration = EiffelClassUtil.findClassDeclaration(project, source.getClassName().getText());
+        EiffelClassDeclaration destinationDeclaration =
+                EiffelClassUtil.findClassDeclaration(project, destination.getClassName().getText());
+
+        if (destinationGenerics == null && sourceGenerics == null) {
+            if (sourceDeclaration == null || destinationDeclaration == null) return true;
+            return sourceDeclaration.hasAncestor(destinationDeclaration);
+        } else if (destinationGenerics == null || sourceGenerics == null) {
+            return false;
+        } else {
+            List<EiffelType> dstTypeList = destinationGenerics.getTypeList();
+            List<EiffelType> srcTypeList = sourceGenerics.getTypeList();
+            if (dstTypeList.size() != srcTypeList.size()) return false;
+
+            return StreamUtil.zipIntoPairs(srcTypeList.stream(), dstTypeList.stream()).allMatch(
+                    p -> p.getKey().conformsTo(p.getValue())
+            );
+        }
+    }
+
+    @Nullable
+    public static String getUngenerified(EiffelType type) {
+        EiffelClassName className = type.getClassName();
+        if (className == null) return null;
+        return EiffelClassUtil.formalizeName(className.getText());
     }
 }

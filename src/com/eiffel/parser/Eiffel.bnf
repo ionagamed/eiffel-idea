@@ -137,6 +137,9 @@ class_declaration ::=
             getAllNewFeaturesSubset
             getCreationProcedures
             getNewFeature
+
+            hasAncestor
+            isAncestorOf
         ]
         stubClass="com.eiffel.psi.stubs.EiffelClassDeclarationStub"
     }
@@ -187,6 +190,7 @@ new_feature ::= ['frozen'] extended_feature_name
     methods = [
         getName
         getTypeString
+        getType
         getSerializedFormalArguments
         getFeatureDeclaration
         getFeatureClause
@@ -251,6 +255,7 @@ entity_identifier ::= IDENTIFIER
     {
         methods=[
             getTypeString
+            getType
         ]
         implements="com.eiffel.psi.EiffelTypedElement"
     }
@@ -317,9 +322,15 @@ parent_qualification ::= '{' class_name '}'
 redefine ::= 'redefine' feature_list
 undefine ::= 'undefine' feature_list
 
-type ::= 'none' | class_or_tuple_type | formal_generic_name | anchored
+type ::= 'none' | class_or_tuple_type | formal_generic_name | anchored {
+    methods=[
+        conformsTo
+        getString
+        getUngenerified
+    ]
+}
 private class_or_tuple_type ::= tuple_type | class_type
-private class_type ::= ['detachable' | 'attached'] ['separate'] [attachment_mark] class_name [actual_generics]
+private class_type ::= ['detachable' | 'attached'] ['separate'] [attachment_mark] class_name [actual_generics] { extends=type }
 attachment_mark ::= '?' | '!'
 private anchored ::= ['detachable' | 'attached'] ['separate'] [attachment_mark] 'like' anchor
 private anchor ::= expression
@@ -340,7 +351,7 @@ multiple_constraint ::= '{' constraint_list '}'
 private constraint_list ::= single_constraint (',' single_constraint)*
 constraint_creators ::= 'create' feature_list 'end'
 
-tuple_type ::= ['detachable' | 'attached'] ['separate'] 'tuple' [tuple_parameter_list]
+private tuple_type ::= ['detachable' | 'attached'] ['separate'] 'tuple' [tuple_parameter_list] { extends=type }
 private tuple_parameter_list ::= '[' tuple_parameters ']'
 private tuple_parameters ::= entity_declaration_list | type_list
 
@@ -422,15 +433,15 @@ assignment ::= variable ':=' expression
 
 assigner_call ::= expression ':=' expression
 
-private call ::= object_call | non_object_call | non_object_parenthesized_call | casting_call
-object_call ::= (target_atomic '.' call) | (target_atomic bracketed_actuals '.' call) | (target_atomic bracketed_actuals) | unqualified_call
+call ::= object_call | non_object_call | non_object_parenthesized_call | casting_call
+object_call ::= (target_atomic '.' call) | (target_atomic bracketed_actuals '.' call) | (target_atomic bracketed_actuals) | unqualified_call { extends=call }
 unqualified_call ::= (feature_name [actuals]) | ('current' bracketed_actuals)
 private target_atomic ::= casting_call | unqualified_call | local | read_only | non_object_call | parenthesized
 private target ::= target_atomic ['.' call]
-non_object_call ::= '{' type '}' '.' unqualified_call
-non_object_parenthesized_call ::= '(' '{' type '}' ')' DOT unqualified_call
+non_object_call ::= '{' type '}' '.' unqualified_call { extends=call }
+non_object_parenthesized_call ::= '(' '{' type '}' ')' DOT unqualified_call { extends=call }
 
-casting_call ::= '{' type '}' actuals
+casting_call ::= '{' type '}' actuals { extends=call }
 
 actuals ::= parenthesized_actuals | bracketed_actuals
 private parenthesized_actuals ::= '(' actual_list ')'
@@ -510,7 +521,7 @@ private character_constant ::= CHARACTER_LITERAL
 private boolean_constant ::= TRUE_KEYWORD | FALSE_KEYWORD
 private real_constant ::= REAL_LITERAL
 
-manifest_string ::= STRING_LITERAL
+private manifest_string ::= STRING_LITERAL
 array_literal ::= '<<' expression_list '>>'
 
 ext ::= EXTERNAL_KEYWORD external_language [external_name]
