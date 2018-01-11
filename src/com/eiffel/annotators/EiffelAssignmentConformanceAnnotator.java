@@ -14,12 +14,14 @@ public class EiffelAssignmentConformanceAnnotator implements Annotator {
             EiffelExpression expression = ((EiffelAssignment) element).getExpression();
 
             String variableTypeString = EiffelTypeResolutionUtil.getTypeString(variable.getProject(), variable);
+            if (variableTypeString == null) return;
             EiffelClassDeclaration variableType = EiffelClassUtil.findClassDeclaration(
                     variable.getProject(),
                     variableTypeString
             );
 
             String expressionTypeString = EiffelTypeResolutionUtil.getTypeString(expression.getProject(), expression);
+            if (expressionTypeString == null) return;
             EiffelClassDeclaration expressionType = EiffelClassUtil.findClassDeclaration(
                     expression.getProject(),
                     expressionTypeString
