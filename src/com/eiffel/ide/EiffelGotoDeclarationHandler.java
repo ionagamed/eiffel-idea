@@ -47,7 +47,7 @@ public class EiffelGotoDeclarationHandler extends GotoDeclarationHandlerBase {
     private PsiElement getFormalArgumentByGrandparent(PsiElement grandparent, Editor editor) {
         EiffelFeatureDeclaration featureDeclaration = EiffelClassUtil.findFeatureDeclaration(grandparent);
         if (featureDeclaration == null) return null;
-        return featureDeclaration.getFormalArgumentIdentifier(grandparent.getText());
+        return featureDeclaration.getArgument(grandparent.getText());
     }
 
     private PsiElement getClassByNameElement(PsiElement nameElement, Editor editor) {
@@ -71,7 +71,7 @@ public class EiffelGotoDeclarationHandler extends GotoDeclarationHandlerBase {
         ASTNode featureDeclarationNode = EiffelClassUtil.findParentOfType(grandparent.getNode(), EiffelTypes.FEATURE_DECLARATION);
         if (featureDeclarationNode == null) return null;
         EiffelFeatureDeclaration featureDeclaration = featureDeclarationNode.getPsi(EiffelFeatureDeclaration.class);
-        return featureDeclaration.getLocalEntityIdentifier(grandparent.getText());
+        return featureDeclaration.getLocal(grandparent.getText());
     }
 
     private PsiElement getFeatureDeclarationByPlainName(PsiElement featureName, Editor editor) {

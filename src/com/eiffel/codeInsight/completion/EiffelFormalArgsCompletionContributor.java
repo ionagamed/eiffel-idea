@@ -21,7 +21,7 @@ public class EiffelFormalArgsCompletionContributor extends EiffelCompletionUtilB
         if (isApplicable(element)) {
             EiffelFeatureDeclaration featureDeclaration = EiffelClassUtil.findFeatureDeclaration(element);
             if (featureDeclaration == null) return;
-            for (EiffelEntityIdentifier identifier : featureDeclaration.getFormalArgumentIdentifiers()) {
+            for (EiffelEntity identifier : featureDeclaration.getArguments()) {
                 final String name = identifier.getText();
                 final String type = identifier.getTypeString();
                 LookupElement lookupElement = LookupElementBuilder

@@ -12,6 +12,7 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.stubs.StubIndex;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -87,9 +88,9 @@ public class EiffelClassUtil {
      * @param element - child element
      * @return ancestor class declaration
      */
+    @NotNull
     public static EiffelClassDeclaration findClassDeclaration(PsiElement element) {
         ASTNode classDeclaration = findParentOfType(element.getNode(), EiffelTypes.CLASS_DECLARATION);
-        if (classDeclaration == null) return null;
         return classDeclaration.getPsi(EiffelClassDeclaration.class);
     }
 
@@ -163,9 +164,9 @@ public class EiffelClassUtil {
         final String name = reference.getText();
         EiffelFeatureDeclaration featureDeclaration = findFeatureDeclaration(reference);
         if (featureDeclaration != null) {
-            EiffelEntityIdentifier identifier = featureDeclaration.getLocalEntityIdentifier(name);
+            EiffelEntity identifier = featureDeclaration.getLocal(name);
             if (identifier != null) return identifier;
-            identifier = featureDeclaration.getFormalArgumentIdentifier(name);
+            identifier = featureDeclaration.getArgument(name);
             if (identifier != null) return identifier;
         }
         EiffelClassDeclaration classDeclaration = findClassDeclaration(reference);

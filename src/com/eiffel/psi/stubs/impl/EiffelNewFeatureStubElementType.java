@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class EiffelNewFeatureStubElementType extends IStubElementType<EiffelNewFeatureStub, EiffelNewFeature> {
     public EiffelNewFeatureStubElementType() {
@@ -31,9 +30,9 @@ public class EiffelNewFeatureStubElementType extends IStubElementType<EiffelNewF
     public EiffelNewFeatureStub createStub(@NotNull EiffelNewFeature psi, StubElement parentStub) {
         return new EiffelNewFeatureStubImpl(
                 parentStub,
-                psi.getName(),
+                psi.getFinalName(),
                 psi.getTypeString(),
-                psi.getSerializedFormalArguments(),
+                psi.getSerializedArguments(),
                 psi.getClientNames(),
                 psi.getCommentDoc()
         );

@@ -22,7 +22,7 @@ public class EiffelLocalCompletionUtil extends EiffelCompletionUtilBase {
             ASTNode featureDeclarationNode = EiffelClassUtil.findParentOfType(parameters.getPosition().getNode(), EiffelTypes.FEATURE_DECLARATION);
             if (featureDeclarationNode == null) return;
             EiffelFeatureDeclaration featureDeclaration = featureDeclarationNode.getPsi(EiffelFeatureDeclaration.class);
-            for (EiffelEntityIdentifier local : featureDeclaration.getLocalEntityIdentifiers()) {
+            for (EiffelEntity local : featureDeclaration.getLocals()) {
 //                final String type = local.getType();
                 final String type = local.getTypeString();
                 LookupElement lookupElement = LookupElementBuilder.create(local.getText())

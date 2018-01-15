@@ -7,15 +7,15 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.containers.ContainerUtil;
-import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.stream.Stream;
 
 public class EiffelPsiImplUtil {
+
+    //region Class Declaration methods
     @Nullable
     public static String getName(EiffelClassDeclaration classDeclaration) {
         if (classDeclaration.getStub() != null) return classDeclaration.getStub().getName();
@@ -66,7 +66,7 @@ public class EiffelPsiImplUtil {
     @Nullable
     public static EiffelNewFeature getNewFeature(EiffelClassDeclaration classDeclaration, String featureName) {
         for (EiffelNewFeature newFeature : classDeclaration.getAllNewFeatures()) {
-            if (newFeature.getName().equals(featureName)) {
+            if (newFeature.getFinalName().equals(featureName)) {
                 return newFeature;
             }
         }
@@ -97,13 +97,13 @@ public class EiffelPsiImplUtil {
     public static List<EiffelNewFeature> getAllNewFeaturesSubset(EiffelClassDeclaration classDeclaration, Set<String> names) {
         List<EiffelNewFeature> result = new ArrayList<>();
         for (EiffelNewFeature newFeature : classDeclaration.getNewFeatures()) {
-            if (names.contains(newFeature.getName())) {
+            if (names.contains(newFeature.getFinalName())) {
                 result.add(newFeature);
             }
         }
         for (EiffelClassDeclaration parent : classDeclaration.getParents()) {
             for (EiffelNewFeature newFeature : parent.getNewFeatures()) {
-                if (names.contains(newFeature.getName())) {
+                if (names.contains(newFeature.getFinalName())) {
                     result.add(newFeature);
                 }
             }
@@ -131,15 +131,15 @@ public class EiffelPsiImplUtil {
         for (EiffelNewFeature newFeature : classDeclaration.getNewFeatures()) {
             if (newFeature.isAccessibleBy(context)) {
                 result.put(newFeature, 0);
-                alreadyPut.add(newFeature.getName());
+                alreadyPut.add(newFeature.getFinalName());
             }
         }
         Map<EiffelClassDeclaration, Integer> parents = classDeclaration.getParentsWithDepth();
         for (EiffelClassDeclaration parent : parents.keySet()) {
             for (EiffelNewFeature newFeature : parent.getNewFeatures()) {
-                if (newFeature.isAccessibleBy(context) && !alreadyPut.contains(newFeature.getName())) {
+                if (newFeature.isAccessibleBy(context) && !alreadyPut.contains(newFeature.getFinalName())) {
                     result.put(newFeature, parents.get(parent));
-                    alreadyPut.add(newFeature.getName());
+                    alreadyPut.add(newFeature.getFinalName());
                 }
             }
         }
@@ -150,7 +150,7 @@ public class EiffelPsiImplUtil {
     public static List<String> getFeatureNames(EiffelClassDeclaration classDeclaration) {
         List<String> result = new ArrayList<>();
         for (EiffelNewFeature newFeature : classDeclaration.getNewFeatures()) {
-            result.add(newFeature.getName());
+            result.add(newFeature.getFinalName());
         }
         return result;
     }
@@ -239,60 +239,58 @@ public class EiffelPsiImplUtil {
     }
 
     @NotNull
-    public static String getName(EiffelNewFeature newFeature) {
-        if (newFeature.getStub() != null) return newFeature.getStub().getName();
+    public static List<EiffelNewFeature> getCreationProcedures(EiffelClassDeclaration classDeclaration) {
+        List<EiffelNewFeature> result = new ArrayList<>();
+        EiffelCreators creators = classDeclaration.getCreators();
+        if (creators == null) return result;
+        Set<String> filter = new HashSet<>();
+        for (EiffelFeatureName newFeature : creators.getFeatureNameList()) {
+            filter.add(newFeature.getText());
+        }
+        return classDeclaration.getAllNewFeaturesSubset(filter);
+    }
+    //endregion
+
+    //region New Feature methods
+
+    @NotNull
+    public static String getFinalName(EiffelNewFeature newFeature) {
+        return newFeature.getOriginalName();
+    }
+
+    @NotNull
+    public static String getOriginalName(EiffelNewFeature newFeature) {
         return newFeature.getFeatureName().getText();
     }
 
-    @Nullable
-    public static String getTypeString(EiffelNewFeature newFeature) {
-        if (newFeature.getStub() != null) return newFeature.getStub().getTypeString();
-        if (newFeature.getParent() instanceof EiffelFeatureDeclaration) {
-            EiffelFeatureDeclaration featureDeclaration = (EiffelFeatureDeclaration) newFeature.getParent();
-            EiffelType type = featureDeclaration.getType();
-            if (type == null) return null;
-            EiffelClassName className = type.getClassName();
-            if (className != null) {
-                return EiffelClassUtil.formalizeName(className.getText());
-            }
-        }
-        return null;
+    @NotNull
+    public static List<EiffelEntity> getArguments(EiffelNewFeature newFeature) {
+        return newFeature.getFeatureDeclaration().getArguments();
     }
 
+    /**
+     * Convenience method. Returns a formalized version of getFormalArguments().getText()
+     * !! not to be mistaken with getArguments(). getArguments returns a list of identifiers,
+     * while getFormalArguments returns another psi element.
+     * <p>
+     * Mainly used for completion
+     *
+     * @return serialized formals
+     */
     @Nullable
-    public static EiffelType getType(EiffelNewFeature newFeature) {
-        return null;
-    }
-
-    @Nullable
-    public static String getSerializedFormalArguments(EiffelNewFeature newFeature) {
+    public static String getSerializedArguments(EiffelNewFeature newFeature) {
         if (newFeature.getStub() != null) return newFeature.getStub().getSerializedFormalArguments();
-        EiffelFeatureDeclaration featureDeclaration = newFeature.getFeatureDeclaration();
-        if (featureDeclaration == null) return null;
-        EiffelFormalArguments arguments = featureDeclaration.getFormalArguments();
-        if (arguments != null) {
-            return EiffelClassUtil.formalizeName(arguments.getText());
-        }
-        return null;
+        return newFeature.getFeatureDeclaration().getSerializedArguments();
     }
 
-    @Nullable
-    public static EiffelFeatureDeclaration getFeatureDeclaration(EiffelNewFeature newFeature) {
-//        if (newFeature.getStub() != null) return newFeature.getStub().getFeatureDeclarationStub().getPsi();
-        if (newFeature.getParent() instanceof EiffelFeatureDeclaration) {
-            return (EiffelFeatureDeclaration) newFeature.getParent();
-        }
-        return null;
+    @NotNull
+    public static List<EiffelEntity> getLocals(EiffelNewFeature newFeature) {
+        return newFeature.getFeatureDeclaration().getLocals();
     }
 
-    @Nullable
-    public static EiffelFeatureClause getFeatureClause(EiffelNewFeature newFeature) {
-        EiffelFeatureDeclaration featureDeclaration = newFeature.getFeatureDeclaration();
-        if (featureDeclaration == null) return null;
-        if (featureDeclaration.getParent() instanceof EiffelFeatureClause) {
-            return (EiffelFeatureClause) featureDeclaration.getParent();
-        }
-        return null;
+    public static boolean isAccessibleBy(EiffelNewFeature newFeature, String context) {
+        Set<String> clients = newFeature.getClientNames();
+        return clients.size() == 0 || clients.contains("ALL") || clients.contains(context);
     }
 
     @NotNull
@@ -314,111 +312,134 @@ public class EiffelPsiImplUtil {
         return result;
     }
 
-    public static boolean isAccessibleBy(EiffelNewFeature newFeature, String context) {
-        Set<String> clients = newFeature.getClientNames();
-        return clients.size() == 0 || clients.contains("ALL") || clients.contains(context) ||
-                context.equals(EiffelClassUtil.findClassDeclaration(newFeature).getName());
-    }
-
-    @NotNull
-    public static List<EiffelEntityIdentifier> getLocalEntityIdentifiers(EiffelFeatureDeclaration featureDeclaration) {
-        List<EiffelEntityIdentifier> result = new ArrayList<>();
-        EiffelFeatureValue featureValue = featureDeclaration.getFeatureValue();
-        if (featureValue == null) return result;
-        EiffelLocalDeclarations localDeclarations = featureValue.getLocalDeclarations();
-        if (localDeclarations == null) return result;
-        for (EiffelEntityDeclarationGroup group : localDeclarations.getEntityDeclarationGroupList()) {
-            result.addAll(group.getEntityIdentifierList());
-        }
-        return result;
+    @Nullable
+    public static EiffelType getType(EiffelNewFeature newFeature) {
+        EiffelFeatureDeclaration fd = newFeature.getFeatureDeclaration();
+        return fd.getType();
     }
 
     @Nullable
-    public static EiffelEntityIdentifier getLocalEntityIdentifier(EiffelFeatureDeclaration featureDeclaration, String name) {
-        EiffelFeatureValue featureValue = featureDeclaration.getFeatureValue();
-        if (featureValue == null) return null;
-        EiffelLocalDeclarations localDeclarations = featureValue.getLocalDeclarations();
-        if (localDeclarations == null) return null;
-        for (EiffelEntityDeclarationGroup group : localDeclarations.getEntityDeclarationGroupList()) {
-            for (EiffelEntityIdentifier identifier : group.getEntityIdentifierList()) {
-                if (identifier.getText().equals(name)) {
-                    return identifier;
-                }
-            }
-        }
-        return null;
+    public static String getTypeString(EiffelNewFeature newFeature) {
+        if (newFeature.getStub() != null) return newFeature.getStub().getTypeString();
+        EiffelType type = newFeature.getType();
+        if (type == null) return null;
+        EiffelClassName className = type.getClassName();
+        if (className == null) return null; // TODO
+        return className.getText();
     }
 
     @NotNull
-    public static List<EiffelEntityIdentifier> getFormalArgumentIdentifiers(EiffelFeatureDeclaration featureDeclaration) {
-        List<EiffelEntityIdentifier> result = new ArrayList<>();
-        EiffelFormalArguments formalArguments = featureDeclaration.getFormalArguments();
-        if (formalArguments == null) return result;
-        for (EiffelEntityDeclarationGroup group : formalArguments.getEntityDeclarationGroupList()) {
-            result.addAll(group.getEntityIdentifierList());
-        }
-        return result;
-    }
-
-    @Nullable
-    public static EiffelEntityIdentifier getFormalArgumentIdentifier(EiffelFeatureDeclaration featureDeclaration, String name) {
-        EiffelFormalArguments formalArguments = featureDeclaration.getFormalArguments();
-        if (formalArguments == null) return null;
-        for (EiffelEntityDeclarationGroup group : formalArguments.getEntityDeclarationGroupList()) {
-            for (EiffelEntityIdentifier identifier : group.getEntityIdentifierList()) {
-                if (identifier.getText().equals(name)) {
-                    return identifier;
-                }
-            }
+    public static EiffelFeatureDeclaration getFeatureDeclaration(EiffelNewFeature newFeature) {
+//        if (newFeature.getStub() != null) return newFeature.getStub().getFeatureDeclarationStub().getPsi();
+        if (newFeature.getParent() instanceof EiffelFeatureDeclaration) {
+            return (EiffelFeatureDeclaration) newFeature.getParent();
         }
         return null;
     }
 
     @Nullable
-    public static String getTypeString(EiffelEntityIdentifier identifier) {
-        EiffelType type = identifier.getType();
-        return type == null ? null : type.getUngenerified();
-    }
-
-    @Nullable
-    public static EiffelType getType(EiffelEntityIdentifier identifier) {
-        PsiElement parent = identifier.getParent();
-        if (parent instanceof EiffelEntityDeclarationGroup) {
-            EiffelEntityDeclarationGroup group = (EiffelEntityDeclarationGroup) parent;
-            return group.getType();
-        }
-        return null;
-    }
-
-
-    @NotNull
-    public static List<EiffelNewFeature> getCreationProcedures(EiffelClassDeclaration classDeclaration) {
-        List<EiffelNewFeature> result = new ArrayList<>();
-        EiffelCreators creators = classDeclaration.getCreators();
-        if (creators == null) return result;
-        Set<String> filter = new HashSet<>();
-        for (EiffelFeatureName newFeature : creators.getFeatureNameList()) {
-            filter.add(newFeature.getText());
-        }
-        return classDeclaration.getAllNewFeaturesSubset(filter);
-    }
-
-    @Nullable
-    public static String getCommentDoc(EiffelFeatureDeclaration featureDeclaration) {
-        for (ASTNode child : featureDeclaration.getNode().getChildren(TokenSet.create(EiffelTypes.COMMENT))) {
-            return child.getText();
+    public static EiffelFeatureClause getFeatureClause(EiffelNewFeature newFeature) {
+        EiffelFeatureDeclaration featureDeclaration = newFeature.getFeatureDeclaration();
+        if (featureDeclaration == null) return null;
+        if (featureDeclaration.getParent() instanceof EiffelFeatureClause) {
+            return (EiffelFeatureClause) featureDeclaration.getParent();
         }
         return null;
     }
 
     @Nullable
     public static String getCommentDoc(EiffelNewFeature newFeature) {
-        if (newFeature.getStub() != null) return newFeature.getStub().getCommentDoc();
-        EiffelFeatureDeclaration fd = newFeature.getFeatureDeclaration();
-        if (fd == null) return null;
-        return fd.getCommentDoc();
+        ASTNode fdNode = newFeature.getFeatureDeclaration().getNode();
+        ASTNode commentNode = fdNode.findChildByType(EiffelTypes.COMMENT);
+        if (commentNode != null) return commentNode.getText();
+        return null;
+    }
+    //endregion
+
+    //region Feature Declaration methods
+    @NotNull
+    public static List<EiffelEntity> getArguments(EiffelFeatureDeclaration fd) {
+        EiffelFormalArguments formalArguments = fd.getFormalArguments();
+        if (formalArguments == null) return Collections.emptyList();
+        return formalArguments.getEntityDeclarationList().getEntityList();
     }
 
+    @Nullable
+    public static String getSerializedArguments(EiffelFeatureDeclaration fd) {
+        if (fd == null) return null;
+        EiffelFormalArguments arguments = fd.getFormalArguments();
+        if (arguments != null) {
+            return EiffelClassUtil.formalizeName(arguments.getText());
+        }
+        return null;
+    }
+
+    @Nullable
+    public static EiffelEntity getArgument(EiffelFeatureDeclaration fd, String name) {
+        for (EiffelEntity entity : fd.getArguments()) {
+            if (entity.getName().equals(name)) {
+                return entity;
+            }
+        }
+        return null;
+    }
+
+    @NotNull
+    public static List<EiffelEntity> getLocals(EiffelFeatureDeclaration fd) {
+        EiffelFeatureValue featureValue = fd.getFeatureValue();
+        if (featureValue == null) return Collections.emptyList();
+        EiffelLocalDeclarations locals = featureValue.getLocalDeclarations();
+        if (locals == null) return Collections.emptyList();
+
+        return locals.getEntityDeclarationList().getEntityList();
+    }
+
+    @Nullable
+    public static EiffelEntity getLocal(EiffelFeatureDeclaration fd, String name) {
+        for (EiffelEntity entity : fd.getLocals()) {
+            if (entity.getName().equals(name)) {
+                return entity;
+            }
+        }
+        return null;
+    }
+    //endregion
+
+    //region Entity methods
+    @NotNull
+    public static String getName(EiffelEntity entity) {
+        return entity.getText();
+    }
+
+    @Nullable
+    public static String getTypeString(EiffelEntity entity) {
+        EiffelType type = entity.getType();
+        return type == null ? null : type.getUngenerified();
+    }
+
+    @Nullable
+    public static EiffelType getType(EiffelEntity entity) {
+        PsiElement parent = entity.getParent();
+        if (parent instanceof EiffelEntityDeclarationGroup) {
+            EiffelEntityDeclarationGroup group = (EiffelEntityDeclarationGroup) parent;
+            return group.getType();
+        }
+        return null;
+    }
+    //endregion
+
+    //region Entity List methods
+    @NotNull
+    public static List<EiffelEntity> getEntityList(EiffelEntityDeclarationList edl) {
+        List<EiffelEntity> result = new ArrayList<>();
+        for (EiffelEntityDeclarationGroup group : edl.getEntityDeclarationGroupList()) {
+            result.addAll(group.getEntityList());
+        }
+        return result;
+    }
+    //endregion
+
+    //region Type methods
     @Nullable
     public static String getString(EiffelType type) {
         return type.getText();
@@ -459,4 +480,5 @@ public class EiffelPsiImplUtil {
         if (className == null) return null;
         return EiffelClassUtil.formalizeName(className.getText());
     }
+    //endregion
 }

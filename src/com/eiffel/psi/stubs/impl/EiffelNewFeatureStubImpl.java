@@ -7,9 +7,6 @@ import com.intellij.psi.stubs.IStubElementType;
 import com.intellij.psi.stubs.StubBase;
 import com.intellij.psi.stubs.StubElement;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 public class EiffelNewFeatureStubImpl extends StubBase<EiffelNewFeature> implements EiffelNewFeatureStub {

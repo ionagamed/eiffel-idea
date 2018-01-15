@@ -3,7 +3,6 @@ package com.eiffel.psi.stubs;
 import com.eiffel.psi.EiffelNewFeature;
 import com.intellij.psi.stubs.StubElement;
 
-import java.util.List;
 import java.util.Set;
 
 public interface EiffelNewFeatureStub extends StubElement<EiffelNewFeature> {

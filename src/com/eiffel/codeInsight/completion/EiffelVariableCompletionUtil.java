@@ -21,7 +21,7 @@ public class EiffelVariableCompletionUtil extends EiffelCompletionUtilBase {
         if (classDeclaration == null) return;
         // TODO: create only creatable variables
         for (EiffelNewFeature newFeature : classDeclaration.getNewFeatures()) {
-            final String name = newFeature.getName();
+            final String name = newFeature.getFinalName();
             final String type = newFeature.getTypeString();
             LookupElement lookupElement = LookupElementBuilder.create(name)
                     .withRenderer(new LookupElementRenderer<LookupElement>() {
