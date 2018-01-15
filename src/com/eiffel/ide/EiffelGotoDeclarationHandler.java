@@ -81,7 +81,7 @@ public class EiffelGotoDeclarationHandler extends GotoDeclarationHandlerBase {
         String currentClass = classDeclaration.getName();
         if (currentClass == null) return null;
 
-        return EiffelClassUtil.findFeatureDeclaration(editor.getProject(), currentClass, featureName.getText());
+        return EiffelClassUtil.findFeatureIntroduction(editor.getProject(), currentClass, featureName.getText());
     }
 
     private PsiElement getCreationProcedureDeclarationByGrandparent(PsiElement grandparent, Editor editor) {
@@ -91,11 +91,11 @@ public class EiffelGotoDeclarationHandler extends GotoDeclarationHandlerBase {
                 PsiElement variable = ((EiffelCreationInstruction) instruction).getVariable();
                 EiffelClassDeclaration declaration = EiffelClassUtil.findClassDeclaration(variable);
                 if (variable == null || declaration == null) return null;
-                EiffelNewFeature target = declaration.getNewFeature(variable.getText());
+                EiffelFeature target = declaration.getNewFeature(variable.getText());
                 if (target == null) return null;
                 EiffelFeatureName featureName = ((EiffelUnqualifiedCall) grandparent).getFeatureName();
                 if (featureName == null) return null;
-                return EiffelClassUtil.findFeatureDeclaration(
+                return EiffelClassUtil.findFeatureIntroduction(
                         editor.getProject(),
                         target.getTypeString(),
                         featureName.getText()

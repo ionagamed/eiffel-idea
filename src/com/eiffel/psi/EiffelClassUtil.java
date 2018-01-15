@@ -117,12 +117,16 @@ public class EiffelClassUtil {
         return declarations.toArray(new EiffelClassDeclaration[1])[0];
     }
 
-    public static EiffelFeatureDeclaration findFeatureDeclaration(Project project, String className, String feature) {
+    public static EiffelNewFeature findFeatureIntroduction(Project project, String className, String feature) {
         EiffelClassDeclaration classDeclaration = findClassDeclaration(project, className);
         if (classDeclaration == null) return null;
-        for (EiffelNewFeature newFeature : classDeclaration.getAllNewFeatures()) {
-            if (newFeature.getFeatureName().getText().equals(feature)) {
-                return newFeature.getFeatureDeclaration();
+        for (EiffelFeature newFeature : classDeclaration.getAllNewFeatures()) {
+            if (newFeature.getFinalName().equals(feature)) {
+                if (newFeature instanceof EiffelNewFeature) {
+                    return (EiffelNewFeature) newFeature;
+                } else {
+                    return null;
+                }
             }
         }
         return null;
@@ -132,7 +136,7 @@ public class EiffelClassUtil {
     public static String findFeatureReturnType(Project project, String className, String feature) {
         EiffelClassDeclaration classDeclaration = findClassDeclaration(project, className);
         if (classDeclaration == null) return null;
-        EiffelNewFeature newFeature = classDeclaration.getNewFeature(feature);
+        EiffelFeature newFeature = classDeclaration.getNewFeature(feature);
         if (newFeature == null) return null;
         return newFeature.getTypeString();
 //        if (className.equals("APPLICATION")) {
@@ -171,7 +175,7 @@ public class EiffelClassUtil {
         }
         EiffelClassDeclaration classDeclaration = findClassDeclaration(reference);
         if (classDeclaration != null) {
-            EiffelNewFeature feature = classDeclaration.getNewFeature(name);
+            EiffelFeature feature = classDeclaration.getNewFeature(name);
             if (feature != null) return feature;
         }
         return null;

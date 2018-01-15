@@ -26,7 +26,7 @@ public class EiffelCreationProcedureCompletionUtil extends EiffelCompletionUtilB
         if (contextElement == null) return;
         EiffelClassDeclaration contextClass = EiffelClassUtil.findClassDeclaration(parameters.getEditor().getProject(), contextElement.getTypeString());
         if (contextClass == null) return;
-        for (EiffelNewFeature creationFeature : contextClass.getCreationProcedures()) {
+        for (EiffelFeature creationFeature : contextClass.getCreationProcedures()) {
             final String name = creationFeature.getFinalName();
             final String formals = creationFeature.getSerializedArguments();
             final String doc = creationFeature.getCommentDoc();

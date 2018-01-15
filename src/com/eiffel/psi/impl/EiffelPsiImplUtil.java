@@ -64,8 +64,8 @@ public class EiffelPsiImplUtil {
     }
 
     @Nullable
-    public static EiffelNewFeature getNewFeature(EiffelClassDeclaration classDeclaration, String featureName) {
-        for (EiffelNewFeature newFeature : classDeclaration.getAllNewFeatures()) {
+    public static EiffelFeature getNewFeature(EiffelClassDeclaration classDeclaration, String featureName) {
+        for (EiffelFeature newFeature : classDeclaration.getAllNewFeatures()) {
             if (newFeature.getFinalName().equals(featureName)) {
                 return newFeature;
             }
@@ -74,9 +74,9 @@ public class EiffelPsiImplUtil {
     }
 
     @NotNull
-    public static List<EiffelNewFeature> getNewFeatures(EiffelClassDeclaration classDeclaration) {
+    public static List<EiffelFeature> getNewFeatures(EiffelClassDeclaration classDeclaration) {
         if (classDeclaration.getStub() != null) return classDeclaration.getStub().getNewFeatures();
-        List<EiffelNewFeature> newFeatures = new ArrayList<>();
+        List<EiffelFeature> newFeatures = new ArrayList<>();
         for (EiffelFeatureDeclaration featureDeclaration : classDeclaration.getFeatureDeclarations()) {
             newFeatures.addAll(featureDeclaration.getNewFeatureList());
         }
@@ -84,8 +84,8 @@ public class EiffelPsiImplUtil {
     }
 
     @NotNull
-    public static List<EiffelNewFeature> getAllNewFeatures(EiffelClassDeclaration classDeclaration) {
-        List<EiffelNewFeature> result = new ArrayList<>();
+    public static List<EiffelFeature> getAllNewFeatures(EiffelClassDeclaration classDeclaration) {
+        List<EiffelFeature> result = new ArrayList<>();
         result.addAll(classDeclaration.getNewFeatures());
         for (EiffelClassDeclaration parent : classDeclaration.getParents()) {
             result.addAll(parent.getNewFeatures());
@@ -94,15 +94,15 @@ public class EiffelPsiImplUtil {
     }
 
     @NotNull
-    public static List<EiffelNewFeature> getAllNewFeaturesSubset(EiffelClassDeclaration classDeclaration, Set<String> names) {
-        List<EiffelNewFeature> result = new ArrayList<>();
-        for (EiffelNewFeature newFeature : classDeclaration.getNewFeatures()) {
+    public static List<EiffelFeature> getAllNewFeaturesSubset(EiffelClassDeclaration classDeclaration, Set<String> names) {
+        List<EiffelFeature> result = new ArrayList<>();
+        for (EiffelFeature newFeature : classDeclaration.getNewFeatures()) {
             if (names.contains(newFeature.getFinalName())) {
                 result.add(newFeature);
             }
         }
         for (EiffelClassDeclaration parent : classDeclaration.getParents()) {
-            for (EiffelNewFeature newFeature : parent.getNewFeatures()) {
+            for (EiffelFeature newFeature : parent.getNewFeatures()) {
                 if (names.contains(newFeature.getFinalName())) {
                     result.add(newFeature);
                 }
@@ -112,9 +112,9 @@ public class EiffelPsiImplUtil {
     }
 
     @NotNull
-    public static List<EiffelNewFeature> getAllNewFeaturesInContext(EiffelClassDeclaration classDeclaration, String context) {
+    public static List<EiffelFeature> getAllNewFeaturesInContext(EiffelClassDeclaration classDeclaration, String context) {
         return ContainerUtil.mapNotNull(classDeclaration.getAllNewFeatures(),
-                (EiffelNewFeature f) -> {
+                (EiffelFeature f) -> {
                     if (f.isAccessibleBy(context)) {
                         return f;
                     } else {
@@ -125,10 +125,10 @@ public class EiffelPsiImplUtil {
     }
 
     @NotNull
-    public static Map<EiffelNewFeature, Integer> getAllNewFeaturesInContextWithDepth(EiffelClassDeclaration classDeclaration, String context) {
-        Map<EiffelNewFeature, Integer> result = new HashMap<>();
+    public static Map<EiffelFeature, Integer> getAllNewFeaturesInContextWithDepth(EiffelClassDeclaration classDeclaration, String context) {
+        Map<EiffelFeature, Integer> result = new HashMap<>();
         Set<String> alreadyPut = new HashSet<>(); // used to add nearest feature in inheritance tree
-        for (EiffelNewFeature newFeature : classDeclaration.getNewFeatures()) {
+        for (EiffelFeature newFeature : classDeclaration.getNewFeatures()) {
             if (newFeature.isAccessibleBy(context)) {
                 result.put(newFeature, 0);
                 alreadyPut.add(newFeature.getFinalName());
@@ -136,7 +136,7 @@ public class EiffelPsiImplUtil {
         }
         Map<EiffelClassDeclaration, Integer> parents = classDeclaration.getParentsWithDepth();
         for (EiffelClassDeclaration parent : parents.keySet()) {
-            for (EiffelNewFeature newFeature : parent.getNewFeatures()) {
+            for (EiffelFeature newFeature : parent.getNewFeatures()) {
                 if (newFeature.isAccessibleBy(context) && !alreadyPut.contains(newFeature.getFinalName())) {
                     result.put(newFeature, parents.get(parent));
                     alreadyPut.add(newFeature.getFinalName());
@@ -149,7 +149,7 @@ public class EiffelPsiImplUtil {
     @NotNull
     public static List<String> getFeatureNames(EiffelClassDeclaration classDeclaration) {
         List<String> result = new ArrayList<>();
-        for (EiffelNewFeature newFeature : classDeclaration.getNewFeatures()) {
+        for (EiffelFeature newFeature : classDeclaration.getNewFeatures()) {
             result.add(newFeature.getFinalName());
         }
         return result;
@@ -239,8 +239,8 @@ public class EiffelPsiImplUtil {
     }
 
     @NotNull
-    public static List<EiffelNewFeature> getCreationProcedures(EiffelClassDeclaration classDeclaration) {
-        List<EiffelNewFeature> result = new ArrayList<>();
+    public static List<EiffelFeature> getCreationProcedures(EiffelClassDeclaration classDeclaration) {
+        List<EiffelFeature> result = new ArrayList<>();
         EiffelCreators creators = classDeclaration.getCreators();
         if (creators == null) return result;
         Set<String> filter = new HashSet<>();
@@ -254,7 +254,7 @@ public class EiffelPsiImplUtil {
     //region New Feature methods
 
     @NotNull
-    public static String getFinalName(EiffelNewFeature newFeature) {
+    public static String getFinalName(EiffelFeature newFeature) {
         return newFeature.getOriginalName();
     }
 
@@ -288,7 +288,7 @@ public class EiffelPsiImplUtil {
         return newFeature.getFeatureDeclaration().getLocals();
     }
 
-    public static boolean isAccessibleBy(EiffelNewFeature newFeature, String context) {
+    public static boolean isAccessibleBy(EiffelFeature newFeature, String context) {
         Set<String> clients = newFeature.getClientNames();
         return clients.size() == 0 || clients.contains("ALL") || clients.contains(context);
     }
@@ -329,7 +329,7 @@ public class EiffelPsiImplUtil {
     }
 
     @NotNull
-    public static EiffelFeatureDeclaration getFeatureDeclaration(EiffelNewFeature newFeature) {
+    public static EiffelFeatureDeclaration getFeatureDeclaration(EiffelFeature newFeature) {
 //        if (newFeature.getStub() != null) return newFeature.getStub().getFeatureDeclarationStub().getPsi();
         if (newFeature.getParent() instanceof EiffelFeatureDeclaration) {
             return (EiffelFeatureDeclaration) newFeature.getParent();

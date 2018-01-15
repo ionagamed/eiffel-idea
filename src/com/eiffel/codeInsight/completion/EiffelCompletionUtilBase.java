@@ -2,7 +2,7 @@ package com.eiffel.codeInsight.completion;
 
 import com.eiffel.psi.EiffelClassDeclaration;
 import com.eiffel.psi.EiffelClassUtil;
-import com.eiffel.psi.EiffelNewFeature;
+import com.eiffel.psi.EiffelFeature;
 import com.intellij.codeInsight.completion.CompletionParameters;
 import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.completion.PrioritizedLookupElement;
@@ -23,8 +23,8 @@ public abstract class EiffelCompletionUtilBase {
     protected void addFeatureNamesForClassInContext(Project project, String className, String context, CompletionResultSet result) {
         EiffelClassDeclaration classDeclaration = EiffelClassUtil.findClassDeclaration(project, className);
         if (classDeclaration == null) return;
-        Map<EiffelNewFeature, Integer> newFeatures = classDeclaration.getAllNewFeaturesInContextWithDepth(context);
-        for (EiffelNewFeature newFeature : newFeatures.keySet()) {
+        Map<EiffelFeature, Integer> newFeatures = classDeclaration.getAllNewFeaturesInContextWithDepth(context);
+        for (EiffelFeature newFeature : newFeatures.keySet()) {
             final String formalArguments = newFeature.getSerializedArguments();
             final String returnType = newFeature.getTypeString();
             final int priority = newFeatures.get(newFeature);

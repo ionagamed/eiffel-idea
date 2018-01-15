@@ -15,19 +15,19 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
-public class EiffelNewFeatureStubElementType extends IStubElementType<EiffelNewFeatureStub, EiffelNewFeature> {
+public class EiffelNewFeatureStubElementType extends IStubElementType<EiffelNewFeatureStub, EiffelFeature> {
     public EiffelNewFeatureStubElementType() {
         super("CLASS_DECLARATION", EiffelLanguage.INSTANCE);
     }
 
     @Override
-    public EiffelNewFeature createPsi(@NotNull EiffelNewFeatureStub stub) {
+    public EiffelFeature createPsi(@NotNull EiffelNewFeatureStub stub) {
         return new EiffelNewFeatureImpl(stub, this);
     }
 
     @NotNull
     @Override
-    public EiffelNewFeatureStub createStub(@NotNull EiffelNewFeature psi, StubElement parentStub) {
+    public EiffelNewFeatureStub createStub(@NotNull EiffelFeature psi, StubElement parentStub) {
         return new EiffelNewFeatureStubImpl(
                 parentStub,
                 psi.getFinalName(),

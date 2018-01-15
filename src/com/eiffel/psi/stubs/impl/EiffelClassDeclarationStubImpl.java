@@ -5,7 +5,6 @@ import com.eiffel.psi.stubs.*;
 import com.intellij.psi.stubs.IStubElementType;
 import com.intellij.psi.stubs.StubBase;
 import com.intellij.psi.stubs.StubElement;
-import com.intellij.util.containers.ContainerUtil;
 
 import java.util.*;
 import java.util.List;
@@ -24,8 +23,8 @@ public class EiffelClassDeclarationStubImpl extends StubBase<EiffelClassDeclarat
     }
 
     @Override
-    public List<EiffelNewFeature> getNewFeatures() {
-        List<EiffelNewFeature> result = new LinkedList<>();
+    public List<EiffelFeature> getNewFeatures() {
+        List<EiffelFeature> result = new LinkedList<>();
         for (StubElement candidate : getChildrenStubs()) {
             if (candidate instanceof EiffelNewFeatureStub) {
                 result.add(((EiffelNewFeatureStub) candidate).getPsi());

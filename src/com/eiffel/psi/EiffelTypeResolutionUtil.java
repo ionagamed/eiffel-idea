@@ -45,7 +45,7 @@ public class EiffelTypeResolutionUtil {
         } else {
             EiffelClassDeclaration context = EiffelClassUtil.findClassDeclaration(variable);
             if (context == null) return null;
-            EiffelNewFeature feature = context.getNewFeature(variable.getText());
+            EiffelFeature feature = context.getNewFeature(variable.getText());
             if (feature == null) return null;
             return feature.getTypeString();
         }
@@ -88,7 +88,7 @@ public class EiffelTypeResolutionUtil {
                 EiffelClassDeclaration contextClass = EiffelClassUtil.findClassDeclaration(project, contextTypeString);
                 PsiElement unqualifiedCall = current.getFirstChild();
                 if (unqualifiedCall instanceof EiffelUnqualifiedCall && contextClass != null) {
-                    EiffelNewFeature feature = contextClass.getNewFeature(unqualifiedCall.getText());
+                    EiffelFeature feature = contextClass.getNewFeature(unqualifiedCall.getText());
                     if (feature != null) {
                         contextTypeString = feature.getTypeString();
                     }
@@ -98,7 +98,7 @@ public class EiffelTypeResolutionUtil {
             EiffelClassDeclaration contextClass = EiffelClassUtil.findClassDeclaration(project, contextTypeString);
             PsiElement unqualifiedCall = current.getFirstChild();
             if (unqualifiedCall instanceof EiffelUnqualifiedCall && contextClass != null) {
-                EiffelNewFeature feature = contextClass.getNewFeature(unqualifiedCall.getText());
+                EiffelFeature feature = contextClass.getNewFeature(unqualifiedCall.getText());
                 if (feature != null) {
                     contextTypeString = feature.getTypeString();
                 }

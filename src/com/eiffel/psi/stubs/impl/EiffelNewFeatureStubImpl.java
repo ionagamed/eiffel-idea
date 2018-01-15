@@ -1,6 +1,6 @@
 package com.eiffel.psi.stubs.impl;
 
-import com.eiffel.psi.EiffelNewFeature;
+import com.eiffel.psi.EiffelFeature;
 import com.eiffel.psi.stubs.*;
 import com.eiffel.psi.EiffelTypes;
 import com.intellij.psi.stubs.IStubElementType;
@@ -9,7 +9,7 @@ import com.intellij.psi.stubs.StubElement;
 
 import java.util.Set;
 
-public class EiffelNewFeatureStubImpl extends StubBase<EiffelNewFeature> implements EiffelNewFeatureStub {
+public class EiffelNewFeatureStubImpl extends StubBase<EiffelFeature> implements EiffelNewFeatureStub {
     private String name;
     private String type;
     private String formals;
